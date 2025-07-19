@@ -95,48 +95,60 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-
-
-
-
-
+We present tEDM, an R package for discovering causal relationships in urban time series data using temporal empirical dynamic modeling (EDM). This paper introduces the theoretical basis, software structure, and representative applications of tEDM, and highlights its advantages in detecting dynamic and nonlinear causal relationships in complex urban systems.
 \end{abstract}
 
 \begin{keyword}
-causal influence \sep direct causation \sep causation transitivity \sep empirical dynamic modeling \sep spatially convergent partial cross mapping \sep dynamical system 
+causal discovery \sep empirical dynamic modeling \sep time series \sep urban data \sep tEDM
 \end{keyword}
 \end{frontmatter}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \linenumbers
 
-
 \section{Introduction}
 
-\section{Results}
+Causal inference in urban systems is critical for understanding the dynamic interactions between socio-economic, environmental, and infrastructural factors. With the increasing availability of high-frequency urban data, data-driven approaches to causal discovery have gained prominence. However, most existing methods assume linearity, stationarity, or specific model structures that may not suit complex urban systems.
 
-\subsection{Identifying direct causation with SCPCM}
+This paper introduces tEDM, an R package built upon empirical dynamic modeling (EDM), specifically designed to uncover dynamic, nonlinear causal relationships in multivariate time series data. The package implements advanced methods such as temporal convergent cross mapping (tCCM) and generalized causal strength measures, with built-in visualization and diagnostic tools.
 
-\subsection{Validation in benchmark systems}
+The rest of the paper is structured as follows: Section 2 provides the theoretical background; Section 3 presents the structure and main features of the tEDM package; Section 4 demonstrates its use through three real-world case studies; Section 5 concludes with key findings and potential future developments.
 
-\subsection{Application to real-world datasets with known causation}
+\section{Background}
 
-\subsubsection{Identified direct causation between precipitation and NDVI}
+\subsection{Data-driven causal discovery in time series data}
 
-\subsubsection{Identified direct causation between elevation and NPP}
+\subsection{Empirical dynamic modeling and dynamic causality}
 
-\section{Discussion}
+\subsection{Existing toolkits for time series causal discovery}
 
-\section{Methods}
+\section{The tEDM Package}
+
+\subsection{Software design philosophy and architecture}
+
+\subsection{Core functionalities}
+
+\section{Case Studies}
+
+\subsection{Air pollution and cardiovascular health in hong kong}
+
+\subsection{US county carbon emissions and temperature dynamics}
+
+\subsection{COVID-19 spread across japanese prefectures}
+
+\section{Conclusion}
+
+1. Summary of contributions
+2. Limitations and next steps
 
 \section*{Data availability}
+Data used in the case studies are publicly available at [link].
 
 \section*{Code availability}
+The source code of the tEDM package is available at \url{https://github.com/stscl/tEDM}.
 
-%\section*{References}
 \baselineskip12pt
 \bibliographystyle{elsarticle-harv} 
 \bibliography{references.bib} 
-
 
 \end{document}
