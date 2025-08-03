@@ -19,6 +19,8 @@ doi2bib = \(doi,style = "aps"){
   return(rcrossref::cr_cn(dois = doi, style = style, format = "bibtex"))
 }
 
+# methods
+
 doi2bib("10.1098/rspl.1895.0041")     # pcc
 
 doi2bib("10.2307/1912791")            # granger test
@@ -31,7 +33,8 @@ doi2bib("10.1111/pirs.12144")           # sem
 doi2bib("10.1126/sciadv.aau4996")       # pcmci
 doi2bib("10.1038/s41467-024-53373-4")   # surd
 doi2bib("10.1038/s41467-023-39983-4")   # gobi
-doi2bib("10.1016/j.cities.2025.105980") # FsATE
+doi2bib("10.1109/TVCG.2021.3114875")    # urban_granger_causality
+doi2bib("10.1016/j.cities.2025.105980") # urban_transfer_entropy
 
 doi2bib("10.1103/PhysRevA.45.3403")   # fnn
 doi2bib("10.1038/344734a0")           # simplex projection
@@ -46,6 +49,8 @@ doi2bib("10.1890/14-1479.1")          # multispatialccm
 doi2bib("10.2139/ssrn.2637764")       # sdid
 doi2bib("10.1177/0160017619869781")   # srdd 
 
+# reviews
+
 doi2bib("10.1038/s41467-019-10105-3") # review1 
 doi2bib("10.1038/s43017-023-00431-y") # review2
 
@@ -53,5 +58,11 @@ doi2bib("10.1016/j.scib.2021.10.002")   # Temporally or spatially
 doi2bib("10.1111/gean.12312")           # spatial causality review
 doi2bib("10.1016/j.spasta.2022.100621") # causal inference in spatial statistics
 
-                   
-# style -> elsevier-harvard
+# applications
+
+doi2bib("10.1073/pnas.1104268108")        # climate change & human crisis + granger causality test
+doi2bib("10.1016/j.scs.2024.105850")      # urban heat island effect + PC
+doi2bib("10.1073/pnas.1300018110")        # air pollution & life expectancy + RDD
+doi2bib("10.1111/mice.13334")             # urban traffic networks + CCM
+doi2bib("10.1038/s41467-024-48199-z")     # Ozone & influenza + CCM PCMCI+ GLM
+
