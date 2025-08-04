@@ -15,7 +15,7 @@ setwd("d:/publication/tEDManuscript/")
          './figure/figure_appendix.jpg')
 
 # references: doi -> bibtex
-doi2bib = \(doi,style = "aps"){
+doi2bib = \(doi,style = "elsevier-harvard"){
   return(rcrossref::cr_cn(dois = doi, style = style, format = "bibtex"))
 }
 
@@ -52,6 +52,8 @@ doi2bib("10.1177/0160017619869781")   # srdd
 
 # reviews
 
+doi2bib("10.1016/j.ecolind.2016.03.054")
+
 doi2bib("10.1038/s41467-019-10105-3") # review1 
 doi2bib("10.1038/s43017-023-00431-y") # review2
 
@@ -63,7 +65,10 @@ doi2bib("10.1016/j.spasta.2022.100621") # causal inference in spatial statistics
 
 doi2bib("10.1073/pnas.1104268108")        # climate change & human crisis + granger causality test
 doi2bib("10.1016/j.scs.2024.105850")      # urban heat island effect + PC
+doi2bib("10.1016/j.scs.2025.106240")      # urban transport + PCMCI
 doi2bib("10.1073/pnas.1300018110")        # air pollution & life expectancy + RDD
 doi2bib("10.1111/mice.13334")             # urban traffic networks + CCM
 doi2bib("10.1038/s41467-024-48199-z")     # Ozone & influenza + CCM PCMCI+ GLM
 
+# books 
+doi2bib("10.7551/mitpress/9399.001.0001") # new science of cities
