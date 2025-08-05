@@ -124,6 +124,13 @@ The remainder of this paper is organized as follows. Section~2 outlines the theo
 
 \subsection{Empirical dynamic modeling and dynamic causality}
 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.95\textwidth]{./figure/figure1.jpg}
+\caption{Schematic illustration of the Empirical Dynamic Modeling (EDM) framework.}
+\label{fig_edm}
+\end{figure}
+
 \subsection{Existing toolkits for time series causal discovery}
 
 \section{The tEDM Package}
@@ -132,13 +139,41 @@ The remainder of this paper is organized as follows. Section~2 outlines the theo
 
 \subsection{Core functionalities}
 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.95\textwidth]{./figure/figure2.jpg}
+\caption{Schematic representation of a standard workflow for causal discovery using the \textit{tEDM} package.}
+\label{fig_tedm}
+\end{figure}
+
 \section{Case Studies}
 
 \subsection{Air pollution and cardiovascular health in hong kong}
 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.95\textwidth]{./figure/figure3.jpg}
+\caption{Causal relationship between air pollutants and cardiovascular disease incidence in Hong Kong. \textbf{a} Time series plots of the relevant variables. \textbf{b} Causal strength among variables detected via partial cross mapping. \textbf{c} Inferred causal pathways from air pollutants to cardiovascular disease incidence, based on the partial cross mapping results (see Figure~\ref{fig_appendix}).}
+\label{fig_cvds_hk}
+\end{figure}
+
 \subsection{US county carbon emissions and temperature dynamics}
 
+\begin{figure}[h!]
+\centering
+\includegraphics[height=0.65\textwidth]{./figure/figure4.jpg}
+\caption{Boxplots of causal strengths between average temperature and carbon emissions across U.S. counties.}
+\label{fig_carbon_us}
+\end{figure}
+
 \subsection{COVID-19 spread across japanese prefectures}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.95\textwidth]{./figure/figure5.jpg}
+\caption{Reconstruction of COVID-19 transmission dynamics from Tokyo to other prefectures in Japan using convergent cross mapping.}
+\label{fig_covid_jp}
+\end{figure}
 
 \section{Conclusion}
 
@@ -153,5 +188,20 @@ The source code of the tEDM package is available at \url{https://github.com/stsc
 \baselineskip12pt
 \bibliographystyle{elsarticle-harv} 
 \bibliography{references.bib} 
+
+\newpage
+% \appendix
+\section*{Appendix}
+
+% Reset figure counter and label format
+\renewcommand{\thefigure}{A\arabic{figure}}
+\setcounter{figure}{0}  % reset counter for appendix
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.95\textwidth]{./figure/figure_appendix.jpg}
+\caption{Predictive skills ($\rho$) between air pollutants and cardiovascular disease incidence, estimated via partial cross mapping (PCM) across varying library sizes.}
+\label{fig_appendix}
+\end{figure}
 
 \end{document}
