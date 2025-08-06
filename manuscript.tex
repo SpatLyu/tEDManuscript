@@ -131,7 +131,40 @@ The remainder of this paper is organized as follows. Section~2 outlines the theo
 \label{fig_edm}
 \end{figure}
 
-\subsection{Existing toolkits for time series causal discovery}
+\subsection{Open-source toolkits for time series causal discovery}
+
+Causal discovery in time series is a growing area of interest in fields such as econometrics, neuroscience, climate science, and systems biology. Numerous open-source toolkits have been developed in both \textbf{Python} and \textbf{R} to facilitate causal inference from observational temporal data. These toolkits implement a diverse range of methodologies, including traditional statistical tests (e.g., Granger causality), constraint-based approaches (e.g., PC algorithm), score-based and hybrid learning algorithms, and more recent methods based on empirical dynamic modeling (EDM) and deep learning.
+
+Table~\ref{tab_toolkits} summarizes a selection of notable toolkits across both platforms. Each package is characterized by its core platform and language, primary use case or method family, and whether it supports direct application to time series data. Some packages are designed explicitly for time series analysis (e.g., \texttt{rEDM}, \texttt{pyEDM}, \texttt{cdt}, \texttt{crossmapy}), while others can be adapted with additional preprocessing steps (e.g., \texttt{pcalg}, \texttt{bnlearn}, \texttt{causal-learn}). Toolkits such as \texttt{NliTS}, \texttt{tEDM}, and \texttt{multispatialccm} are focused specifically on nonlinear and high-dimensional dynamical systems.
+
+\begin{table}[h!]
+\centering
+\caption{Open-source toolkits for causal discovery and their applicability to time series}
+\label{tab_toolkits}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{| p{3.2cm} | p{2.8cm} | p{7.2cm} | p{2.5cm} |}
+\hline
+\textbf{Package} & \textbf{Language} & \textbf{Implemented Methods} & \textbf{Time Series Ready} \\
+\hline
+\textit{dowhy-gcm}       & Python   & Graphical causal modeling & \textbf{No} \\
+\textit{causal-learn}    & Python           & Multiple causal discovery algorithms            & \textbf{Partial} \\
+\textit{cdt}             & Python           & Causal discovery toolbox (hybrid methods)            & \textbf{Partial} \\
+\textit{lingam}          & Python           & Linear non-Gaussian models      & \textbf{Yes} \\
+\textit{tigramite}          & Python           & Causal time series analysis via PCMCI and its variants     & \textbf{Yes} \\
+\textit{pcalg}           & R                & Causal structure learning                & \textbf{Partial} \\
+\textit{bnlearn}         & R                & Bayesian network structure learning                  & \textbf{Partial} \\
+\textit{lmtest}          & R                & Granger causality tests  (GCT)                             & \textbf{Yes} \\
+\textit{NliTS}           & R                & Nonlinear time series causality methods              & \textbf{Yes} \\
+\textit{rEDM} \& \textit{pyEDM}          & R \& Python                 & Convergent Cross Mapping (CCM)             & \textbf{Yes} \\
+\textit{multispatialccm} & R                & Multispatial Convergent Cross Mapping (MultispatialCCM)                  & \textbf{Yes} \\
+\textit{fastEDM}         & R \& Python        &   CCM \& MultispatialCCM                          & \textbf{Yes} \\
+\textit{crossmapy}       & Python           & Temporal Empirical Dynamic Modeling      & \textbf{Yes} \\
+\textit{tEDM} (Our work)       & R                & Enhanced Temporal Empirical Dynamic Modeling                           & \textbf{Yes} \\
+\hline
+\end{tabular}
+\end{table}
+
+
 
 \section{The tEDM Package}
 
@@ -161,7 +194,7 @@ The remainder of this paper is organized as follows. Section~2 outlines the theo
 
 \begin{figure}[h!]
 \centering
-\includegraphics[height=0.65\textwidth]{./figure/figure4.jpg}
+\includegraphics[height=0.6\textwidth]{./figure/figure4.jpg}
 \caption{Boxplots of causal strengths between average temperature and carbon emissions across U.S. counties.}
 \label{fig_carbon_us}
 \end{figure}
