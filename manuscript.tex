@@ -133,9 +133,13 @@ The remainder of this paper is organized as follows. Section~2 outlines the theo
 
 \subsection{Open-source toolkits for time series causal discovery}
 
-Causal discovery in time series is a growing area of interest in fields such as econometrics, neuroscience, climate science, and systems biology. Numerous open-source toolkits have been developed in both \textbf{Python} and \textbf{R} to facilitate causal inference from observational temporal data. These toolkits implement a diverse range of methodologies, including traditional statistical tests (e.g., Granger causality), constraint-based approaches (e.g., PC algorithm), score-based and hybrid learning algorithms, and more recent methods based on empirical dynamic modeling (EDM) and deep learning.
+Causal discovery in time series is a growing area of interest in fields such as econometrics, neuroscience, climate science, and systems biology \citep{runge2019ictsess,runge2023cits}. Numerous open-source toolkits have been developed in both \textit{Python} and \textit{R} to facilitate causal discovery from observational temporal data. These toolkits implement a diverse range of methodologies, including traditional statistical tests such as Granger causality, constraint-based algorithms such as the PC algorithm, score-based and hybrid learning approaches, and more recent techniques derived from empirical dynamic modeling (EDM). Table~\ref{tab_toolkits} summarizes a selection of representative toolkits across these categories. Each package is described by its programming language, core methodological focus, and whether it supports direct application to time series data.
 
-Table~\ref{tab_toolkits} summarizes a selection of notable toolkits across both platforms. Each package is characterized by its core platform and language, primary use case or method family, and whether it supports direct application to time series data. Some packages are designed explicitly for time series analysis (e.g., \texttt{rEDM}, \texttt{pyEDM}, \texttt{cdt}, \texttt{crossmapy}), while others can be adapted with additional preprocessing steps (e.g., \texttt{pcalg}, \texttt{bnlearn}, \texttt{causal-learn}). Toolkits such as \texttt{NliTS}, \texttt{tEDM}, and \texttt{multispatialccm} are focused specifically on nonlinear and high-dimensional dynamical systems.
+Among these, traditional statistical methods are exemplified by the \textit{lmtest} package, which provides implementations of Granger causality tests based on linear autoregressive models \citep{lmtest}. Constraint-based methods are implemented in \textit{pcalg}, \textit{causal-learn}, and \textit{cdt}, which allow for causal structure learning through conditional independence testing, though they often require additional preprocessing to handle temporal dependencies \citep{pcalg,causal-learn,cdt}. Score-based and hybrid approaches, such as those supported in \textit{bnlearn} and \textit{cdt}, combine structure search with statistical criteria to learn Bayesian networks, but are not inherently designed for time-lagged causality \citep{bnlearn,cdt}. Linear non-Gaussian models, as implemented in \textit{lingam}, assume non-Gaussian noise to identify causal directions and are directly applicable to time series under appropriate conditions \citep{lingam}.
+
+Methods designed specifically for causal discovery in time series include \textit{tigramite}, which employs PCMCI and its variants to robustly detect time-lagged causal relations under high-dimensional and autocorrelated conditions \citep{runge2019pcmci,runge2023cits}. In the context of nonlinear dynamical systems, EDM-based toolkits such as \textit{rEDM}, \textit{pyEDM}, and \textit{crossmapy} implement techniques like convergent cross mapping to infer causality from state-space reconstruction \citep{sugihara2012ccm, tao2023cmc}. Packages such as \textit{multispatialccm} and \textit{fastEDM} further extend EDM capabilities by enabling causal inference on short time series with spatial replication, where spatial replicates are leveraged as surrogates for temporal variation, thereby allowing the application of convergent cross mapping even when the available time series data are too short for traditional EDM approaches.\citep{clark2015multispatialccm,fastEDM}.
+
+To address remaining challenges in flexibility, scalability, and multivariate modeling within the empirical dynamic modeling framework, this work introduces \textit{tEDM}, a novel R package developed for causal discovery in urban time series data. Urban systems often contain short temporal sequences accompanied by multiple spatially replicated observations, along with substantial heterogeneity across spatial locations \citep{gan2025urban_transfer_entropy,mao2024urban_traffic_networks}. \textit{tEDM} extends and refines core methods such as Convergent Cross Mapping (CCM), Partial Cross Mapping (PCM), and Cross Mapping Cardinality (CMC) in order to better accommodate these characteristics. Through carefully designed temporal embedding strategies and efficient implementations for large-scale data, \textit{tEDM} enables causal discovery in complex and high dimensional spatiotemporal systems, and serves as a comprehensive and performant extension of existing empirical dynamic modeling toolkits.
 
 \begin{table}[h!]
 \centering
@@ -163,8 +167,6 @@ Table~\ref{tab_toolkits} summarizes a selection of notable toolkits across both 
 \hline
 \end{tabular}
 \end{table}
-
-
 
 \section{The tEDM Package}
 
@@ -225,12 +227,13 @@ The source code of the tEDM package is available at \url{https://github.com/stsc
 \newpage
 % \appendix
 \section*{Appendix}
+\vspace{-0.5em}
 
 % Reset figure counter and label format
 \renewcommand{\thefigure}{A\arabic{figure}}
 \setcounter{figure}{0}  % reset counter for appendix
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{./figure/figure_appendix.jpg}
 \caption{Predictive skills ($\rho$) between air pollutants and cardiovascular disease incidence, estimated via partial cross mapping (PCM) across varying library sizes.}
