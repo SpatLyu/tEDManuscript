@@ -124,12 +124,23 @@ The remainder of this paper is organized as follows. Section~2 outlines the theo
 
 \subsection{Empirical dynamic modeling and dynamic causality}
 
+Traditional causality detection in time series analysis often relies on Granger causality, which assumes that if the historical values of variable $X$ can improve the prediction of variable $Y$, then $X$ is said to Granger-cause $Y$ \citep{granger1969grangertest,geweke1982grangertest2}. However, this approach is typically implemented using linear vector autoregressive models, whose assumptions of linear interactions and variable separability are often violated in nonlinear and dynamically coupled systems \citep{sugihara2012ccm}. To address these limitations, empirical dynamic modeling provides a data-driven, model-free framework capable of capturing nonlinear and inseparable causal relationships directly from time series data. EDM reconstructs the underlying system dynamics through time-delay embedding, enabling robust inference of causations without requiring explicit functional forms or assumptions of separability \citep{Takens1981embedding,Mane1981embedding,sugihara2012ccm,leng2020pcm,tao2023cmc}.
+
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.95\textwidth]{./figure/figure1.jpg}
-\caption{Schematic illustration of the Empirical Dynamic Modeling (EDM) framework.}
+\caption{Schematic illustration of the empirical dynamic modeling framework.}
 \label{fig_edm}
 \end{figure}
+
+\subsubsection{Convergent Cross Mapping (CCM)}
+Convergent Cross Mapping (CCM) tests whether historical states of a response variable $Y$ can reliably estimate the states of a potential driver $X$, based on the assumption that if $X$ causally influences $Y$, then information about $X$ is encoded in the dynamics of $Y$. This is achieved by reconstructing the attractor manifold $M_Y$ from time-lagged embeddings of $Y$ and cross-mapping to $X$. A key feature of CCM is convergence: as the time series library length increases, the cross-mapping skill—typically measured by Pearson correlation—should improve. CCM is particularly useful for detecting nonlinear, bidirectional, and time-lagged causality between geospatial time series.
+
+\subsubsection{Partial Cross Mapping (PCM)}
+Partial Cross Mapping (PCM) extends CCM by accounting for potential confounding influences from a third variable $Z$. In many geospatial contexts, apparent causality between $X$ and $Y$ may be driven by shared responses to external drivers. PCM controls for such effects by conditioning the cross mapping on $Z$, either through residualization or partial correlations within the reconstructed state spaces. This enables more accurate identification of direct causal links in multivariate spatiotemporal systems.
+
+\subsubsection{Cross Mapping Cardinality (CMC)}
+Cross Mapping Cardinality (CMC) evaluates causality based on the structural similarity between the reconstructed attractor manifolds of $X$ and $Y$. It quantifies how frequently nearest neighbors in one manifold correspond to neighbors in the other, under the assumption that causally linked variables share geometric properties in state space. Unlike CCM, which focuses on predictive performance, CMC emphasizes topological consistency, offering an alternative metric for assessing the strength of dynamic coupling in spatiotemporal processes.
 
 \subsection{Open-source toolkits for time series causal discovery}
 
@@ -150,20 +161,20 @@ To address remaining challenges in flexibility, scalability, and multivariate mo
 \hline
 \textbf{Package} & \textbf{Language} & \textbf{Implemented Methods} & \textbf{Time Series Ready} \\
 \hline
-\textit{dowhy-gcm}       & Python   & Graphical causal modeling & \textbf{No} \\
+\textit{dowhy-gcm}       & Python           & Graphical causal modeling & \textbf{No} \\
 \textit{causal-learn}    & Python           & Multiple causal discovery algorithms            & \textbf{Partial} \\
 \textit{cdt}             & Python           & Causal discovery toolbox (hybrid methods)            & \textbf{Partial} \\
 \textit{lingam}          & Python           & Linear non-Gaussian models      & \textbf{Yes} \\
-\textit{tigramite}          & Python           & Causal time series analysis via PCMCI and its variants     & \textbf{Yes} \\
+\textit{tigramite}       & Python           & Causal time series analysis via PCMCI and its variants     & \textbf{Yes} \\
 \textit{pcalg}           & R                & Causal structure learning                & \textbf{Partial} \\
 \textit{bnlearn}         & R                & Bayesian network structure learning                  & \textbf{Partial} \\
 \textit{lmtest}          & R                & Granger causality tests  (GCT)                             & \textbf{Yes} \\
 \textit{NliTS}           & R                & Nonlinear time series causality methods              & \textbf{Yes} \\
-\textit{rEDM} \& \textit{pyEDM}          & R \& Python                 & Convergent Cross Mapping (CCM)             & \textbf{Yes} \\
+\textit{rEDM} \& \textit{pyEDM}     & R \& Python                 & Convergent Cross Mapping (CCM)             & \textbf{Yes} \\
 \textit{multispatialccm} & R                & Multispatial Convergent Cross Mapping (MultispatialCCM)                  & \textbf{Yes} \\
-\textit{fastEDM}         & R \& Python        &   CCM \& MultispatialCCM                          & \textbf{Yes} \\
+\textit{fastEDM}         & R \& Python      &   CCM \& MultispatialCCM                          & \textbf{Yes} \\
 \textit{crossmapy}       & Python           & Temporal Empirical Dynamic Modeling      & \textbf{Yes} \\
-\textit{tEDM} (Our work)       & R                & Enhanced Temporal Empirical Dynamic Modeling                           & \textbf{Yes} \\
+\textit{tEDM} (Our work)       & R          & Enhanced Temporal Empirical Dynamic Modeling                           & \textbf{Yes} \\
 \hline
 \end{tabular}
 \end{table}
