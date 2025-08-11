@@ -140,7 +140,68 @@ Building on this principle, \citet{sugihara2012ccm} proposed convergent cross ma
 Beyond methodological refinements, EDM has evolved from an approach limited to time series analysis to one applicable to spatial cross-sectional data \citep{gao2023gccm}. To address CCM's requirement for relatively long time series, alternative models such as cross map smoothness (CMS) and multispatial convergent cross mapping (MultispatialCCM) have been developed for shorter time series \citep{ma2014cms,clark2015multispatialccm}. These advancements have broadened EDM’s applicability across diverse empirical scenarios. Building upon these developments, the \textit{tEDM} package is specifically designed to address the characteristics of urban time series. In particular, it focuses on datasets with prevalent multi-spatial observations and high-dimensional multivariate structures by adapting and integrating CCM, PCM, and CMC with tailored modifications to enhance causal discovery in complex spatiotemporal systems.
 
 \subsubsection{Convergent Cross Mapping (CCM)}
-Convergent Cross Mapping (CCM) tests whether historical states of a response variable $Y$ can reliably estimate the states of a potential driver $X$, based on the assumption that if $X$ causally influences $Y$, then information about $X$ is encoded in the dynamics of $Y$. This is achieved by reconstructing the attractor manifold $M_Y$ from time-lagged embeddings of $Y$ and cross-mapping to $X$. A key feature of CCM is convergence: as the time series library length increases, the cross-mapping skill—typically measured by Pearson correlation—should improve. CCM is particularly useful for detecting nonlinear, bidirectional, and time-lagged causality between geospatial time series.
+
+Convergent cross mapping (CCM) tests whether historical states of a response variable $Y$ can reliably estimate the states of a potential driver $X$, based on the assumption that if $X$ causally influences $Y$, then information about $X$ is encoded in the dynamics of $Y$ \citep{sugihara2012ccm}. Let $Y_{(t)}$ and $X_{(t)}$ be the two time series variable, the shadow manifolds can be constructed using:
+
+\begin{equation}\label{eq_ts_embedding}
+\begin{split}
+M_{x} &= \left[ x(t),\, x(t+\tau),\, x\big(t+2\tau\big),\, \ldots,\, x\big(t+(E - 1)\tau\big) \right] \\
+M_{y} &= \left[ y(t),\, y(t+\tau),\, y\big(t+2\tau\big),\, \ldots,\, y\big(t+(E - 1)\tau\big) \right]
+\end{split}
+\end{equation}
+
+\noindent where $\tau$ denotes the time-delay step (lag), $E$ is the embedding dimension, and $M_{x}$ and $M_{y}$ are the reconstructed shadow manifolds of the time series $X$ and $Y$, respectively.
+
+With the reconstructed shadow manifold $M_{y}$, the state of $X$ can be estimated from the state of $Y$ through the cross-mapping procedure:
+
+\begin{equation}\label{eq_cross_mapping}
+\hat{X}_t \mid M_y = \sum_{i=1}^k \left( \omega_{ti} \, X_{ti} \mid M_y \right),
+\end{equation}
+
+\noindent where $t$ denotes the time point at which the value of $X$ is to be predicted, $\hat{X}_t$ is the predicted value, $k$ is the number of nearest neighbors in the manifold used for prediction, $t_i$ is the time index of a neighbor, and $X_{ti}$ is the observed value of $X$ at time $t_i$. The corresponding weight $\omega_{ti}$ is defined as
+
+\begin{equation}\label{eq_ccm_weight}
+\omega_{ti} \mid M_y = \frac{ \mathrm{weight} \left( \psi(M_y, t_i),\, \psi(M_y, t) \right) }{ \sum_{i=1}^{k} \mathrm{weight} \left( \psi(M_y, t_i),\, \psi(M_y, t) \right) },
+\end{equation}
+
+\noindent where $\psi(M_y, t_i)$ is the state vector at time $t_i$ in the shadow manifold $M_y$, and $\mathrm{weight}(\cdot,\cdot)$ is a kernel function measuring the similarity between two states, given by
+
+\begin{equation}\label{eq_ccm_weight_fun}
+\mathrm{weight} \left( \psi(M_y, t_i),\, \psi(M_y, t) \right) =
+\exp \left( - \frac{ \mathrm{dis} \left( \psi(M_y, t_i),\, \psi(M_y, t) \right) }{ \mathrm{dis} \left( \psi(M_y, t_1),\, \psi(M_y, t) \right) } \right).
+\end{equation}
+
+\noindent Here, $\exp$ denotes the exponential function, and $\mathrm{dis}(\cdot,\cdot)$ represents the average absolute distance between two state vectors in $M_y$, defined as
+
+\begin{equation}\label{eq_ccm_distance}
+\mathrm{dis} \left( \psi(M_y, t_i),\, \psi(M_y, t) \right) = \frac{1}{E} \sum_{m=1}^{E} \left| \psi_m(M_y, t_i) - \psi_m(M_y, t) \right|,
+\end{equation}
+
+\noindent where $E$ is the embedding dimension, and $\psi_m(M_y, t_i)$ denotes the $m$-th coordinate of $\psi(M_y, t_i)$.
+
+The cross-mapping skill $\rho$ is quantified by the Pearson correlation coefficient between the observed and predicted values, with the confidence interval of $\rho$ estimated via the $z$-transformation under the normality assumption:
+
+\begin{equation}\label{eq_ccm_rho}
+\rho = \frac{\mathrm{Cov}\left( X, \hat{X} \mid M_y \right)}{ \sqrt{\mathrm{Var}(X) \, \mathrm{Var}\left( \hat{X} \mid M_y \right) } },y
+\end{equation}
+
+\begin{equation}\label{eq_ccm_tstat}
+t = \rho \, \sqrt{\frac{n - 2}{1 - \rho^2}}, 
+\end{equation}
+
+\noindent where $n$ is the number of predicted observations, and
+
+\begin{equation}\label{eq_ccm_zstat}
+z = \frac{1}{2} \ln \left( \frac{1 + \rho}{1 - \rho} \right).
+\end{equation}
+
+In CCM, the prediction skill $\rho$ is evaluated across different library sizes $L$, where $L$ is the number of points used to reconstruct the shadow manifold. Causal influence is inferred when $\rho$ exhibits a positive trend with increasing library size $L$ and shows convergence to a stable, statistically significant value as $L$ approaches its maximum. For the causal direction from $Y$ to $X$, the converged cross-mapping skill is expressed as
+
+\begin{equation}\label{eq_ccm_convergence}
+\rho_{x \to y} = \lim_{L \to \infty} \mathrm{cor} \left( X, \hat{X} \mid M_y \right),
+\end{equation}
+
+\noindent where $\rho_{x \to y}$ measures the strength of causal influence from $X$ to $Y$ after convergence.
 
 \subsubsection{Partial Cross Mapping (PCM)}
 Partial Cross Mapping (PCM) extends CCM by accounting for potential confounding influences from a third variable $Z$. In many geospatial contexts, apparent causality between $X$ and $Y$ may be driven by shared responses to external drivers. PCM controls for such effects by conditioning the cross mapping on $Z$, either through residualization or partial correlations within the reconstructed state spaces. This enables more accurate identification of direct causal links in multivariate spatiotemporal systems.
