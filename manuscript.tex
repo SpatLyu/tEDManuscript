@@ -155,26 +155,26 @@ M_{y} &= \left[ y(t),\, y(t+\tau),\, y\big(t+2\tau\big),\, \ldots,\, y\big(t+(E 
 With the reconstructed shadow manifold $M_{y}$, the state of $X$ can be estimated from the state of $Y$ through the cross-mapping procedure:
 
 \begin{equation}\label{eq_cross_mapping}
-\hat{X}_t \mid M_y = \sum_{i=1}^k \left( \omega_{ti} \, X_{ti} \mid M_y \right),
+\hat{X}_t \mid M_y = \sum_{i=1}^k \left( \omega_{ti} \, X_{ti} \mid M_y \right)
 \end{equation}
 
 \noindent where $t$ denotes the time point at which the value of $X$ is to be predicted, $\hat{X}_t$ is the predicted value, $k$ is the number of nearest neighbors in the manifold used for prediction, $t_i$ is the time index of a neighbor, and $X_{ti}$ is the observed value of $X$ at time $t_i$. The corresponding weight $\omega_{ti}$ is defined as
 
 \begin{equation}\label{eq_ccm_weight}
-\omega_{ti} \mid M_y = \frac{ \mathrm{weight} \left( \psi(M_y, t_i),\, \psi(M_y, t) \right) }{ \sum_{i=1}^{k} \mathrm{weight} \left( \psi(M_y, t_i),\, \psi(M_y, t) \right) },
+\omega_{ti} \mid M_y = \frac{ \mathrm{weight} \left( \psi(M_y, t_i),\, \psi(M_y, t) \right) }{ \sum_{i=1}^{k} \mathrm{weight} \left( \psi(M_y, t_i),\, \psi(M_y, t) \right) }
 \end{equation}
 
-\noindent where $\psi(M_y, t_i)$ is the state vector at time $t_i$ in the shadow manifold $M_y$, and $\mathrm{weight}(\cdot,\cdot)$ is a kernel function measuring the similarity between two states, given by
+\noindent where $\psi(M_y, t_i)$ is the state vector at time $t_i$ in the shadow manifold $M_y$, and $\mathrm{weight}(\cdot,\cdot)$ is a weight function based on the distance metric between two state-space vectors, defined as
 
 \begin{equation}\label{eq_ccm_weight_fun}
 \mathrm{weight} \left( \psi(M_y, t_i),\, \psi(M_y, t) \right) =
-\exp \left( - \frac{ \mathrm{dis} \left( \psi(M_y, t_i),\, \psi(M_y, t) \right) }{ \mathrm{dis} \left( \psi(M_y, t_1),\, \psi(M_y, t) \right) } \right).
+\exp \left( - \frac{ \mathrm{dis} \left( \psi(M_y, t_i),\, \psi(M_y, t) \right) }{ \mathrm{dis} \left( \psi(M_y, t_1),\, \psi(M_y, t) \right) } \right)
 \end{equation}
 
 \noindent Here, $\exp$ denotes the exponential function, and $\mathrm{dis}(\cdot,\cdot)$ represents the average absolute distance between two state vectors in $M_y$, defined as
 
 \begin{equation}\label{eq_ccm_distance}
-\mathrm{dis} \left( \psi(M_y, t_i),\, \psi(M_y, t) \right) = \frac{1}{E} \sum_{m=1}^{E} \left| \psi_m(M_y, t_i) - \psi_m(M_y, t) \right|,
+\mathrm{dis} \left( \psi(M_y, t_i),\, \psi(M_y, t) \right) = \frac{1}{E} \sum_{m=1}^{E} \left| \psi_m(M_y, t_i) - \psi_m(M_y, t) \right|
 \end{equation}
 
 \noindent where $E$ is the embedding dimension, and $\psi_m(M_y, t_i)$ denotes the $m$-th coordinate of $\psi(M_y, t_i)$.
@@ -182,17 +182,17 @@ With the reconstructed shadow manifold $M_{y}$, the state of $X$ can be estimate
 The cross-mapping skill $\rho$ is quantified by the Pearson correlation coefficient between the observed and predicted values, with the confidence interval of $\rho$ estimated via the $z$-transformation under the normality assumption:
 
 \begin{equation}\label{eq_ccm_rho}
-\rho = \frac{\mathrm{Cov}\left( X, \hat{X} \mid M_y \right)}{ \sqrt{\mathrm{Var}(X) \, \mathrm{Var}\left( \hat{X} \mid M_y \right) } },y
+\rho = \frac{\mathrm{Cov}\left( X, \hat{X} \mid M_y \right)}{ \sqrt{\mathrm{Var}(X) \, \mathrm{Var}\left( \hat{X} \mid M_y \right) } }
 \end{equation}
 
 \begin{equation}\label{eq_ccm_tstat}
-t = \rho \, \sqrt{\frac{n - 2}{1 - \rho^2}}, 
+t = \rho \, \sqrt{\frac{n - 2}{1 - \rho^2}} 
 \end{equation}
 
 \noindent where $n$ is the number of predicted observations, and
 
 \begin{equation}\label{eq_ccm_zstat}
-z = \frac{1}{2} \ln \left( \frac{1 + \rho}{1 - \rho} \right).
+z = \frac{1}{2} \ln \left( \frac{1 + \rho}{1 - \rho} \right)
 \end{equation}
 
 In CCM, the prediction skill $\rho$ is evaluated across different library sizes $L$, where $L$ is the number of points used to reconstruct the shadow manifold. Causal influence is inferred when $\rho$ exhibits a positive trend with increasing library size $L$ and shows convergence to a stable, statistically significant value as $L$ approaches its maximum. For the causal direction from $Y$ to $X$, the converged cross-mapping skill is expressed as
@@ -204,7 +204,35 @@ In CCM, the prediction skill $\rho$ is evaluated across different library sizes 
 \noindent where $\rho_{x \to y}$ measures the strength of causal influence from $X$ to $Y$ after convergence.
 
 \subsubsection{Partial Cross Mapping (PCM)}
-Partial Cross Mapping (PCM) extends CCM by accounting for potential confounding influences from a third variable $Z$. In many geospatial contexts, apparent causality between $X$ and $Y$ may be driven by shared responses to external drivers. PCM controls for such effects by conditioning the cross mapping on $Z$, either through residualization or partial correlations within the reconstructed state spaces. This enables more accurate identification of direct causal links in multivariate spatiotemporal systems.
+
+Partial cross mapping (PCM) extends the standard CCM framework by accounting for potential indirect causal effects mediated by a third variable. In addition to detecting whether $X$ causally influences $Y$, PCM seeks to distinguish the \emph{direct} effect of $X$ on $Y$ from any indirect influence transmitted through a confounding variable $Z$.
+
+Given three time series $X_{(t)}, Y_{(t)}, Z_{(t)}$, the PCM procedure operates as follows:
+
+First, the shadow manifold $M_y$ of $Y$ is reconstructed, and $\hat{X}$ is obtained from $M_y$ following the standard CCM cross-mapping step in Equation~\eqref{eq_cross_mapping}, with weights defined by Equation~\eqref{eq_ccm_weight}.  
+
+Next, $Y$ is used to predict $Z$ in the same manner:
+
+\begin{equation}\label{eq_pcm_step2}
+\hat{Z}_t \mid M_y = \sum_{i=1}^k \left( \omega_{ti} \, Z_{ti} \mid M_y \right).
+\end{equation}
+
+Then, the predicted $\hat{Z}$ is itself used to estimate $X$ via CCM:
+
+\begin{equation}\label{eq_pcm_step3}
+\hat{X}^{(Z)}_t \mid M_{\hat{Z}} = \sum_{i=1}^k \left( \omega^{(Z)}_{ti} \, X_{ti} \mid M_{\hat{Z}} \right),
+\end{equation}
+
+\noindent where $M_{\hat{Z}}$ denotes the shadow manifold reconstructed from $\hat{Z}$, and $\omega^{(Z)}_{ti}$ is defined analogously to Equation~\eqref{eq_ccm_weight}.
+
+Finally, the causal strength from $X$ to $Y$ is quantified using the \emph{partial correlation} between $X$ and $\hat{X}$ while controlling for $\hat{X}^{(Z)}$:
+
+\begin{equation}\label{eq_pcm_partial_corr}
+\rho_{X \to Y \mid Z} = \frac{ \rho_{X,\, \hat{X}} - \rho_{X,\, \hat{X}^{(Z)}} \rho_{\hat{X},\, \hat{X}^{(Z)}} }
+{\sqrt{\left( 1 - \rho_{X,\, \hat{X}^{(Z)}}^2 \right) \left( 1 - \rho_{\hat{X},\, \hat{X}^{(Z)}}^2 \right) }},
+\end{equation}
+
+\noindent where $\rho_{A,B}$ denotes the Pearson correlation between variables $A$ and $B$. A significant $\rho_{X \to Y \mid Z}$ suggests a direct causal influence from $X$ to $Y$ after removing the indirect path through $Z$.
 
 \subsubsection{Cross Mapping Cardinality (CMC)}
 Cross Mapping Cardinality (CMC) evaluates causality based on the structural similarity between the reconstructed attractor manifolds of $X$ and $Y$. It quantifies how frequently nearest neighbors in one manifold correspond to neighbors in the other, under the assumption that causally linked variables share geometric properties in state space. Unlike CCM, which focuses on predictive performance, CMC emphasizes topological consistency, offering an alternative metric for assessing the strength of dynamic coupling in spatiotemporal processes.
