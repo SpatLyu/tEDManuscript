@@ -95,7 +95,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-Urban systems are complex, nonlinear, and adaptive, with interactions spanning multiple spatial and temporal scales. Traditional correlation-based and regression approaches often fail to capture their dynamic causal structures, limiting the understanding of underlying mechanisms. Causal inference offers a more powerful framework, encompassing both causal discovery and causal effect estimation. While causal effect estimation has been widely applied in urban studies, causal discovery remains underexplored. Among available approaches, Empirical Dynamic Modeling (EDM) stands out for its ability to reconstruct system dynamics from time series without prespecified models, making it well suited to the temporally evolving, multi-scale, and interdependent nature of urban processes. However, its application in urban contexts has been limited. To address this gap, we present tEDM, an open-source R package that extends EDM for heterogeneous, high-frequency, multivariate, and multi-spatial urban datasets, enabling more nuanced causal discovery and offering both methodological and practical advancements for urban science.
+We present tEDM, an R package for discovering causal relationships in urban time series data using temporal empirical dynamic modeling (EDM). This paper introduces the theoretical basis, software structure, and representative applications of tEDM, and highlights its advantages in detecting dynamic and nonlinear causal relationships in complex urban systems.
 \end{abstract}
 
 \begin{keyword}
@@ -205,21 +205,21 @@ In CCM, the prediction skill $\rho$ is evaluated across different library sizes 
 
 \subsubsection{Partial Cross Mapping (PCM)}
 
-Partial cross mapping (PCM) extends the standard CCM framework by accounting for potential indirect causal effects mediated by a third variable. In addition to detecting whether $X$ causally influences $Y$, PCM seeks to distinguish the \emph{direct} effect of $X$ on $Y$ from any indirect influence transmitted through a confounding variable $Z$.
+Partial cross mapping (PCM) extends the standard CCM framework by accounting for potential indirect causal effects mediated by a third variable. In addition to detecting whether $X$ causally influences $Y$, PCM seeks to distinguish the \emph{direct} effect of $X$ on $Y$ from any indirect influence transmitted through a confounding variable $Z$ \citep{leng2020pcm}.
 
 Given three time series $X_{(t)}, Y_{(t)}, Z_{(t)}$, the PCM procedure operates as follows:
 
 First, the shadow manifold $M_y$ of $Y$ is reconstructed, and $\hat{X}$ is obtained from $M_y$ following the standard CCM cross-mapping step in Equation~\eqref{eq_cross_mapping}, with weights defined by Equation~\eqref{eq_ccm_weight}.  
 
-Next, $Y$ is used to predict $Z$ in the same manner:
+Next, the shadow manifold $M_y$ is used to predict $Z$ in the same manner:
 
-\begin{equation}\label{eq_pcm_step2}
+\begin{equation}\label{eq_pcm_zhat}
 \hat{Z}_t \mid M_y = \sum_{i=1}^k \left( \omega_{ti} \, Z_{ti} \mid M_y \right).
 \end{equation}
 
 Then, the predicted $\hat{Z}$ is itself used to estimate $X$ via CCM:
 
-\begin{equation}\label{eq_pcm_step3}
+\begin{equation}\label{eq_pcm_x_zhat}
 \hat{X}^{(Z)}_t \mid M_{\hat{Z}} = \sum_{i=1}^k \left( \omega^{(Z)}_{ti} \, X_{ti} \mid M_{\hat{Z}} \right),
 \end{equation}
 
@@ -233,6 +233,29 @@ Finally, the causal strength from $X$ to $Y$ is quantified using the \emph{parti
 \end{equation}
 
 \noindent where $\rho_{A,B}$ denotes the Pearson correlation between variables $A$ and $B$. A significant $\rho_{X \to Y \mid Z}$ suggests a direct causal influence from $X$ to $Y$ after removing the indirect path through $Z$.
+
+The original PCM formulation can handle more than one potential confounding variable by sequentially considering cumulative indirect effects. For example, when assessing the causal influence of $X$ on $Y$ with two potential confounders $Z_1$ and $Z_2$, one can first predict $Z_1$ from $M_y$, then predict $Z_2$ from $M_{\hat{Z}_1}$, and finally estimate $\hat{X}^{(Z_1,Z_2)}$ from $M_{\hat{Z}_2}$. This procedure captures the causal influence of $X$ on $Y$ transmitted through $Z_1$ and $Z_2$ sequentially. Similarly, one can reverse the order—predict $Z_2$ first, then $Z_1$—to account for the alternative indirect pathway.
+
+In \textit{tEDM}, we support this sequential strategy, while also offering an alternative approach analogous to partial and semi-partial correlation analysis. When considering multiple confounders $(Z_1, Z_2, \dots, Z_m)$, we first reconstruct $M_y$ and predict each $Z_i$ individually:
+
+\begin{equation}\label{eq_pcm_multi_zhat}
+\hat{Z}_i \mid M_y = \sum_{j=1}^k \left( \omega_{tj} \, Z_{ij} \mid M_y \right), \quad i=1,2,\dots,m,
+\end{equation}
+
+\noindent then use each $\hat{Z}_i$ to predict $X$:
+
+\begin{equation}\label{eq_pcm_multi_xhat}
+\hat{X}^{(Z_i)}_t \mid M_{\hat{Z}_i} = \sum_{j=1}^k \left( \omega^{(Z_i)}_{tj} \, X_{tj} \mid M_{\hat{Z}_i} \right),
+\end{equation}
+
+\noindent and finally compute the partial correlation between $X$ and $\hat{X}$ while controlling for all $\hat{X}^{(Z_i)}$:
+
+\begin{equation}\label{eq_pcm_multi_partial_corr}
+\rho_{X \to Y \mid Z_1, \dots, Z_m} = \text{PartialCorr}\Big(X,\, \hat{X} \mid \hat{X}^{(Z_1)}, \dots, \hat{X}^{(Z_m)} \Big),
+\end{equation}
+
+\noindent where $\text{PartialCorr}(\cdot)$ denotes the standard multivariate partial correlation. This approach provides a complementary perspective on direct causal effects in the presence of multiple confounders, analogous to extending correlation and partial correlation analyses to high-dimensional settings.
+
 
 \subsubsection{Cross Mapping Cardinality (CMC)}
 Cross Mapping Cardinality (CMC) evaluates causality based on the structural similarity between the reconstructed attractor manifolds of $X$ and $Y$. It quantifies how frequently nearest neighbors in one manifold correspond to neighbors in the other, under the assumption that causally linked variables share geometric properties in state space. Unlike CCM, which focuses on predictive performance, CMC emphasizes topological consistency, offering an alternative metric for assessing the strength of dynamic coupling in spatiotemporal processes.
