@@ -141,7 +141,7 @@ Beyond methodological refinements, EDM has evolved from an approach limited to t
 
 \subsubsection{Convergent Cross Mapping (CCM)}
 
-Convergent cross mapping (CCM) tests whether historical states of a response variable $Y$ can reliably estimate the states of a potential driver $X$, based on the assumption that if $X$ causally influences $Y$, then information about $X$ is encoded in the dynamics of $Y$ \citep{sugihara2012ccm}. Let $Y_{(t)}$ and $X_{(t)}$ be the two time series variable, the shadow manifolds can be constructed using:
+Convergent cross mapping tests whether historical states of a response variable $Y$ can reliably estimate the states of a potential driver $X$, based on the assumption that if $X$ causally influences $Y$, then information about $X$ is encoded in the dynamics of $Y$ \citep{sugihara2012ccm}. Let $Y_{(t)}$ and $X_{(t)}$ be the two time series variable, the shadow manifolds can be constructed using:
 
 \begin{equation}\label{eq_ts_embedding}
 \begin{split}
@@ -205,21 +205,21 @@ In CCM, the prediction skill $\rho$ is evaluated across different library sizes 
 
 \subsubsection{Partial Cross Mapping (PCM)}
 
-Partial cross mapping (PCM) extends the standard CCM framework by accounting for potential indirect causal effects mediated by a third variable. In addition to detecting whether $X$ causally influences $Y$, PCM seeks to distinguish the \emph{direct} effect of $X$ on $Y$ from any indirect influence transmitted through a confounding variable $Z$.
+Partial cross mapping extends the standard CCM framework by accounting for potential indirect causal effects mediated by a third variable. In addition to detecting whether $X$ causally influences $Y$, PCM seeks to distinguish the \emph{direct} effect of $X$ on $Y$ from any indirect influence transmitted through a confounding variable $Z$ \citep{leng2020pcm}.
 
 Given three time series $X_{(t)}, Y_{(t)}, Z_{(t)}$, the PCM procedure operates as follows:
 
 First, the shadow manifold $M_y$ of $Y$ is reconstructed, and $\hat{X}$ is obtained from $M_y$ following the standard CCM cross-mapping step in Equation~\eqref{eq_cross_mapping}, with weights defined by Equation~\eqref{eq_ccm_weight}.  
 
-Next, $Y$ is used to predict $Z$ in the same manner:
+Next, the shadow manifold $M_y$ is used to predict $Z$ in the same manner:
 
-\begin{equation}\label{eq_pcm_step2}
+\begin{equation}\label{eq_pcm_zhat}
 \hat{Z}_t \mid M_y = \sum_{i=1}^k \left( \omega_{ti} \, Z_{ti} \mid M_y \right).
 \end{equation}
 
 Then, the predicted $\hat{Z}$ is itself used to estimate $X$ via CCM:
 
-\begin{equation}\label{eq_pcm_step3}
+\begin{equation}\label{eq_pcm_x_zhat}
 \hat{X}^{(Z)}_t \mid M_{\hat{Z}} = \sum_{i=1}^k \left( \omega^{(Z)}_{ti} \, X_{ti} \mid M_{\hat{Z}} \right),
 \end{equation}
 
@@ -234,18 +234,77 @@ Finally, the causal strength from $X$ to $Y$ is quantified using the \emph{parti
 
 \noindent where $\rho_{A,B}$ denotes the Pearson correlation between variables $A$ and $B$. A significant $\rho_{X \to Y \mid Z}$ suggests a direct causal influence from $X$ to $Y$ after removing the indirect path through $Z$.
 
+The original PCM formulation can handle more than one potential confounding variable by sequentially considering cumulative indirect effects. For example, when assessing the causal influence of $X$ on $Y$ with two potential confounders $Z_1$ and $Z_2$, one can first predict $Z_1$ from $M_y$, then predict $Z_2$ from $M_{\hat{Z}_1}$, and finally estimate $\hat{X}^{(Z_1,Z_2)}$ from $M_{\hat{Z}_2}$. This procedure captures the causal influence of $X$ on $Y$ transmitted through $Z_1$ and $Z_2$ sequentially. Similarly, one can reverse the order—predict $Z_2$ first, then $Z_1$—to account for the alternative indirect pathway.
+
+In \textit{tEDM}, we support this sequential strategy, while also offering an alternative approach analogous to partial and semi-partial correlation analysis. When considering multiple confounders $(Z_1, Z_2, \dots, Z_m)$, we first reconstruct $M_y$ and predict each $Z_i$ individually:
+
+\begin{equation}\label{eq_pcm_multi_zhat}
+\hat{Z}_i \mid M_y = \sum_{j=1}^k \left( \omega_{tj} \, Z_{ij} \mid M_y \right), \quad i=1,2,\dots,m,
+\end{equation}
+
+\noindent then use each $\hat{Z}_i$ to predict $X$:
+
+\begin{equation}\label{eq_pcm_multi_xhat}
+\hat{X}^{(Z_i)}_t \mid M_{\hat{Z}_i} = \sum_{j=1}^k \left( \omega^{(Z_i)}_{tj} \, X_{tj} \mid M_{\hat{Z}_i} \right),
+\end{equation}
+
+\noindent and finally compute the partial correlation between $X$ and $\hat{X}$ while controlling for all $\hat{X}^{(Z_i)}$:
+
+\begin{equation}\label{eq_pcm_multi_partial_corr}
+\rho_{X \to Y \mid Z_1, \dots, Z_m} = \text{PartialCorr}\Big(X,\, \hat{X} \mid \hat{X}^{(Z_1)}, \dots, \hat{X}^{(Z_m)} \Big),
+\end{equation}
+
+\noindent where $\text{PartialCorr}(\cdot)$ denotes the standard multivariate partial correlation. This approach provides a complementary perspective on direct causal effects in the presence of multiple confounders, analogous to extending correlation and partial correlation analyses to high-dimensional settings.
+
 \subsubsection{Cross Mapping Cardinality (CMC)}
-Cross Mapping Cardinality (CMC) evaluates causality based on the structural similarity between the reconstructed attractor manifolds of $X$ and $Y$. It quantifies how frequently nearest neighbors in one manifold correspond to neighbors in the other, under the assumption that causally linked variables share geometric properties in state space. Unlike CCM, which focuses on predictive performance, CMC emphasizes topological consistency, offering an alternative metric for assessing the strength of dynamic coupling in spatiotemporal processes.
+
+Cross mapping cardinality evaluates causality based on the structural similarity between the reconstructed attractor manifolds of $X$ and $Y$. It quantifies how frequently nearest neighbors in one manifold correspond to neighbors in the other, under the assumption that causally linked variables share geometric properties in state space \citep{tao2023cmc}. Unlike CCM, which focuses on predictive performance, CMC emphasizes topological consistency, offering an alternative metric for assessing the strength of dynamic coupling in spatiotemporal processes. Given two time series $X_{(t)}$ and $Y_{(t)}$, we first reconstruct their shadow manifolds $M_x$ and $M_y$. For each time point $i$, the intersection cardinality is defined as the number of shared neighbors between the direct neighborhood of $Y$ and the neighborhood inferred via cross mapping from $X$:
+
+\begin{equation}\label{eq_cmc_ic_ik_delong}
+IC_{i,k} = \left| M_y^{nn}(i,k) \cap M_y^{nn}\big(M_x^{nn}(i,k),k\big) \right|,
+\end{equation}
+
+\noindent where $M_x^{nn}(i,k)$ and $M_y^{nn}(i,k)$ denote the sets of the $k$ nearest neighbors of the $i$-th time point in $M_x$ and $M_y$, respectively. Averaging over all time points yields the global IC value:
+
+\begin{equation}\label{eq_cmc_ic_k_delong}
+IC_k = \frac{1}{T} \sum_{i=1}^T IC_{i,k},
+\end{equation}
+
+\noindent and varying $k$ from $1$ to $T$ produces the IC curve:
+
+\begin{equation}\label{eq_cmc_ic_curve_delong}
+IC_{\text{curve}} = \{ IC_k \mid k = 1, 2, \dots, T \}.
+\end{equation}
+
+The causal strength (CS) from $Y$ to $X$ is estimated using the DeLong placement method, a non-parametric approach for calculating the area under the IC curve (AUC), along with its variance and confidence interval \citep{delong1988,sun2014delongfi}. Different from the original CMC, which directly compares IC curves, here we adopt the DeLong placement method to provide a statistically rigorous estimate of the AUC. Let $\{X_i\}_{i=1}^{m}$ denote the IC values under the alternative hypothesis $H_1$ and $\{Y_j\}_{j=1}^{n}$ denote the IC values under the null hypothesis $H_0$. The estimated AUC is:
+
+\begin{equation}
+\hat{\theta} = \frac{1}{mn} \sum_{i=1}^{m} \sum_{j=1}^{n} \mathbb{I}(X_i > Y_j) + \frac{1}{2} \mathbb{I}(X_i = Y_j),
+\end{equation}
+
+\noindent where $\mathbb{I}(\cdot)$ is the indicator function. The variance of the estimated AUC is
+
+\begin{equation}
+\hat{\sigma}^2 = \frac{1}{m} \sum_{i=1}^{m} (X_i - \hat{\theta})^2 + \frac{1}{n} \sum_{j=1}^{n} (Y_j - (1 - \hat{\theta}))^2,
+\end{equation}
+
+\noindent and the confidence interval is given by
+
+\begin{equation}
+\text{CI} = \left[ \hat{\theta} - z_{\alpha/2} \hat{\sigma}, \hat{\theta} + z_{\alpha/2} \hat{\sigma} \right].
+\end{equation}
+
+Finally, the statistical significance of the causal strength is assessed via a Z-test:
+
+\begin{equation}
+Z = \frac{\hat{\theta} - 0.5}{\hat{\sigma}}, \quad p = 2 \Phi(-|Z|),
+\end{equation}
+
+\noindent where $\Phi(\cdot)$ is the standard normal cumulative distribution function. A significant p-value indicates that the IC curve under $H_1$ is significantly different from the null expectation, supporting a causal influence from $Y$ to $X$.
 
 \subsection{Open-source toolkits for time series causal discovery}
 
 Causal discovery in time series is a growing area of interest in fields such as econometrics, neuroscience, climate science, and systems biology \citep{runge2019ictsess,runge2023cits}. Numerous open-source toolkits have been developed in both \textit{Python} and \textit{R} to facilitate causal discovery from observational temporal data. These toolkits implement a diverse range of methodologies, including traditional statistical tests such as Granger causality, constraint-based algorithms such as the PC algorithm, score-based and hybrid learning approaches, and more recent techniques derived from empirical dynamic modeling (EDM). Table~\ref{tab_toolkits} summarizes a selection of representative toolkits across these categories. Each package is described by its programming language, core methodological focus, and whether it supports direct application to time series data.
-
-Among these, traditional statistical methods are exemplified by the \textit{lmtest} package, which provides implementations of Granger causality tests based on linear autoregressive models \citep{lmtest}. Constraint-based methods are implemented in \textit{pcalg}, \textit{causal-learn}, and \textit{cdt}, which allow for causal structure learning through conditional independence testing, though they often require additional preprocessing to handle temporal dependencies \citep{pcalg,causal-learn,cdt}. Score-based and hybrid approaches, such as those supported in \textit{bnlearn} and \textit{cdt}, combine structure search with statistical criteria to learn Bayesian networks, but are not inherently designed for time-lagged causality \citep{bnlearn,cdt}. Linear non-Gaussian models, as implemented in \textit{lingam}, assume non-Gaussian noise to identify causal directions and are directly applicable to time series under appropriate conditions \citep{lingam}.
-
-Methods designed specifically for causal discovery in time series include \textit{tigramite}, which employs PCMCI and its variants to robustly detect time-lagged causal relations under high-dimensional and autocorrelated conditions \citep{runge2019pcmci,runge2023cits}. In the context of nonlinear dynamical systems, EDM-based toolkits such as \textit{rEDM}, \textit{pyEDM}, and \textit{crossmapy} implement techniques like convergent cross mapping to infer causality from state-space reconstruction \citep{sugihara2012ccm, tao2023cmc}. Packages such as \textit{multispatialccm} and \textit{fastEDM} further extend EDM capabilities by enabling causal inference on short time series with spatial replication, where spatial replicates are leveraged as surrogates for temporal variation, thereby allowing the application of convergent cross mapping even when the available time series data are too short for traditional EDM approaches.\citep{clark2015multispatialccm,fastEDM}.
-
-To address remaining challenges in flexibility, scalability, and multivariate modeling within the empirical dynamic modeling framework, this work introduces \textit{tEDM}, a novel R package developed for causal discovery in urban time series data. Urban systems often contain short temporal sequences accompanied by multiple spatially replicated observations, along with substantial heterogeneity across spatial locations \citep{gan2025urban_transfer_entropy,mao2024urban_traffic_networks}. \textit{tEDM} extends and refines core methods such as convergent cross mapping, partial cross mapping, and cross mapping cardinality in order to better accommodate these characteristics. Through carefully designed temporal embedding strategies and efficient implementations for large-scale data, \textit{tEDM} enables causal discovery in complex and high dimensional spatiotemporal systems, and serves as a comprehensive and performant extension of existing empirical dynamic modeling toolkits.
 
 \begin{table}[h!]
 \centering
@@ -273,6 +332,12 @@ To address remaining challenges in flexibility, scalability, and multivariate mo
 \hline
 \end{tabular}
 \end{table}
+
+Among these, traditional statistical methods are exemplified by the \textit{lmtest} package, which provides implementations of Granger causality tests based on linear autoregressive models \citep{lmtest}. Constraint-based methods are implemented in \textit{pcalg}, \textit{causal-learn}, and \textit{cdt}, which allow for causal structure learning through conditional independence testing, though they often require additional preprocessing to handle temporal dependencies \citep{pcalg,causal-learn,cdt}. Score-based and hybrid approaches, such as those supported in \textit{bnlearn} and \textit{cdt}, combine structure search with statistical criteria to learn Bayesian networks, but are not inherently designed for time-lagged causality \citep{bnlearn,cdt}. Linear non-Gaussian models, as implemented in \textit{lingam}, assume non-Gaussian noise to identify causal directions and are directly applicable to time series under appropriate conditions \citep{lingam}.
+
+Methods designed specifically for causal discovery in time series include \textit{tigramite}, which employs PCMCI and its variants to robustly detect time-lagged causal relations under high-dimensional and autocorrelated conditions \citep{runge2019pcmci,runge2023cits}. In the context of nonlinear dynamical systems, EDM-based toolkits such as \textit{rEDM}, \textit{pyEDM}, and \textit{crossmapy} implement techniques like convergent cross mapping to infer causality from state-space reconstruction \citep{sugihara2012ccm, tao2023cmc}. Packages such as \textit{multispatialccm} and \textit{fastEDM} further extend EDM capabilities by enabling causal inference on short time series with spatial replication, where spatial replicates are leveraged as surrogates for temporal variation, thereby allowing the application of convergent cross mapping even when the available time series data are too short for traditional EDM approaches.\citep{clark2015multispatialccm,fastEDM}.
+
+To address remaining challenges in flexibility, scalability, and multivariate modeling within the empirical dynamic modeling framework, this work introduces \textit{tEDM}, a novel R package developed for causal discovery in urban time series data. Urban systems often contain short temporal sequences accompanied by multiple spatially replicated observations, along with substantial heterogeneity across spatial locations \citep{gan2025urban_transfer_entropy,mao2024urban_traffic_networks}. \textit{tEDM} extends and refines core methods such as convergent cross mapping, partial cross mapping, and cross mapping cardinality in order to better accommodate these characteristics. Through carefully designed temporal embedding strategies and efficient implementations for large-scale data, \textit{tEDM} enables causal discovery in complex and high dimensional spatiotemporal systems, and serves as a comprehensive and performant extension of existing empirical dynamic modeling toolkits.
 
 \section{The tEDM Package}
 
