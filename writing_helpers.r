@@ -1,5 +1,3 @@
-setwd("d:/publication/tEDManuscript/")
-
 # figures: pdf -> jpg
 .pdf2jpg = \(pdfname,jpgname,dpi = 300){
   pdftools::pdf_convert(pdf = pdfname, filenames = jpgname, dpi = dpi)
