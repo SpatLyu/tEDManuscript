@@ -366,12 +366,16 @@ To demonstrate the practical utility of the \textit{tEDM} package, we present th
 
 \subsection{Air pollution and cardiovascular health in hong kong}
 
+The first case study focuses on the causal relationships between air pollutants and cardiovascular disease (CVD) incidence in Hong Kong. Figure~\ref{fig_cvds_hk}a presents the time series of the variables, including daily counts of CVD hospital admissions and the concentrations of SO$_2$, NO$_2$, O$_3$, and respirable suspended particulates (RSP). The dynamics exhibit both seasonal fluctuations and short-term variations, reflecting the complex interplay between environmental exposures and health outcomes. To quantify these interactions, we applied the partial cross mapping method implemented in the \textit{tEDM} package. Figure~\ref{fig_cvds_hk}b reports the estimated causal strengths among variables, where higher $\rho$ values indicate stronger causal associations. These results reveal multiple significant causal links from air pollutants to CVD, as well as interdependencies among the pollutants themselves. The detailed convergence of cross mapping correlations used to support these causal links is provided in the Appendix (Figure~\ref{fig_appendix}).
+
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.95\textwidth]{./figure/figure3.jpg}
 \caption{Causal relationship between air pollutants and cardiovascular disease incidence in Hong Kong. \textbf{a} Time series plots of the relevant variables. \textbf{b} Causal strength among variables detected via partial cross mapping. \textbf{c} Inferred causal pathways from air pollutants to cardiovascular disease incidence, based on the partial cross mapping results (see Figure~\ref{fig_appendix}).}
 \label{fig_cvds_hk}
 \end{figure}
+
+Building on these statistical results, Figure~\ref{fig_cvds_hk}c summarizes the inferred causal pathways linking air pollutants to cardiovascular health outcomes. The analysis suggests that SO$_2$ plays a central role, exerting both direct and indirect causal effects through interactions with O$_3$, NO$_2$, and RSP, which subsequently influence CVD incidence. This causal network highlights the interconnected nature of air pollution effects and provides an interpretable framework for understanding how multiple pollutants jointly contribute to cardiovascular health risks. Overall, this case study demonstrates how \textit{tEDM} can reconstruct multivariate causal networks from observational time series and generate insights into the mechanisms linking environmental stressors and public health outcomes.
 
 \subsection{US county carbon emissions and temperature dynamics}
 
