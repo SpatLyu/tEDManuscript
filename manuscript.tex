@@ -408,9 +408,9 @@ The third case study investigates the dynamics of COVID-19 transmission among Ja
 
 \section{Conclusion}
 
-1. Summary of contributions
+In this study, we have introduced \textit{tEDM}, an open-source \textit{R} package designed to extend empirical dynamic modeling (EDM) for temporal causal discovery in complex urban systems. Through three representative case studies—spanning air pollution and cardiovascular health in Hong Kong, county-level carbon emissions and temperature dynamics in the United States, and the spread of COVID-19 across Japanese prefectures—we demonstrated the versatility and practical utility of \textit{tEDM} in uncovering dynamic causal linkages from multivariate and spatially replicated time series. Our results highlight the advantages of EDM-based causal inference in capturing nonlinear interactions, feedback mechanisms, and temporally evolving dependencies that are often overlooked by traditional correlation-based or quasi-experimental approaches. Collectively, \textit{tEDM} provides both methodological innovation and actionable insights, offering a robust framework for advancing causal understanding in urban science and related disciplines.
 
-2. Limitations and next steps
+Despite its strengths, several limitations warrant consideration. First, while \textit{tEDM} excels in identifying temporal causal relationships, its performance may be constrained by short or irregular time series, measurement noise, and unobserved confounders. Second, the current implementation primarily focuses on observational time series and does not incorporate interventional or experimental data, which could further strengthen causal inference. Third, while our case studies cover a range of urban contexts, broader validation across diverse cities, sectors, and spatiotemporal scales is needed. Future work could address these limitations by integrating hybrid approaches that combine EDM with other causal discovery frameworks, enhancing robustness to data sparsity and noise, and extending the package to accommodate intervention-based or policy-driven datasets. By doing so, \textit{tEDM} has the potential to become a cornerstone tool for dynamic causal analysis in increasingly complex and interconnected urban systems.
 
 \section*{Data Availability Statement}
 Data used in the case studies are publicly available at [link].
