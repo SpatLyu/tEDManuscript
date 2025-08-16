@@ -81,17 +81,22 @@
 % \author[d]{Yongze Song}
 % %\ead{yongze.song@curtin.edu.au}
 
-% \author[f]{Shaoqing Dai}
+% \author[d]{Xiao Li}
+% %\ead{xiao-shaw.li@polyu.edu.hk}
+
+% \author[g]{Shaoqing Dai}
 % \ead{shaoqing.dai@whu.edu.cn}
 
 % \author[a]{Wufan Zhao\corref{cor1}}
 % \cortext[cor1]{Corresponding author: Wufan Zhao, wufanzhao@hkust-gz.edu.cn}
 
 % \address[a]{Urban Governance and Design Thrust, Society Hub, The Hong Kong University of Science and Technology(Guangzhou), Guangzhou, China}
-% \address[b]{Department of Building and Real Estate, The Hong Kong Polytechnic University, Hong Kong, China}
+% \address[b]{Department of Building and Real Estate, The Hong Kong Polytechnic University, Hong Kong SAR, China}
 % \address[c]{The Hong Kong Polytechnic University, Shenzhen Research Institute, Shenzhen, China}
 % \address[d]{School of Design and the Built Environment, Curtin University, Perth, Australia}
-% \address[e]{School of Resource and Environmental Sciences, Wuhan University, Wuhan, China}
+% \address[e]{Department of Land Surveying and Geo-Informatics, The Hong Kong Polytechnic University, Hong Kong SAR, China}
+% \address[f]{Transport Studies Unit, School of Geography and the Environment, University of Oxford, UK}
+% \address[g]{School of Resource and Environmental Sciences, Wuhan University, Wuhan, China}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
@@ -362,7 +367,11 @@ After parameter selection, \textit{tEDM} provides several algorithms for causal 
 
 \section{Case Studies}
 
+To demonstrate the practical utility of the \textit{tEDM} package, we present three representative case studies drawn from prior work in urban and environmental research, each highlighting different characteristics of urban time series data and corresponding causal discovery tasks. The first case study investigates the relationship between air pollution and cardiovascular health in Hong Kong \citep{leng2020pcm}, illustrating how \textit{tEDM} can be employed to analyze multivariate time series and infer the underlying causal interaction network between environmental exposures and health outcomes. The second case study examines county-level carbon emissions and temperature dynamics in the United States \citep{gan2025urban_transfer_entropy}, showcasing the capability of \textit{tEDM} to uncover causal dependencies within spatially replicated multivariate time series, a type of data structure frequently encountered in large-scale urban and climate research. The third case study explores the spread of COVID-19 across Japanese prefectures \citep{tao2023cmc}, demonstrating how \textit{tEDM} can reconstruct causal structures from spatially replicated univariate time series, where repeated temporal observations across locations(spatial units) enable causal inference even in single-variable settings. Collectively, these examples underscore both the methodological versatility and the practical relevance of \textit{tEDM}, emphasizing its potential to advance causal discovery in urban time series research that often involves complex interdependencies across variables, scales, and spatial units.
+
 \subsection{Air pollution and cardiovascular health in hong kong}
+
+The first case study focuses on the causal relationships between air pollutants and cardiovascular disease (CVD) incidence in Hong Kong. Figure~\ref{fig_cvds_hk}a presents the time series of the variables, including daily counts of CVD hospital admissions and the concentrations of SO$_2$, NO$_2$, O$_3$, and respirable suspended particulates (RSP). The dynamics exhibit both seasonal fluctuations and short-term variations, reflecting the complex interplay between environmental exposures and health outcomes. To quantify these interactions, we applied the partial cross mapping method implemented in the \textit{tEDM} package. Figure~\ref{fig_cvds_hk}b reports the estimated causal strengths among variables, where higher $\rho$ values indicate stronger causal associations. These results reveal multiple significant causal links from air pollutants to CVD, as well as interdependencies among the pollutants themselves. The detailed convergence of cross mapping correlations used to support these causal links is provided in the Appendix (Figure~\ref{fig_appendix}).
 
 \begin{figure}[h!]
 \centering
@@ -371,7 +380,11 @@ After parameter selection, \textit{tEDM} provides several algorithms for causal 
 \label{fig_cvds_hk}
 \end{figure}
 
+Building on these statistical results, Figure~\ref{fig_cvds_hk}c summarizes the inferred causal pathways linking air pollutants to cardiovascular health outcomes. The analysis suggests that SO$_2$ plays a central role, exerting both direct and indirect causal effects through interactions with O$_3$, NO$_2$, and RSP, which subsequently influence CVD incidence. This causal network highlights the interconnected nature of air pollution effects and provides an interpretable framework for understanding how multiple pollutants jointly contribute to cardiovascular health risks. Overall, this case study demonstrates how \textit{tEDM} can reconstruct multivariate causal networks from observational time series and generate insights into the mechanisms linking environmental stressors and public health outcomes.
+
 \subsection{US county carbon emissions and temperature dynamics}
+
+Figure \ref{fig_carbon_us} presents the causal strength between carbon emissions and temperature changes across US counties, as investigated using the tEDM package. A pronounced asymmetry in the directional causal influence is evident. The causal strength from carbon emissions to temperature (carbon $\rightarrow$ tem) is consistently and significantly higher than the causal strength from temperature to carbon emissions (tem $\rightarrow$ carbon). Specifically, the median causal strength for the 'carbon $\rightarrow$ tem' pathway is approximately 0.18 (Interquartile Range, IQR: 0.15--0.21), indicating a robust influence. In contrast, the 'tem $\rightarrow$ carbon' pathway exhibits a much weaker causal strength, with a median of about 0.065 (IQR: 0.06--0.07), suggesting a considerably less prominent reciprocal effect.
 
 \begin{figure}[h!]
 \centering
@@ -380,7 +393,11 @@ After parameter selection, \textit{tEDM} provides several algorithms for causal 
 \label{fig_carbon_us}
 \end{figure}
 
+This clear disparity in causal strength suggests that anthropogenic carbon emissions exert a dominant and direct influence on temperature variations across US counties, whereas the reciprocal influence of temperature on carbon emissions is comparatively minimal. The broader distribution of causal strengths observed for the 'carbon $\rightarrow$ tem' pathway (spanning from approximately 0.08 to 0.29, with outliers in the 'tem $\rightarrow$ carbon' pathway near 0.05 and slightly above 0.09) could reflect heterogeneous responses across different counties or variations in local sensitivities. While complex feedback mechanisms undoubtedly exist within Earth's climate system, these empirical findings underscore the predominant role of carbon emissions as a primary driver of temperature dynamics, aligning with established understanding of human-induced climate change. This analysis provides quantitative support for the unidirectional impact in this specific context, derived from high-dimensional time series data.
+
 \subsection{COVID-19 spread across japanese prefectures}
+
+The third case study investigates the dynamics of COVID-19 transmission among Japanese prefectures during the pandemic, utilizing convergent cross mapping to reconstruct the influence of the Tokyo outbreak. As illustrated in Figure~\ref{fig_covid_jp}, we identified prefectures with a causal strength greater than 0.9, indicating a robust transmission link to Tokyo. This high causal strength underscores the significant role that Tokyo played in influencing the spread of COVID-19 across neighboring regions, highlighting the interconnectedness of prefectural dynamics during the pandemic. Furthermore, the analysis reveals a complex network of interactions among prefectures, where the flow of infection is not only directed from Tokyo but also reciprocally influences surrounding areas. This finding emphasizes the necessity for coordinated public health strategies across prefectures to effectively manage and mitigate the spread of infectious diseases. The results contribute to a deeper understanding of regional transmission dynamics and inform future preparedness efforts in the face of similar public health crises.
 
 \begin{figure}[h!]
 \centering
