@@ -75,17 +75,23 @@
 % \author[a,b,c]{Wenbo Lv}
 % \ead{wenbolyu@hkust-gz.edu.cn}
 
+% \author[b]{Yangyang Lei}
+% \ead{yangyang.lei@stu.hit.edu.cn}
+
 % \author[b]{Wen Yi}
 % \ead{wen.yi@polyu.edu.hk}
 
-% \author[d]{Yongze Song}
+% \author[e]{Yongze Song}
 % %\ead{yongze.song@curtin.edu.au}
 
-% \author[d]{Xiao Li}
+% \author[f,g]{Xiao Li}
 % %\ead{xiao-shaw.li@polyu.edu.hk}
 
-% \author[g]{Shaoqing Dai}
+% \author[h]{Shaoqing Dai}
 % \ead{shaoqing.dai@whu.edu.cn}
+
+% \author[i]{Yiming Qin}
+% \ead{ymqin@eitech.edu.cn}
 
 % \author[a]{Wufan Zhao\corref{cor1}}
 % \cortext[cor1]{Corresponding author: Wufan Zhao, wufanzhao@hkust-gz.edu.cn}
@@ -93,10 +99,12 @@
 % \address[a]{Urban Governance and Design Thrust, Society Hub, The Hong Kong University of Science and Technology(Guangzhou), Guangzhou, China}
 % \address[b]{Department of Building and Real Estate, The Hong Kong Polytechnic University, Hong Kong SAR, China}
 % \address[c]{The Hong Kong Polytechnic University, Shenzhen Research Institute, Shenzhen, China}
-% \address[d]{School of Design and the Built Environment, Curtin University, Perth, Australia}
-% \address[e]{Department of Land Surveying and Geo-Informatics, The Hong Kong Polytechnic University, Hong Kong SAR, China}
-% \address[f]{Transport Studies Unit, School of Geography and the Environment, University of Oxford, UK}
-% \address[g]{School of Resource and Environmental Sciences, Wuhan University, Wuhan, China}
+% \address[d]{School of Architecture and Design, Harbin Institute of Technology, Harbin, China}
+% \address[e]{School of Design and the Built Environment, Curtin University, Perth, Australia}
+% \address[f]{Department of Land Surveying and Geo-Informatics, The Hong Kong Polytechnic University, Hong Kong SAR, China}
+% \address[g]{Transport Studies Unit, School of Geography and the Environment, University of Oxford, UK}
+% \address[h]{School of Resource and Environmental Sciences, Wuhan University, Wuhan, China}
+% \address[i]{School of the Environment and Sustainable Engineering, Eastern Institute of Technology, Ningbo, China}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
@@ -408,7 +416,7 @@ The third case study investigates the dynamics of COVID-19 transmission among Ja
 
 \section{Conclusion}
 
-In this study, we have introduced \textit{tEDM}, an open-source \textit{R} package designed to extend empirical dynamic modeling (EDM) for temporal causal discovery in complex urban systems. Through three representative case studies, which investigate the relationship between air pollution and cardiovascular health in Hong Kong, the dynamics between county-level carbon emissions and temperature in the United States, and the spread of COVID-19 across Japanese prefectures, we demonstrated the versatility and practical utility of \textit{tEDM} in uncovering dynamic causal linkages from multivariate and spatially replicated time series. Our results highlight the advantages of EDM-based causal inference in capturing nonlinear interactions, feedback mechanisms, and temporally evolving dependencies that are often overlooked by traditional correlation-based or quasi-experimental approaches. Collectively, \textit{tEDM} provides both methodological innovation and actionable insights, offering a robust framework for advancing causal understanding in urban science and related disciplines.
+In this study, we have introduced \textit{tEDM}, an open-source \textit{R} package designed to implement and extend empirical dynamic modeling for temporal causal discovery in complex urban systems. Through three representative case studies, which investigate the relationship between air pollution and cardiovascular health in Hong Kong, the dynamics between county-level carbon emissions and temperature in the United States, and the spread of COVID-19 across Japanese prefectures, we demonstrated the versatility and practical utility of \textit{tEDM} in uncovering dynamic causal linkages from multivariate and spatially replicated time series. Our results highlight the advantages of EDM-based causal inference in capturing nonlinear interactions, feedback mechanisms, and temporally evolving dependencies that are often overlooked by traditional correlation-based or quasi-experimental approaches. Collectively, \textit{tEDM} provides both methodological innovation and actionable insights, offering a robust framework for advancing causal understanding in urban science and related disciplines.
 
 Despite its strengths, several limitations warrant consideration. First, while \textit{tEDM} excels in identifying temporal causal relationships, its performance may be constrained by short or irregular time series, measurement noise, and unobserved confounders. Recent advances in information-theoretic approaches, such as the decomposition of mutual information, offer promising avenues for addressing these challenges and could be tested in the context of urban time series \citep{sanchez2024surd}. Second, the current implementation primarily focuses on observational data and does not incorporate interventional or experimental designs, which could further strengthen causal inference. Third, EDM is presently limited to identifying whether a causal relationship exists, without distinguishing the nature of causality (e.g., whether an effect is promotive or suppressive). Approaches based on ordinary differential equation (ODE) models provide potential solutions to this issue and represent a promising direction for future integration \citep{park2023gobi}. Finally, while our case studies cover a range of urban contexts, broader validation across diverse cities, sectors, and spatiotemporal scales is needed. Future research could thus pursue hybrid approaches that combine EDM with complementary causal discovery frameworks, enhance robustness to data sparsity and noise, and extend the package to incorporate intervention-based or policy-driven datasets. By doing so, \textit{tEDM} has the potential to become a cornerstone tool for dynamic causal analysis in increasingly complex and interconnected urban systems.
 
