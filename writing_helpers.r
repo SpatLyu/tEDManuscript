@@ -82,3 +82,4 @@ doi2bib("10.7551/mitpress/9399.001.0001") # new science of cities
 doi2bib("10.1016/j.ecolind.2016.03.054")
 doi2bib("10.1038/ncomms9502")
 doi2bib("10.1126/science.209.4458.763")
+doi2bib("10.1007/s11869-022-01168-1") o3 <-> no2
