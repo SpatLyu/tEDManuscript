@@ -382,11 +382,18 @@ To demonstrate the practical utility of the \textit{tEDM} package, we present th
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.95\textwidth]{./figure/figure3.jpg}
-\caption{Causal relationship between air pollutants and cardiovascular disease incidence in Hong Kong. \textbf{a} Time series plots of the relevant variables. \textbf{b} Causal strength among variables detected via partial cross mapping. \textbf{c} Inferred causal pathways from air pollutants to cardiovascular disease incidence, based on the partial cross mapping results (see Figure~\ref{fig_appendix}).}
+\caption{Causal relationship between air pollutants and cardiovascular disease incidence in Hong Kong. \textbf{a} Time series plots of the relevant variables. \textbf{b} Causal strength among variables detected via partial cross mapping. \textbf{c} Inferred causal pathways from air pollutants to cardiovascular disease incidence, based on the partial cross mapping results (see Figure~\ref{fig_pcm}).}
 \label{fig_cvds_hk}
 \end{figure}
 
-The first case study focuses on the causal relationships between air pollutants and cardiovascular disease (CVD) incidence in Hong Kong. Figure~\ref{fig_cvds_hk}a presents the time series of the variables, including daily counts of CVD hospital admissions and the concentrations of SO$_2$, NO$_2$, O$_3$, and respirable suspended particulates (RSP). The dynamics exhibit both seasonal fluctuations and short-term variations, reflecting the complex interplay between environmental exposures and health outcomes. To quantify these interactions, we applied the partial cross mapping method implemented in the \textit{tEDM} package. Figure~\ref{fig_cvds_hk}b reports the estimated causal strengths among variables, where higher $\rho$ values indicate stronger causal associations. These results reveal multiple significant causal links from air pollutants to CVD, as well as interdependencies among the pollutants themselves. The detailed mutual cross mapping and partial cross mapping used to support these causal links is provided in the Appendix (Figure~\ref{fig_appendix}).
+The first case study focuses on the causal relationships between air pollutants and cardiovascular disease (CVD) incidence in Hong Kong. Figure~\ref{fig_cvds_hk}a presents the time series of the variables, including daily counts of CVD hospital admissions and the concentrations of SO$_2$, NO$_2$, O$_3$, and respirable suspended particulates (RSP). The dynamics exhibit both seasonal fluctuations and short-term variations, reflecting the complex interplay between environmental exposures and health outcomes. To quantify these interactions, we applied the partial cross mapping method implemented in the \textit{tEDM} package. Figure~\ref{fig_cvds_hk}b reports the estimated causal strengths among variables, where higher $\rho$ values indicate stronger causal associations. These results reveal multiple significant causal links from air pollutants to CVD, as well as interdependencies among the pollutants themselves. The detailed mutual cross mapping and partial cross mapping used to support these causal links is provided in Figure~\ref{fig_pcm}).
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.95\textwidth]{./figure/figure4.jpg}
+\caption{Predictive skills ($\rho$) between air pollutants and cardiovascular disease incidence, estimated via partial cross mapping (PCM) across varying library sizes.}
+\label{fig_pcm}
+\end{figure}
 
 Building on these statistical results, Figure~\ref{fig_cvds_hk}c summarizes the reconstructed causal pathways linking air pollutants to cardiovascular disease (CVD) incidence. The analysis reveals that RSP and NO$_2$ exert direct causal influences on CVD, with RSP occupying a central mediating role in the overall pollution–health pathway. In contrast, O$_3$ and SO$_2$ primarily contribute indirectly by modulating the levels of NO$_2$ and RSP, thereby influencing downstream impacts. This causal network underscores the dominant role of particulate pollution while also emphasizing the interconnected pathways through which multiple pollutants jointly affect cardiovascular health risks. In comparison with the original PCM study, our implementation in \textit{tEDM} provides an extended perspective by detecting the plausible atmospheric interaction between O$_3$ and NO$_2$, a well-documented process in photochemical smog formation and nitric oxide cycling \citep{ravina2022o3_no2}. Taken together, this case study exemplifies how \textit{tEDM} can recover multivariate causal networks from observational time series and generate mechanistic insights into the linkages between environmental stressors and public health outcomes.
 
@@ -396,7 +403,7 @@ Figure~\ref{fig_carbon_us} reports the causal strengths between county-level car
 
 \begin{figure}[h!]
 \centering
-\includegraphics[height=0.6\textwidth]{./figure/figure4.jpg}
+\includegraphics[height=0.6\textwidth]{./figure/figure5.jpg}
 \caption{Boxplots of causal strengths between annual mean temperature and carbon emissions across U.S. counties. Causal strengths were estimated using cross mapping cardinality by the \textit{tEDM} package.}
 \label{fig_carbon_us}
 \end{figure}
@@ -407,8 +414,8 @@ The broader spread of causal strengths in the carbon $\rightarrow$ temperature d
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.95\textwidth]{./figure/figure5.jpg}
-\caption{Reconstruction of COVID-19 transmission dynamics from Tokyo to other prefectures in Japan using convergent cross mapping.}
+\includegraphics[width=0.95\textwidth]{./figure/figure6.jpg}
+\caption{Reconstruction of COVID-19 transmission dynamics from Tokyo to other prefectures in Japan using convergent cross mapping. Results are based on our reanalysis of the original dataset, with visualization style adapted from \citet{tao2023cmc}.}
 \label{fig_covid_jp}
 \end{figure}
 
@@ -428,20 +435,15 @@ The datasets and analysis scripts used in the case studies are openly available 
 \bibliographystyle{elsarticle-harv} 
 \bibliography{references.bib} 
 
-\newpage
-% \appendix
-\section*{Appendix}
-\vspace{-0.5em}
+% \newpage
+% % \appendix
+% \section*{Appendix}
+% \vspace{-0.5em}
 
-% Reset figure counter and label format
-\renewcommand{\thefigure}{A\arabic{figure}}
-\setcounter{figure}{0}  % reset counter for appendix
+% % Reset figure counter and label format
+% \renewcommand{\thefigure}{A\arabic{figure}}
+% \setcounter{figure}{0}  % reset counter for appendix
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.95\textwidth]{./figure/figure_appendix.jpg}
-\caption{Predictive skills ($\rho$) between air pollutants and cardiovascular disease incidence, estimated via partial cross mapping (PCM) across varying library sizes.}
-\label{fig_appendix}
-\end{figure}
+
 
 \end{document}
