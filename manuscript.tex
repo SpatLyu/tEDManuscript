@@ -70,45 +70,43 @@
 \begin{frontmatter}
 \title{Causal discovery in urban data with temporal empirical dynamic modeling}
 
-\author{Wenbo's thesis team}
+\author[a,b,c]{Wenbo Lv}
+\ead{wenbolyu@hkust-gz.edu.cn}
 
-% \author[a,b,c]{Wenbo Lv}
-% \ead{wenbolyu@hkust-gz.edu.cn}
+\author[d]{Yangyang Lei}
+\ead{yangyang.lei@stu.hit.edu.cn}
 
-% \author[b]{Yangyang Lei}
-% \ead{yangyang.lei@stu.hit.edu.cn}
+\author[b]{Wen Yi}
+\ead{wen.yi@polyu.edu.hk}
 
-% \author[b]{Wen Yi}
-% \ead{wen.yi@polyu.edu.hk}
+\author[e]{Yongze Song}
+%\ead{yongze.song@curtin.edu.au}
 
-% \author[e]{Yongze Song}
-% %\ead{yongze.song@curtin.edu.au}
+\author[f,g]{Xiao Li}
+%\ead{xiao-shaw.li@polyu.edu.hk}
 
-% \author[f,g]{Xiao Li}
-% %\ead{xiao-shaw.li@polyu.edu.hk}
+\author[h]{Shaoqing Dai}
+\ead{shaoqing.dai@whu.edu.cn}
 
-% \author[h]{Shaoqing Dai}
-% \ead{shaoqing.dai@whu.edu.cn}
+\author[i]{Yiming Qin}
+\ead{ymqin@eitech.edu.cn}
 
-% \author[i]{Yiming Qin}
-% \ead{ymqin@eitech.edu.cn}
+\author[a]{Wufan Zhao\corref{cor1}}
+\cortext[cor1]{Corresponding author: Wufan Zhao, wufanzhao@hkust-gz.edu.cn}
 
-% \author[a]{Wufan Zhao\corref{cor1}}
-% \cortext[cor1]{Corresponding author: Wufan Zhao, wufanzhao@hkust-gz.edu.cn}
-
-% \address[a]{Urban Governance and Design Thrust, Society Hub, The Hong Kong University of Science and Technology(Guangzhou), Guangzhou, China}
-% \address[b]{Department of Building and Real Estate, The Hong Kong Polytechnic University, Hong Kong SAR, China}
-% \address[c]{The Hong Kong Polytechnic University, Shenzhen Research Institute, Shenzhen, China}
-% \address[d]{School of Architecture and Design, Harbin Institute of Technology, Harbin, China}
-% \address[e]{School of Design and the Built Environment, Curtin University, Perth, Australia}
-% \address[f]{Department of Land Surveying and Geo-Informatics, The Hong Kong Polytechnic University, Hong Kong SAR, China}
-% \address[g]{Transport Studies Unit, School of Geography and the Environment, University of Oxford, UK}
-% \address[h]{School of Resource and Environmental Sciences, Wuhan University, Wuhan, China}
-% \address[i]{School of the Environment and Sustainable Engineering, Eastern Institute of Technology, Ningbo, China}
+\address[a]{Urban Governance and Design Thrust, Society Hub, The Hong Kong University of Science and Technology(Guangzhou), Guangzhou, China}
+\address[b]{Department of Building and Real Estate, The Hong Kong Polytechnic University, Hong Kong SAR, China}
+\address[c]{The Hong Kong Polytechnic University, Shenzhen Research Institute, Shenzhen, China}
+\address[d]{School of Architecture and Design, Harbin Institute of Technology, Harbin, China}
+\address[e]{School of Design and the Built Environment, Curtin University, Perth, Australia}
+\address[f]{Department of Land Surveying and Geo-Informatics, The Hong Kong Polytechnic University, Hong Kong SAR, China}
+\address[g]{Transport Studies Unit, School of Geography and the Environment, University of Oxford, UK}
+\address[h]{School of Resource and Environmental Sciences, Wuhan University, Wuhan, China}
+\address[i]{School of the Environment and Sustainable Engineering, Eastern Institute of Technology, Ningbo, China}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-Urban systems are complex, nonlinear, and adaptive, with interactions spanning multiple spatial and temporal scales. Traditional correlation-based and regression approaches often fail to capture their dynamic causal structures, limiting the understanding of underlying mechanisms. Causal inference offers a more powerful framework, encompassing both causal discovery and causal effect estimation. While causal effect estimation has been widely applied in urban studies, causal discovery remains underexplored. Among available approaches, Empirical Dynamic Modeling (EDM) stands out for its ability to reconstruct system dynamics from time series without prespecified models, making it well suited to the temporally evolving, multi-scale, and interdependent nature of urban processes. However, its application in urban contexts has been limited. To address this gap, we present tEDM, an open-source R package that extends EDM for heterogeneous, high-frequency, multivariate, and multi-spatial urban datasets, enabling more nuanced causal discovery and offering both methodological and practical advancements for urban science.
+Urban systems are complex, nonlinear, and adaptive, with interactions unfolding across multiple spatial and temporal scales. Traditional correlation-based and regression approaches often fail to capture their dynamic causal structures, limiting understanding of underlying mechanisms. Causal inference provides a more powerful framework, encompassing both causal discovery and causal effect estimation, yet the former remains underexplored in urban studies. Empirical Dynamic Modeling (EDM) is well suited for this task, as it reconstructs system dynamics directly from time series without prespecified models. Despite its potential, EDM has seen limited application in urban contexts. To address this gap, we introduce \textit{tEDM}, an open-source R package that extends EDM to heterogeneous, high-frequency, multivariate, and multi-spatial urban datasets. The package combines a C++ computational backbone with seamless R integration to achieve both efficiency and usability in large-scale urban time series analysis. Its applicability is illustrated through representative case studies on environmental health, carbon–climate dynamics, and epidemic spread, demonstrating how \textit{tEDM} enables nuanced causal discovery and provides methodological as well as practical advances for urban and environmental research.
 \end{abstract}
 
 \begin{keyword}
@@ -119,7 +117,7 @@ causal discovery \sep empirical dynamic modeling \sep time series \sep urban dat
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \linenumbers
 
-\section{Introduction}
+\section{Introduction}\label{sec_intro}
 
 Urban systems are inherently complex, comprising interdependent socio-economic, environmental, and infrastructural components that interact across multiple spatial and temporal scales \citep{mcphearson2016understand_urban_systems}. These interactions are often nonlinear, adaptive, and subject to feedback loops, making them challenging to analyze with traditional correlation-based approaches and linear regression models \citep{gan2025urban_transfer_entropy}, which typically assume fixed functional relationships, linearity, and stationarity. Such assumptions constrain their capacity to capture the dynamic, nonlinear dependencies and feedback mechanisms that characterize real-world urban processes. As a result, much of the current analytical practice in urban science relies on methods that can identify statistical associations but are not equipped to uncover underlying causal mechanisms.
 
@@ -131,9 +129,9 @@ Among the existing approaches to causal discovery, one prominent category involv
 
 However, despite its conceptual advantages, the application of EDM for causal discovery in urban contexts remains limited. We argue that harnessing EDM in this domain can uncover dynamic causal linkages that are often overlooked by traditional correlation-based or static approaches, thereby providing deeper insights into the mechanisms that govern urban processes. To facilitate such efforts, we introduce \textit{tEDM}, an open-source \textit{R} package that extends the EDM framework with temporal causality detection capabilities tailored to the heterogeneous, high-frequency, multivariate, and multi-spatial observational nature of urban datasets \citep{deng2022urban_granger_causality,gan2025urban_transfer_entropy,fekete2025urban_transport}. Through three representative case studies, we demonstrate how \textit{tEDM} enables more nuanced and accurate causal discovery in urban time series, contributing both methodological innovation and practical value for urban science.
 
-The remainder of this paper is organized as follows. Section~2 outlines the theoretical foundations of empirical dynamic modeling and its relevance to causal discovery. Section~3 details the design, structure, and core functionalities of the \textit{tEDM} package. In Section~4, we illustrate the practical utility of \textit{tEDM} through three real-world case studies spanning different urban contexts. Finally, Section~5 summarizes the key insights and discusses limitations, as well as directions for future research and development.
+The remainder of this paper is organized as follows. Section~\ref{sec_bg} outlines the theoretical foundations of empirical dynamic modeling and its relevance to causal discovery. Section~\ref{sec_pkg} details the design, structure, and core functionalities of the \textit{tEDM} package. In Section~\ref{sec_cases}, we illustrate the practical utility of \textit{tEDM} through three real-world case studies spanning different urban contexts. Finally, Section~\ref{sec_conc} summarizes the key insights and discusses limitations, as well as directions for future research and development.
 
-\section{Background}
+\section{Background}\label{sec_bg}
 
 \subsection{Empirical dynamic modeling and dynamic causality}
 
@@ -352,7 +350,7 @@ Methods designed specifically for causal discovery in time series include \texti
 
 To address remaining challenges in flexibility, scalability, and multivariate modeling within the empirical dynamic modeling framework, this work introduces \textit{tEDM}, a novel R package developed for causal discovery in urban time series data. Urban systems often contain short temporal sequences accompanied by multiple spatially replicated observations, along with substantial heterogeneity across spatial locations \citep{gan2025urban_transfer_entropy,mao2024urban_traffic_networks}. \textit{tEDM} extends and refines core methods such as convergent cross mapping, partial cross mapping, and cross mapping cardinality in order to better accommodate these characteristics. Through carefully designed temporal embedding strategies and efficient implementations for large-scale data, \textit{tEDM} enables causal discovery in complex and high dimensional spatiotemporal systems, and serves as a comprehensive and performant extension of existing empirical dynamic modeling toolkits.
 
-\section{The \textit{tEDM} Package}
+\section{The \textit{tEDM} Package}\label{sec_pkg}
 
 \subsection{Software design philosophy and architecture}
 
@@ -373,7 +371,7 @@ The core functionalities of \textit{tEDM} are summarized in Figure~\ref{fig_tedm
 
 After parameter selection, \textit{tEDM} provides several algorithms for causal discovery that quantify and evaluate potential causal relationships. The \texttt{cmc()} function implements cross mapping cardinality \citep{tao2023cmc}, which evaluates causality based on intersection statistics (intersection cardinality) and thresholds. The \texttt{ccm()} function applies convergent cross mapping to test for causality by assessing the predictive skills across library sizes \citep{sugihara2012ccm}. For cases where direct causation needs to be identified, the \texttt{pcm()} function employs partial cross mapping to discriminate direct causal effects from indirect associations \citep{leng2020pcm}. Predictive skill and intersection cardinality are incorporated as complementary measures to enhance the robustness of inference. Results can be visualized directly using \textit{ggplot2}, which ensures that causal discovery outcomes in urban time series can be examined in a transparent and interpretable manner. Together, these components provide a coherent workflow that integrates data preparation, parameter selection, causal quantification, and visualization within a unified framework.
 
-\section{Case Studies}
+\section{Case Studies}\label{sec_cases}
 
 To demonstrate the practical utility of the \textit{tEDM} package, we present three representative case studies drawn from prior work in urban and environmental research, each exemplifying different characteristics of urban time series data and corresponding causal discovery tasks. The first case study investigates the relationship between air pollution and cardiovascular health in Hong Kong \citep{leng2020pcm}, illustrating how \textit{tEDM} can be employed to analyze multivariate time series and infer the underlying causal interaction network between environmental exposures and health outcomes. The second case study examines county-level carbon emissions and temperature dynamics in the United States \citep{gan2025urban_transfer_entropy}, showcasing the capability of \textit{tEDM} to uncover causal dependencies within spatially replicated multivariate time series, a type of data structure frequently encountered in large-scale urban and climate research. The third case study explores the spread of COVID-19 across Japanese prefectures \citep{tao2023cmc}, demonstrating how \textit{tEDM} can reconstruct causal structures from spatially replicated univariate time series, where repeated temporal observations across locations (spatial units) enable causal inference even in single-variable settings. For transparency and reproducibility, the datasets corresponding to all three case studies are archived within the \textit{tEDM} package, together with complete analysis code available in the package vignette at \url{https://stscl.github.io/tEDM/articles/tEDM.html}. Taken together, these case studies not only highlight the methodological versatility and empirical relevance of \textit{tEDM}, but also provide a foundation for its broader application in advancing causal discovery across diverse domains of urban and environmental research.
 
@@ -382,11 +380,18 @@ To demonstrate the practical utility of the \textit{tEDM} package, we present th
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.95\textwidth]{./figure/figure3.jpg}
-\caption{Causal relationship between air pollutants and cardiovascular disease incidence in Hong Kong. \textbf{a} Time series plots of the relevant variables. \textbf{b} Causal strength among variables detected via partial cross mapping. \textbf{c} Inferred causal pathways from air pollutants to cardiovascular disease incidence, based on the partial cross mapping results (see Figure~\ref{fig_appendix}).}
+\caption{Causal relationship between air pollutants and cardiovascular disease incidence in Hong Kong. \textbf{a} Time series plots of the relevant variables. \textbf{b} Causal strength among variables detected via partial cross mapping. \textbf{c} Inferred causal pathways from air pollutants to cardiovascular disease incidence, based on the partial cross mapping results (see Figure~\ref{fig_pcm}).}
 \label{fig_cvds_hk}
 \end{figure}
 
-The first case study focuses on the causal relationships between air pollutants and cardiovascular disease (CVD) incidence in Hong Kong. Figure~\ref{fig_cvds_hk}a presents the time series of the variables, including daily counts of CVD hospital admissions and the concentrations of SO$_2$, NO$_2$, O$_3$, and respirable suspended particulates (RSP). The dynamics exhibit both seasonal fluctuations and short-term variations, reflecting the complex interplay between environmental exposures and health outcomes. To quantify these interactions, we applied the partial cross mapping method implemented in the \textit{tEDM} package. Figure~\ref{fig_cvds_hk}b reports the estimated causal strengths among variables, where higher $\rho$ values indicate stronger causal associations. These results reveal multiple significant causal links from air pollutants to CVD, as well as interdependencies among the pollutants themselves. The detailed mutual cross mapping and partial cross mapping used to support these causal links is provided in the Appendix (Figure~\ref{fig_appendix}).
+The first case study focuses on the causal relationships between air pollutants and cardiovascular disease (CVD) incidence in Hong Kong. Figure~\ref{fig_cvds_hk}a presents the time series of the variables, including daily counts of CVD hospital admissions and the concentrations of SO$_2$, NO$_2$, O$_3$, and respirable suspended particulates (RSP). The dynamics exhibit both seasonal fluctuations and short-term variations, reflecting the complex interplay between environmental exposures and health outcomes. To quantify these interactions, we applied the partial cross mapping method implemented in the \textit{tEDM} package. Figure~\ref{fig_cvds_hk}b reports the estimated causal strengths among variables, where higher $\rho$ values indicate stronger causal associations. These results reveal multiple significant causal links from air pollutants to CVD, as well as interdependencies among the pollutants themselves. The detailed mutual cross mapping and partial cross mapping used to support these causal links is provided in Figure~\ref{fig_pcm}.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.95\textwidth]{./figure/figure4.jpg}
+\caption{Predictive skills ($\rho$) between air pollutants and cardiovascular disease incidence, estimated via partial cross mapping (PCM) across varying library sizes.}
+\label{fig_pcm}
+\end{figure}
 
 Building on these statistical results, Figure~\ref{fig_cvds_hk}c summarizes the reconstructed causal pathways linking air pollutants to cardiovascular disease (CVD) incidence. The analysis reveals that RSP and NO$_2$ exert direct causal influences on CVD, with RSP occupying a central mediating role in the overall pollution–health pathway. In contrast, O$_3$ and SO$_2$ primarily contribute indirectly by modulating the levels of NO$_2$ and RSP, thereby influencing downstream impacts. This causal network underscores the dominant role of particulate pollution while also emphasizing the interconnected pathways through which multiple pollutants jointly affect cardiovascular health risks. In comparison with the original PCM study, our implementation in \textit{tEDM} provides an extended perspective by detecting the plausible atmospheric interaction between O$_3$ and NO$_2$, a well-documented process in photochemical smog formation and nitric oxide cycling \citep{ravina2022o3_no2}. Taken together, this case study exemplifies how \textit{tEDM} can recover multivariate causal networks from observational time series and generate mechanistic insights into the linkages between environmental stressors and public health outcomes.
 
@@ -396,7 +401,7 @@ Figure~\ref{fig_carbon_us} reports the causal strengths between county-level car
 
 \begin{figure}[h!]
 \centering
-\includegraphics[height=0.6\textwidth]{./figure/figure4.jpg}
+\includegraphics[height=0.6\textwidth]{./figure/figure5.jpg}
 \caption{Boxplots of causal strengths between annual mean temperature and carbon emissions across U.S. counties. Causal strengths were estimated using cross mapping cardinality by the \textit{tEDM} package.}
 \label{fig_carbon_us}
 \end{figure}
@@ -407,14 +412,14 @@ The broader spread of causal strengths in the carbon $\rightarrow$ temperature d
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.95\textwidth]{./figure/figure5.jpg}
-\caption{Reconstruction of COVID-19 transmission dynamics from Tokyo to other prefectures in Japan using convergent cross mapping.}
+\includegraphics[width=0.95\textwidth]{./figure/figure6.jpg}
+\caption{Reconstruction of COVID-19 transmission dynamics from Tokyo to other prefectures in Japan using convergent cross mapping. Results are based on our reanalysis of the original dataset, with visualization style adapted from \citet{tao2023cmc}.}
 \label{fig_covid_jp}
 \end{figure}
 
 The third case study investigates the dynamics of COVID-19 transmission among Japanese prefectures during the pandemic, utilizing convergent cross mapping to reconstruct the influence of the Tokyo outbreak. As illustrated in Figure~\ref{fig_covid_jp}, six prefectures exhibit a causal strength greater than 0.9 from Tokyo, indicating strong transmission linkages. These prefectures, which include both immediate neighbors in the Tokyo metropolitan area and other major urban centers, represent the regions most substantially affected by the Tokyo outbreak. This finding reflects the hub-like role of Tokyo as the primary source of infection spread, consistent with its status as the earliest and largest epicenter of confirmed cases in Japan. The result resonates with prior studies employing cross map cardinality approaches, which have shown that causal influence from Tokyo tends to decrease with increasing geodesic distance, while metropolitan areas with higher population density and mobility networks remain particularly susceptible \citep{tao2023cmc}. This finding emphasizes the necessity for coordinated public health strategies across prefectures to effectively manage and mitigate the spread of infectious diseases. The results contribute to a deeper understanding of regional transmission dynamics and inform future preparedness efforts in the face of similar public health crises.
 
-\section{Conclusion}
+\section{Conclusion}\label{sec_conc}
 
 In this study, we have introduced \textit{tEDM}, an open-source \textit{R} package designed to implement and extend empirical dynamic modeling for temporal causal discovery in complex urban systems. Through three representative case studies, which investigate the relationship between air pollution and cardiovascular health in Hong Kong, the dynamics between county-level carbon emissions and temperature in the United States, and the spread of COVID-19 across Japanese prefectures, we demonstrated the versatility and practical utility of \textit{tEDM} in uncovering dynamic causal linkages from multivariate and spatially replicated time series. Our results highlight the advantages of EDM-based causal inference in capturing nonlinear interactions, feedback mechanisms, and temporally evolving dependencies that are often overlooked by traditional correlation-based or quasi-experimental approaches. Collectively, \textit{tEDM} provides both methodological innovation and actionable insights, offering a robust framework for advancing causal understanding in urban science and related disciplines.
 
@@ -428,20 +433,15 @@ The datasets and analysis scripts used in the case studies are openly available 
 \bibliographystyle{elsarticle-harv} 
 \bibliography{references.bib} 
 
-\newpage
-% \appendix
-\section*{Appendix}
-\vspace{-0.5em}
+% \newpage
+% % \appendix
+% \section*{Appendix}
+% \vspace{-0.5em}
 
-% Reset figure counter and label format
-\renewcommand{\thefigure}{A\arabic{figure}}
-\setcounter{figure}{0}  % reset counter for appendix
+% % Reset figure counter and label format
+% \renewcommand{\thefigure}{A\arabic{figure}}
+% \setcounter{figure}{0}  % reset counter for appendix
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.95\textwidth]{./figure/figure_appendix.jpg}
-\caption{Predictive skills ($\rho$) between air pollutants and cardiovascular disease incidence, estimated via partial cross mapping (PCM) across varying library sizes.}
-\label{fig_appendix}
-\end{figure}
+
 
 \end{document}
