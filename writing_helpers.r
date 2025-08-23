@@ -65,6 +65,8 @@ doi2bib("10.1111/mice.13334")             # urban traffic networks + CCM
 doi2bib("10.1038/s41467-024-48199-z")     # ozone & influenza + CCM PCMCI+ GLM
 doi2bib("10.1016/j.eneco.2021.105271")    # high-speed rail & CO2 emissions
 doi2bib("10.1038/s41467-024-52693-9")     # global protected areas & resisting habitat loss
+doi2bib("10.1016/j.compenvurbsys.2023.101957") # mobility intervention policies
+doi2bib("10.1016/j.compenvurbsys.2024.102206") # global city carbon emissions
 
 # packages
 
@@ -76,7 +78,6 @@ doi2bib("10.21105/joss.00026")      # Armadillo
 
 doi2bib("10.1007/978-1-4612-2748-9")      # pc
 doi2bib("10.7551/mitpress/9399.001.0001") # new science of cities
-doi2bib("10.1016/j.compenvurbsys.2023.101957")
 doi2bib("10.1016/j.ecolind.2016.03.054")
 doi2bib("10.1038/ncomms9502")
 doi2bib("10.1126/science.209.4458.763")
