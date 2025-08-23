@@ -73,6 +73,7 @@ doi2bib("10.1016/j.compenvurbsys.2024.102206") # global city carbon emissions
 doi2bib("10.18637/jss.v040.i08")    # Rcpp
 doi2bib("10.18637/jss.v097.c01")    # RcppThread
 doi2bib("10.21105/joss.00026")      # Armadillo
+doi2bib("10.5334/jors.bu")          # ropensci
  
 # others 
 
