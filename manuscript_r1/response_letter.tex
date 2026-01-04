@@ -151,13 +151,19 @@ As an R package, the authors should present the basic framework of the package a
 \end{reply}
 
 \begin{point}
-Interpretation of the causal strength derived from the IC curve: I believe that these methods do not so much as quantify the treatment effect of a variable $X_1$, as much as enable to place the strength of this effect in context of other variables $X_2, \dots, X_n$. In a traditional interpretation, the derivation of a causal strength would be the multiplier by how much an increase of $X_1$ alter the outcome $Y$ (modulo confounders, etc.). I am unsure whether the causal strength derived from the AUC of the Cardinality curve can be interpreted this way. SO it may be a good mechanism for causal discovery, or even ranking of the treatment effects of multiple variables, but I am not sure how it would relate to claims about absolute effect strength. Can you address the interpretation of the values you get from your GCMC measure's outcomes?
+As an R package, the authors should present the basic framework of the package as well as the data flow.
 \end{point}
 
 \begin{reply}
-We thank the reviewer for this thoughtful and important comment regarding the interpretation of causal strength. We agree that the notion of causal strength in GCMC differs fundamentally from a traditional treatment-effect interpretation. In the revised manuscript (lines~187--199), we have clarified that the causal strength measured by GCMC is rooted in dynamical systems theory and is defined by the divergence between intersectional cardinality curves under the null and alternative hypotheses of mutual cross mapping. As such, it should not be interpreted as a treatment effect, such as the marginal change in an outcome variable induced by a unit change in a predictor while controlling for confounders.
 
-Instead, the GCMC causal strength represents a relative measure of causal influence, reflecting how consistently the state of one variable can be recovered from another across neighborhood scales in the reconstructed state space. From this perspective, GCMC is particularly well suited for causal discovery and for comparing the relative strength of directional causal coupling among multiple candidate drivers. Larger values indicate stronger causal influence in a comparative sense, enabling ranking and contrast across variables, rather than direct claims about absolute effect magnitudes. We have emphasized that this interpretation is consistent with the empirical dynamic modeling framework, where causation is inferred through information recovery rather than parametric effect sizes.
+\end{reply}
+
+\begin{point}
+In Figure 5, what is the meaning of ``causal strength''? Does ``causal strength'' have general applicability?
+\end{point}
+
+\begin{reply}
+
 \end{reply}
 
 \baselineskip12pt
