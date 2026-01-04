@@ -12,6 +12,10 @@
 \usepackage{enumerate}
 \usepackage{enumitem}
 \usepackage{titlesec}
+\usepackage{xcolor}
+\definecolor{revisionmodified}{HTML}{F2A6A6}   % red: modified text
+\definecolor{revisionadded}{HTML}{8AC1AF}      % green: newly added text
+\definecolor{revisionmoved}{HTML}{B4D9FF}      % blue: relocated/moved text
 
 % 自定义 Reviewer 计数器
 \newcounter{reviewer}
@@ -65,7 +69,7 @@
 
 \vspace{-30pt}
 
-The authors would like to thank the editor and reviewers for their constructive comments and suggestions, which have helped improve the quality of this work. The revised manuscript has undergone a thorough revision according to the editor’s and reviewers’ comments. Please see our responses below. For the reviewers' convenience, we have marked the revisions in the manuscript as follows: \textcolor{red}{red} for modified text, \textcolor{green}{green} for newly added text, and \textcolor{blue}{blue} for relocated text.
+The authors would like to thank the editor and reviewers for their constructive comments and suggestions, which have helped improve the quality of this work. The revised manuscript has undergone a thorough revision according to the editor’s and reviewers’ comments. Please see our responses below. In the revised manuscript, all changes made in response to the reviewers’ comments are color-coded as follows: \textcolor{revisionmodified}{modified text}, \textcolor{revisionadded}{newly added text}, and \textcolor{revisionmoved}{relocated text}.
 
 \begin{point1}
 On top of the suggestions by anonymous reviewers, please consider expanding the data availability statement by including an archived version of the \texttt{SpatLyu/tEDM\_CEUS} and \texttt{stscl/tEDM} repositories, and link the DOI from the statement alongside the GitHub URL. An easy way to do that is to link your repositories to Zenodo and archive released versions there. That way we can ensure longevity of links and point to the exact version of the contents you refer to in the paper. Otherwise, the contents of the repository may change and get out of sync with the contents of the paper.
