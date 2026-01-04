@@ -1,7 +1,7 @@
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
-\usepackage{lipsum} % to generate some filler text
+\usepackage{lipsum} 
 \usepackage{fullpage}
 \usepackage{mathrsfs}
 \usepackage{svg}
@@ -10,6 +10,7 @@
 \usepackage{pifont,tikz,paralist,multirow,amssymb}
 \usepackage{xifthen}
 \usepackage{enumerate}
+\usepackage{enumitem}
 \usepackage{titlesec}
 
 % 自定义 Reviewer 计数器
@@ -114,8 +115,10 @@ The paper does not clearly discuss how the causal discovery results produced by 
 \begin{point}
 \textbf{Minor Comments on Presentation}
 
-① In Figure 4, it is not clearly explained how the causal network results shown in Figure 3-c were obtained. This connection is crucial for understanding the workflow and logic of the causal discovery process. Please provide additional clarification or methodological description.
-② In Figure 3-b, the meaning of the symbol "#" is unclear. A brief note or legend explanation should be added to help readers interpret the figure correctly.
+\begin{enumerate}[label=\arabic*.]
+    \item In Figure 4, it is not clearly explained how the causal network results shown in Figure 3-c were obtained. This connection is crucial for understanding the workflow and logic of the causal discovery process. Please provide additional clarification or methodological description.
+    \item In Figure 3-b, the meaning of the symbol ``\#'' is unclear. A brief note or legend explanation should be added to help readers interpret the figure correctly.
+\end{enumerate}
 \end{point}
 
 \begin{reply}
