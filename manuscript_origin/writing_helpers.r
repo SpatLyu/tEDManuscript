@@ -3,10 +3,10 @@
   pdftools::pdf_convert(pdf = pdfname, filenames = jpgname, dpi = dpi)
 }
 
-1:6 |> 
+1:6 |>
   purrr::walk(\(.x) {
-    .pdf2jpg(paste0('./figure_pdf/figure',.x,'.pdf'),
-             paste0('./figure/figure',.x,'.jpg'))
+    .pdf2jpg(paste0('./manuscript_origin/figure_pdf/figure',.x,'.pdf'),
+             paste0('./manuscript_origin/figure/figure',.x,'.jpg'))
   })
 
 # references: doi -> bibtex
