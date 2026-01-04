@@ -94,7 +94,7 @@ We hope that this extensive revisions address the reviewers’ concerns, and we 
 \reviewersection
 
 \begin{point}
-Novelty and Methodological Contribution
+\textbf{Novelty and Methodological Contribution}
 
 The proposed tool appears to mainly integrate several existing EDM methods without introducing methodological improvements to address known limitations of these models. If the contribution lies primarily in integration, the level of innovation may be limited. In particular, the authors claim that tEDM extends EDM to multivariate and spatially replicated time series, but the manuscript does not describe how this extension is implemented or evaluated in detail. More clarification on the underlying methodological framework is necessary.
 \end{point}
@@ -104,7 +104,7 @@ The proposed tool appears to mainly integrate several existing EDM methods witho
 \end{reply}
 
 \begin{point}
-Adaptation to Urban Environmental Research
+\textbf{Adaptation to Urban Environmental Research}
 
 The manuscript repeatedly states that tEDM is specifically developed for urban environmental studies. However, there is no clear explanation of how the model has been adapted to the specific characteristics of urban data, nor how spatial dependencies are incorporated into the modeling process. The authors should elaborate on why this tool is particularly suited for urban environments and provide supporting analysis or discussion to justify this claim.
 \end{point}
@@ -114,7 +114,9 @@ The manuscript repeatedly states that tEDM is specifically developed for urban e
 \end{reply}
 
 \begin{point}
-Furthermore, regarding the practicalities of the method itself, I see the problem that it makes heavy use of three modeling parameters that would need to be set in advance to make sure the method can distinguish causal from non-causal cases: a threshold parameter for effect strengths (in the experiments, this was 0.1, but how to determine this in general?), a significance threshold for the IC curve (which the authors don't seem to talk about), as well as a the spatial neighborhood lag parameter (k). All these parameters need to be set in a meaningful way (using what kind of knowledge?) before we can expect any meaningful outcomes. This shows that having a simple significance test for causality is illusory. In the end, you need a-priori knowledge to set the parameters right. This makes the whole approach a bit questionable I would say, though it might still be practically useful.
+\textbf{Comparison with Other Causal Discovery Methods}
+
+The paper does not clearly discuss how the causal discovery results produced by tEDM differ from those obtained using other widely adopted causal discovery algorithms, such as the PC algorithm. It would be valuable for readers if the authors could discuss which approach is more suitable under certain conditions, and—given that the true causal structure is typically unknown—how the reliability and robustness of the inferred causal networks are evaluated.
 \end{point}
 
 \begin{reply}
