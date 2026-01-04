@@ -96,7 +96,9 @@ We hope that this extensive revisions address the reviewers’ concerns, and we 
 \reviewersection
 
 \begin{point}
-The main methodological problem that I see with this method is its main idea to infer causality from consistency of spatial patterns between spatial variables. The original idea, temporal delay embedding (Takens, 1981) leverages the fact that time introduces a directed dependence—past states determine future evolution—so if variable x can reconstruct the manifold of y through time delays, it reflects causality encoded in temporal successions. Spatial embeddings, in contrast, lack such directionality: spatial coordinates capture coexistence rather than succession. consistency between spatial embeddings of x and y however only indicates similarity between spatial autocorrelation, not causal influence. Without an explicit process model describing how effects propagate across space, spatial embedding consistency captures only a necessary, but not a sufficient condition of causality. What is lacking is the control of counterfactual conditions, which only allows to infer causality (Pearl, Rubin, Peters & Schölkopf, etc.). For this reason, I would expect that the method still should be prone to confounding and other causal spurious effects.
+Novelty and Methodological Contribution
+
+The proposed tool appears to mainly integrate several existing EDM methods without introducing methodological improvements to address known limitations of these models. If the contribution lies primarily in integration, the level of innovation may be limited. In particular, the authors claim that tEDM extends EDM to multivariate and spatially replicated time series, but the manuscript does not describe how this extension is implemented or evaluated in detail. More clarification on the underlying methodological framework is necessary.
 \end{point}
 
 \begin{reply}
