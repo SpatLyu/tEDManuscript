@@ -101,7 +101,7 @@ Urban systems are complex, nonlinear, and adaptive, with interactions unfolding 
 \end{abstract}
 
 \begin{keyword}
-causal discovery \sep empirical dynamic modeling \sep time series \sep urban data \sep \textit{tEDM} package
+causal discovery \sep empirical dynamic modeling \sep time series \sep urban data \sep R package \textit{tEDM}
 \end{keyword}
 \end{frontmatter}
 
@@ -129,9 +129,9 @@ Traditional causality detection in time series analysis often relies on Granger 
 
 The theoretical foundations of EDM include the generalized embedding theorem and dynamical systems theory. The generalized embedding theorem states that the dynamics of a deterministic system can be reconstructed from time-delayed observations of a single variable \citep{lorenz1969ssr,Takens1981embedding,Mane1981embedding}, producing a shadow manifold in a reconstructed state space that preserves the topological properties of the original system’s attractor. Dynamical systems theory further indicates that if two variables are causally linked, the geometry of their respective shadow manifolds will exhibit a consistent correspondence, allowing states on one manifold to be used to estimate states on the other through mutual cross mapping \citep{sugihara2012ccm,gao2023gccm}. These two processes are jointly illustrated in \autoref{fig_edm}, which depicts both manifold reconstruction and the mapping between shadow manifolds.
 
-\begin{figure}[h!]
+\begin{figure}[htb!]
 \centering
-\includegraphics[width=0.95\textwidth]{./figure/figure1.jpg}
+\includegraphics[width=0.95\textwidth]{./figure/figure1.png}
 \caption{Schematic illustration of empirical dynamic modeling.}
 \label{fig_edm}
 \end{figure}
@@ -344,22 +344,29 @@ To overcome the limitations of existing empirical dynamic modeling toolkits in t
 
 \section{The \textit{tEDM} Package}\label{sec_pkg}
 
-\subsection{Software design philosophy and architecture}
+\subsection{Software design philosophy and architecture}\label{sec_pkg_arch}
 
 The \textit{tEDM} package is developed with an emphasis on computational efficiency and tight integration into the R ecosystem for data science and urban analysis. Its computational backbone is implemented in C++, which provides the performance and scalability required for large time series datasets. Core operations such as state space reconstruction and mutual cross mapping are implemented using the C++ Standard Template Library (STL). The estimation of predictive skill in empirical dynamic modeling, including correlation and partial correlation coefficients, is carried out with the Armadillo linear algebra library \citep{armadillo}. To accelerate performance on modern hardware, the C++ layer integrates the \textit{RcppThread} library for multithreaded parallel computation, which enables efficient execution across multiple cores \citep{rcppthread}. The C++ implementation is exposed to R through the \textit{Rcpp} interface \citep{rcpp}, which provides a seamless binding between the high-performance C++ routines and the R environment.
 
 On the R interface level, \textit{tEDM} is designed with usability and interoperability as primary goals. Functions are structured to accept \textit{data.frame} inputs, where users specify column names and configuration parameters to execute models. Outputs are returned as lists with formatted printing in the R console, making the results easy to interpret. Visualization is supported through default integration with \textit{ggplot2} \citep{ggplot2}. To handle diverse data formats, the package leverages existing tools in the R ecosystem: non-spatial data such as \textit{csv}, \textit{tsv}, and Excel files can be imported using \textit{readr} and \textit{readxl}, while spatial formats such as vector and raster data can be processed with R’s spatial data libraries and converted into \textit{data.frame} structures for subsequent analysis within \textit{tEDM} \citep{r}. This layered design ensures that the package maintains computational robustness while remaining accessible to researchers. In practice, the software enables effective causal discovery in urban time series, where efficiency, interpretability, and reproducibility are essential.
 
+\begin{figure}[htb!] 
+\centering 
+\includegraphics[width=0.95\textwidth]{./figure/figure2.png} 
+\caption{Schematic representation of a standard workflow for causal discovery using the \textit{tEDM} package.} 
+\label{fig_tedm_arch} 
+\end{figure}
+
 \subsection{Core functionalities}  
 
-The core functionalities of \textit{tEDM} are summarized in Figure~\ref{fig_tedm}, which illustrates the workflow from data ingestion to causal discovery. The package supports a variety of common data formats, including non-spatial tabular files (\textit{csv}, \textit{tsv}, and Excel) and spatial datasets that can be pre-processed in R and converted into \textit{data.frame} structures. Once the data are loaded, the pipeline provides tools to determine the minimal embedding dimension through the \texttt{fnn()} function, which applies the false nearest neighbors approach \citep{kennel1992fnn}. Based on the embedding dimension, auxiliary functions such as \texttt{simplex()} assist in refining the choice of embedding dimension $E$ and the number of nearest neighbors $k$, with the goal of maximizing predictive skill. These steps establish the foundation for downstream empirical dynamic modeling analyses. A full description of adjustable parameters for each function is available in the package documentation at \url{https://stscl.github.io/tEDM/reference/index.html}.  
+The core functionalities of \textit{tEDM} are summarized in Figure~\ref{fig_tedm_guideline}, which illustrates the workflow from data ingestion to causal discovery. The package supports a variety of common data formats, including non-spatial tabular files (\textit{csv}, \textit{tsv}, and Excel) and spatial datasets that can be pre-processed in R and converted into \textit{data.frame} structures. Once the data are loaded, the pipeline provides tools to determine the minimal embedding dimension through the \texttt{fnn()} function, which applies the false nearest neighbors approach \citep{kennel1992fnn}. Based on the embedding dimension, auxiliary functions such as \texttt{simplex()} assist in refining the choice of embedding dimension $E$ and the number of nearest neighbors $k$, with the goal of maximizing predictive skill. These steps establish the foundation for downstream empirical dynamic modeling analyses. A full description of adjustable parameters for each function is available in the package documentation at \url{https://stscl.github.io/tEDM/reference/index.html}.  
 
-\begin{figure}[h!] 
+\begin{figure}[htb!] 
 \centering 
-\includegraphics[width=0.95\textwidth]{./figure/figure2.jpg} 
+\includegraphics[width=0.95\textwidth]{./figure/figure3.png} 
 \caption{Schematic representation of a standard workflow for causal discovery using the \textit{tEDM} package.} 
-\label{fig_tedm} 
-\end{figure}  
+\label{fig_tedm_guideline} 
+\end{figure} 
 
 After parameter selection, \textit{tEDM} provides several algorithms for causal discovery that quantify and evaluate potential causal relationships. The \texttt{ccm()} function applies convergent cross mapping to test for causality by explicitly assessing the convergence of predictive skill across library sizes \citep{sugihara2012ccm}, thereby retaining the original definition of CCM rather than returning only a single “optimal” strength value as in some existing implementations (the \textit{crossmapy} package). The \texttt{cmc()} function implements cross mapping cardinality \citep{tao2023cmc}, and extends prior approaches by internally applying the DeLong placement method to estimate causal strength while also providing corresponding $p$-values and confidence intervals. This incorporation of formal statistical inference enhances the rigor and interpretability of causal estimates. For cases where direct causation needs to be identified, the \texttt{pcm()} function employs partial cross mapping to discriminate direct causal effects from indirect causations \citep{leng2020pcm}. Beyond reproducing the approach described in the original paper, \textit{tEDM} introduces a new \texttt{cumulate} parameter: when set to \texttt{TRUE}, the function follows the original PCM implementation, while the default setting (\texttt{FALSE}) applies our newly defined PCM formulation, thereby offering greater flexibility in handling complex spatiotemporal datasets.  
 
@@ -371,21 +378,15 @@ To demonstrate the practical utility of the \textit{tEDM} package, we present th
 
 \subsection{Air pollution and cardiovascular health in Hong Kong}
 
-\begin{figure}[h!]
+\begin{figure}[htb!]
 \centering
-\includegraphics[width=0.95\textwidth]{./figure/figure3.jpg}
-\caption{Causal relationship between air pollutants and cardiovascular disease incidence in Hong Kong. \textbf{a} Time series plots of the relevant variables. \textbf{b} Causal strength among variables detected via partial cross mapping. \textbf{c} Inferred causal pathways from air pollutants to cardiovascular disease incidence, based on the partial cross mapping results (see Figure~\ref{fig_pcm}).}
+\includegraphics[width=0.95\textwidth]{./figure/figure4.png}
+\caption{Causal relationship between air pollutants and cardiovascular disease incidence in Hong Kong. \textbf{a} Time series plots of the relevant variables. \textbf{b} Causal strength among variables detected via partial cross mapping. \textbf{c} Inferred causal pathways from air pollutants to cardiovascular disease incidence, based on the partial cross mapping results (values not statistically significant at $p > 0.05$ are marked with $^\#$).}
 \label{fig_cvds_hk}
 \end{figure}
 
-\begin{figure}[h!]
-\centering
-\includegraphics[width=0.95\textwidth]{./figure/figure4.jpg}
-\caption{Predictive skills ($\rho$) between air pollutants and cardiovascular disease incidence, estimated via partial cross mapping (PCM) across varying library sizes.}
-\label{fig_pcm}
-\end{figure}
-
-The first case study focuses on the causal relationships between air pollutants and cardiovascular disease (CVD) incidence in Hong Kong. Figure~\ref{fig_cvds_hk}a presents the time series of the variables, including daily counts of CVD hospital admissions and the concentrations of SO$_2$, NO$_2$, O$_3$, and respirable suspended particulates (RSP). The dynamics exhibit both seasonal fluctuations and short-term variations, reflecting the complex interplay between environmental exposures and health outcomes. To quantify these interactions, we applied the partial cross mapping method implemented in the \textit{tEDM} package. Figure~\ref{fig_cvds_hk}b reports the estimated causal strengths among variables, where higher $\rho$ values indicate stronger causal associations. These results reveal multiple significant causal links from air pollutants to CVD, as well as interdependencies among the pollutants themselves. The detailed mutual cross mapping and partial cross mapping used to support these causal links is provided in Figure~\ref{fig_pcm}.
+The first case study focuses on the causal relationships between air pollutants and cardiovascular disease (CVD) incidence in Hong Kong. Figure~\ref{fig_cvds_hk}a presents the time series of the variables, including daily counts of CVD hospital admissions and the concentrations of SO$_2$, NO$_2$, O$_3$, and respirable suspended particulates (RSP). The dynamics exhibit both seasonal fluctuations and short-term variations, reflecting the complex interplay between environmental exposures and health outcomes. To quantify these interactions, we applied the partial cross mapping method implemented in the \textit{tEDM} package. Figure~\ref{fig_cvds_hk}b reports the estimated causal strengths among variables, where higher $\rho$ values indicate stronger causal associations. These results reveal multiple significant causal links from air pollutants to CVD, as well as interdependencies among the pollutants themselves. 
+% The detailed mutual cross mapping and partial cross mapping used to support these causal links is provided in Figure~\ref{fig_pcm}.
 
 Building on these statistical results, Figure~\ref{fig_cvds_hk}c summarizes the reconstructed causal pathways linking air pollutants to cardiovascular disease (CVD) incidence. The analysis reveals that RSP and NO$_2$ exert direct causal influences on CVD, with RSP occupying a central mediating role in the overall pollution–health pathway. In contrast, O$_3$ and SO$_2$ primarily contribute indirectly by modulating the levels of NO$_2$ and RSP, thereby influencing downstream impacts. This causal network underscores the dominant role of particulate pollution while also emphasizing the interconnected pathways through which multiple pollutants jointly affect cardiovascular health risks. In comparison with the original PCM study, our implementation in \textit{tEDM} provides an extended perspective by detecting the plausible atmospheric interaction between O$_3$ and NO$_2$, a well-documented process in photochemical smog formation and nitric oxide cycling \citep{ravina2022o3_no2}. Taken together, this case study exemplifies how \textit{tEDM} can recover multivariate causal networks from observational time series and generate mechanistic insights into the linkages between environmental stressors and public health outcomes.
 
@@ -393,9 +394,9 @@ Building on these statistical results, Figure~\ref{fig_cvds_hk}c summarizes the 
 
 Figure~\ref{fig_carbon_us} reports the causal strengths between county-level carbon emissions (CO\textsubscript{2} concentrations) and annual mean temperature (tem) across the United States, as assessed using the cross mapping cardinality method in the \textit{tEDM} package. A pronounced asymmetry in the directional causal influence is evident. The causal effect from carbon emissions to temperature (carbon $\rightarrow$ tem) is substantially stronger than the reciprocal pathway (tem $\rightarrow$ carbon). Specifically, the distribution of causal strengths for carbon $\rightarrow$ temperature has quartiles of 0.15125, 0.18125, and 0.20875 (with a full range of 0.07625--0.28750), whereas the corresponding quartiles for temperature $\rightarrow$ carbon are 0.06375, 0.06750, and 0.07125 (range: 0.04875--0.09250). Importantly, all estimated causal strengths passed the statistical significance test ($p < 0.05$), confirming the robustness of the detected associations. These results indicate that anthropogenic carbon emissions exert a dominant influence on temperature variations, while the reverse effect is comparatively weak.
 
-\begin{figure}[h!]
+\begin{figure}[htb!]
 \centering
-\includegraphics[height=0.6\textwidth]{./figure/figure5.jpg}
+\includegraphics[height=0.6\textwidth]{./figure/figure5.png}
 \caption{Boxplots of causal strengths between annual mean temperature and carbon emissions across U.S. counties. Causal strengths were estimated using cross mapping cardinality by the \textit{tEDM} package.}
 \label{fig_carbon_us}
 \end{figure}
@@ -406,7 +407,7 @@ The broader spread of causal strengths in the carbon $\rightarrow$ temperature d
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.95\textwidth]{./figure/figure6.jpg}
+\includegraphics[width=0.95\textwidth]{./figure/figure6.png}
 \caption{Reconstruction of COVID-19 transmission dynamics from Tokyo to other prefectures in Japan using convergent cross mapping. Results are based on our reanalysis of the original dataset, with visualization style adapted from \citet{tao2023cmc}.}
 \label{fig_covid_jp}
 \end{figure}
