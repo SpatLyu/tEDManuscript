@@ -129,7 +129,7 @@ Traditional causality detection in time series analysis often relies on Granger 
 
 The theoretical foundations of EDM include the generalized embedding theorem and dynamical systems theory. The generalized embedding theorem states that the dynamics of a deterministic system can be reconstructed from time-delayed observations of a single variable \citep{lorenz1969ssr,Takens1981embedding,Mane1981embedding}, producing a shadow manifold in a reconstructed state space that preserves the topological properties of the original system’s attractor. Dynamical systems theory further indicates that if two variables are causally linked, the geometry of their respective shadow manifolds will exhibit a consistent correspondence, allowing states on one manifold to be used to estimate states on the other through mutual cross mapping \citep{sugihara2012ccm,gao2023gccm}. These two processes are jointly illustrated in \autoref{fig_edm}, which depicts both manifold reconstruction and the mapping between shadow manifolds.
 
-\begin{figure}[htb!]
+\begin{figure}[htb]
 \centering
 \includegraphics[width=0.95\textwidth]{./figure/figure1.png}
 \caption{Schematic illustration of empirical dynamic modeling.}
@@ -350,10 +350,10 @@ The \textit{tEDM} package is developed with an emphasis on computational efficie
 
 On the R interface level, \textit{tEDM} is designed with usability and interoperability as primary goals. Functions are structured to accept \textit{data.frame} inputs, where users specify column names and configuration parameters to execute models. Outputs are returned as lists with formatted printing in the R console, making the results easy to interpret. Visualization is supported through default integration with \textit{ggplot2} \citep{ggplot2}. To handle diverse data formats, the package leverages existing tools in the R ecosystem: non-spatial data such as \textit{csv}, \textit{tsv}, and Excel files can be imported using \textit{readr} and \textit{readxl}, while spatial formats such as vector and raster data can be processed with R’s spatial data libraries and converted into \textit{data.frame} structures for subsequent analysis within \textit{tEDM} \citep{r}. This layered design ensures that the package maintains computational robustness while remaining accessible to researchers. In practice, the software enables effective causal discovery in urban time series, where efficiency, interpretability, and reproducibility are essential.
 
-\begin{figure}[htb!] 
+\begin{figure}[htb] 
 \centering 
-\includegraphics[width=0.95\textwidth]{./figure/figure2.png} 
-\caption{Schematic representation of a standard workflow for causal discovery using the \textit{tEDM} package.} 
+\includegraphics[width=0.65\textwidth]{./figure/figure2.png} 
+\caption{Overview of the source code architecture of the \textit{tEDM} package.} 
 \label{fig_tedm_arch} 
 \end{figure}
 
@@ -361,10 +361,10 @@ On the R interface level, \textit{tEDM} is designed with usability and interoper
 
 The core functionalities of \textit{tEDM} are summarized in Figure~\ref{fig_tedm_guideline}, which illustrates the workflow from data ingestion to causal discovery. The package supports a variety of common data formats, including non-spatial tabular files (\textit{csv}, \textit{tsv}, and Excel) and spatial datasets that can be pre-processed in R and converted into \textit{data.frame} structures. Once the data are loaded, the pipeline provides tools to determine the minimal embedding dimension through the \texttt{fnn()} function, which applies the false nearest neighbors approach \citep{kennel1992fnn}. Based on the embedding dimension, auxiliary functions such as \texttt{simplex()} assist in refining the choice of embedding dimension $E$ and the number of nearest neighbors $k$, with the goal of maximizing predictive skill. These steps establish the foundation for downstream empirical dynamic modeling analyses. A full description of adjustable parameters for each function is available in the package documentation at \url{https://stscl.github.io/tEDM/reference/index.html}.  
 
-\begin{figure}[htb!] 
+\begin{figure}[htb] 
 \centering 
 \includegraphics[width=0.95\textwidth]{./figure/figure3.png} 
-\caption{Schematic representation of a standard workflow for causal discovery using the \textit{tEDM} package.} 
+\caption{Schematic representation of the standard workflow for causal discovery using the \textit{tEDM} package.} 
 \label{fig_tedm_guideline} 
 \end{figure} 
 
@@ -378,10 +378,14 @@ To demonstrate the practical utility of the \textit{tEDM} package, we present th
 
 \subsection{Air pollution and cardiovascular health in Hong Kong}
 
-\begin{figure}[htb!]
+\begin{figure}[htb]
 \centering
-\includegraphics[width=0.95\textwidth]{./figure/figure4.png}
-\caption{Causal relationship between air pollutants and cardiovascular disease incidence in Hong Kong. \textbf{a} Time series plots of the relevant variables. \textbf{b} Causal strength among variables detected via partial cross mapping. \textbf{c} Inferred causal pathways from air pollutants to cardiovascular disease incidence, based on the partial cross mapping results (values not statistically significant at $p > 0.05$ are marked with $^\#$).}
+\includegraphics[width=0.85\textwidth]{./figure/figure4.png}
+\caption{Causal relationships between air pollutants and cardiovascular disease incidence in Hong Kong.
+\textbf{a} Time series of the relevant variables.
+\textbf{b} Cross mapping skill (\(\rho\) value) among variables estimated via partial cross mapping (values not statistically significant at \(p > 0.05\) are marked with \(^{\#}\)).
+\textbf{c} Causal network inferred from panel \textbf{b}, where \(\rho\) values that are statistically significant and exceed $0.2$ are identified as causal influences.
+}
 \label{fig_cvds_hk}
 \end{figure}
 
@@ -392,20 +396,20 @@ Building on these statistical results, Figure~\ref{fig_cvds_hk}c summarizes the 
 
 \subsection{US county carbon emissions and temperature dynamics}
 
-Figure~\ref{fig_carbon_us} reports the causal strengths between county-level carbon emissions (CO\textsubscript{2} concentrations) and annual mean temperature (tem) across the United States, as assessed using the cross mapping cardinality method in the \textit{tEDM} package. A pronounced asymmetry in the directional causal influence is evident. The causal effect from carbon emissions to temperature (carbon $\rightarrow$ tem) is substantially stronger than the reciprocal pathway (tem $\rightarrow$ carbon). Specifically, the distribution of causal strengths for carbon $\rightarrow$ temperature has quartiles of 0.15125, 0.18125, and 0.20875 (with a full range of 0.07625--0.28750), whereas the corresponding quartiles for temperature $\rightarrow$ carbon are 0.06375, 0.06750, and 0.07125 (range: 0.04875--0.09250). Importantly, all estimated causal strengths passed the statistical significance test ($p < 0.05$), confirming the robustness of the detected associations. These results indicate that anthropogenic carbon emissions exert a dominant influence on temperature variations, while the reverse effect is comparatively weak.
-
-\begin{figure}[htb!]
+\begin{figure}[htb]
 \centering
 \includegraphics[height=0.6\textwidth]{./figure/figure5.png}
 \caption{Boxplots of causal strengths between annual mean temperature and carbon emissions across U.S. counties. Causal strengths were estimated using cross mapping cardinality by the \textit{tEDM} package.}
 \label{fig_carbon_us}
 \end{figure}
 
+Figure~\ref{fig_carbon_us} reports the causal strengths between county-level carbon emissions (CO\textsubscript{2} concentrations) and annual mean temperature (tem) across the United States, as assessed using the cross mapping cardinality method in the \textit{tEDM} package. A pronounced asymmetry in the directional causal influence is evident. The causal effect from carbon emissions to temperature (carbon $\rightarrow$ tem) is substantially stronger than the reciprocal pathway (tem $\rightarrow$ carbon). Specifically, the distribution of causal strengths for carbon $\rightarrow$ temperature has quartiles of 0.15125, 0.18125, and 0.20875 (with a full range of 0.07625--0.28750), whereas the corresponding quartiles for temperature $\rightarrow$ carbon are 0.06375, 0.06750, and 0.07125 (range: 0.04875--0.09250). Importantly, all estimated causal strengths passed the statistical significance test ($p < 0.05$), confirming the robustness of the detected associations. These results indicate that anthropogenic carbon emissions exert a dominant influence on temperature variations, while the reverse effect is comparatively weak.
+
 The broader spread of causal strengths in the carbon $\rightarrow$ temperature direction highlights spatial heterogeneity across U.S. counties, potentially reflecting variations in local climatic sensitivities or emission profiles. By contrast, the consistently small causal strengths in the temperature $\rightarrow$ carbon pathway suggest that this relationship is better interpreted as a secondary feedback effect rather than a primary driver. Notably, these findings are consistent with prior results obtained using the feature-adjusted transfer entropy (FsATE) method \citep{gan2025urban_transfer_entropy}, while the cross mapping cardinality approach applied here to spatially replicated county-level time series offers a more compelling delineation between dominant causal effects and weaker feedback mechanisms. This provides quantitative evidence reinforcing the well-established role of carbon emissions as a principal driver of temperature dynamics in the context of anthropogenic climate change \citep{madden1980carbon_tem}.
 
 \subsection{COVID-19 spread across japanese prefectures}
 
-\begin{figure}[h!]
+\begin{figure}[htb]
 \centering
 \includegraphics[width=0.95\textwidth]{./figure/figure6.png}
 \caption{Reconstruction of COVID-19 transmission dynamics from Tokyo to other prefectures in Japan using convergent cross mapping. Results are based on our reanalysis of the original dataset, with visualization style adapted from \citet{tao2023cmc}.}
