@@ -1,12 +1,13 @@
-# figures: pdf -> jpg
-.pdf2jpg = \(pdfname,jpgname,dpi = 300){
-  pdftools::pdf_convert(pdf = pdfname, filenames = jpgname, dpi = dpi)
+# figures: pdf -> png
+.pdf2png = \(pdfname,pngname,dpi = 300){
+  pdftools::pdf_convert(pdf = pdfname, filenames = pngname, dpi = dpi)
 }
 
-1:6 |>
+fs::dir_ls("./manuscript_r1/figure_pdf/", regexp = ".pdf$") |>
+  stringr::str_sub(28,-5) |> 
   purrr::walk(\(.x) {
-    .pdf2jpg(paste0('./manuscript_origin/figure_pdf/figure',.x,'.pdf'),
-             paste0('./manuscript_origin/figure/figure',.x,'.jpg'))
+    .pdf2png(paste0('./manuscript_r1/figure_pdf/',.x,'.pdf'),
+             paste0('./manuscript_r1/figure/',.x,'.png'))
   })
 
 # references: doi -> bibtex
