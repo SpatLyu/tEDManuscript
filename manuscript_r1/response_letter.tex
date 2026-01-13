@@ -154,7 +154,9 @@ As an R package, the authors should present the basic framework of the package a
 \end{point}
 
 \begin{reply}
+We thank the reviewer for highlighting the need to clarify the overall framework of the package and the organization of the software. In the revised manuscript (Lines~xx--xx), we have substantially expanded the subsection 3.1 ``Software design philosophy and architecture'' to explicitly describe the layered architecture of \textit{tEDM}, including the separation between the user-facing R interface layer and the high-performance C++ computational backend. We further added a new schematic figure (Figure~\ref{fig_tedm_arch}) illustrating the source code organization and architectural layers of the package, which provides a clear overview of the basic framework and module structure.
 
+The description now explains the responsibilities of each layer, including user interaction, data preparation, parameter configuration, result formatting, visualization at the R level, and computationally intensive numerical operations at the C++ level. To avoid redundancy and improve clarity, the detailed data flow and execution pipeline are presented separately in the following section of the revised manuscript (Lines~xx--xx).
 \end{reply}
 
 \begin{point}
@@ -162,7 +164,9 @@ Which existing R packages does this package rely on, and how does it ensure comp
 \end{point}
 
 \begin{reply}
+We appreciate the reviewer's suggestion to clarify the software dependencies and the mechanisms ensuring computational efficiency for large-scale data analysis. In the revised manuscript (Lines~xx--xx), we explicitly document the mandatory software stack of \textit{tEDM}. On the computational side, the package relies on \textit{Rcpp}, \textit{RcppArmadillo}, and \textit{RcppThread} to enable efficient C++ integration, optimized linear algebra routines, and multithreaded parallel execution. Core algorithmic components such as state-space reconstruction, nearest-neighbor search, and cross mapping are implemented in C++ using the Standard Template Library (STL), thereby minimizing runtime overhead and improving scalability.
 
+On the user interface side, \textit{ggplot2} is employed for visualization and \textit{dplyr} is used for data manipulation and preprocessing, ensuring seamless interoperability with existing R-based workflows. The revised text also clarifies that all computationally intensive operations are executed in the optimized C++ backend, while the R layer primarily manages data input, configuration, and result presentation. These additions directly address how \textit{tEDM} achieves both usability and computational efficiency when handling large-scale urban time series data.
 \end{reply}
 
 \begin{point}
