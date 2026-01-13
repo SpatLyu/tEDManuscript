@@ -204,6 +204,8 @@ In CCM, the prediction skill $\rho$ is evaluated across different library sizes 
 
 \noindent where $\rho_{x \to y}$ measures the strength of causal influence from $X$ to $Y$ after convergence.
 
+Motivated by the multispatial CCM method, \textit{tEDM} extends CCM to explicitly accommodate spatially replicated observations. For time series with repeated measurements across spatial units, each replicated series is first embedded independently using Equation~\ref{eq_ts_embedding}. The resulting embedding matrices are then aligned in temporal order and concatenated to form a combined embedding matrix, together with a combined target vector that preserves the one-to-one correspondence between embedded states and observations. Cross mapping prediction is subsequently performed on the combined embedding using Equations~\ref{eq_cross_mapping}--\ref{eq_ccm_rho}. In this setting, the statistical significance of the cross-mapping skill $\rho$ is assessed via a bootstrap procedure by randomly resampling the target series to be predicted, thereby generating an empirical null distribution of $\rho$ for hypothesis testing. This strategy enables CCM to exploit spatial dependence among replicated units to enhance causal detection when individual time series are short or weakly informative, while preserving the dynamical consistency of the reconstructed state space.
+
 \subsubsection{Partial Cross Mapping (PCM)}
 
 Partial cross mapping extends the CCM method by accounting for indirect causal influences mediated by third variables. In addition to detecting whether $X$ causally influences $Y$, PCM seeks to distinguish the \emph{direct} effect of $X$ on $Y$ from any indirect influence transmitted through a mediate variable $Z$ \citep{leng2020pcm}.
