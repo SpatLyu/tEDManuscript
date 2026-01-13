@@ -206,7 +206,7 @@ In CCM, the prediction skill $\rho$ is evaluated across different library sizes 
 
 \subsubsection{Partial Cross Mapping (PCM)}
 
-Partial cross mapping extends the standard CCM framework by accounting for potential indirect causal effects mediated by a third variable. In addition to detecting whether $X$ causally influences $Y$, PCM seeks to distinguish the \emph{direct} effect of $X$ on $Y$ from any indirect influence transmitted through a confounding variable $Z$ \citep{leng2020pcm}.
+Partial cross mapping extends the standard CCM framework by accounting for potential indirect causal influences mediated by third variables. In addition to detecting whether $X$ causally influences $Y$, PCM seeks to distinguish the \emph{direct} effect of $X$ on $Y$ from any indirect influence transmitted through a mediate variable $Z$ \citep{leng2020pcm}.
 
 Given three time series $X_{(t)}, Y_{(t)}, Z_{(t)}$, the PCM procedure operates as follows:
 
@@ -235,7 +235,7 @@ Finally, the causal strength from $X$ to $Y$ is quantified using the \emph{parti
 
 \noindent where $\rho_{A,B}$ denotes the Pearson correlation between variables $A$ and $B$. A significant $\rho_{X \to Y \mid Z}$ suggests a direct causal influence from $X$ to $Y$ after removing the indirect path through $Z$.
 
-The original PCM formulation can handle more than one potential confounding variable by sequentially considering cumulative indirect effects. For example, when assessing the causal influence of $X$ on $Y$ with two potential confounders $Z_1$ and $Z_2$, one can first predict $Z_1$ from $M_y$, then predict $Z_2$ from $M_{\hat{Z}_1}$, and finally estimate $\hat{X}^{(Z_1,Z_2)}$ from $M_{\hat{Z}_2}$. This procedure captures the causal influence of $X$ on $Y$ transmitted through $Z_1$ and $Z_2$ sequentially. Similarly, one can reverse the order—predict $Z_2$ first, then $Z_1$—to account for the alternative indirect pathway.
+The original PCM formulation can handle more than one potential mediate variable by sequentially considering cumulative indirect effects. For example, when assessing the causal influence of $X$ on $Y$ with two potential mediators $Z_1$ and $Z_2$, one can first predict $Z_1$ from $M_y$, then predict $Z_2$ from $M_{\hat{Z}_1}$, and finally estimate $\hat{X}^{(Z_1,Z_2)}$ from $M_{\hat{Z}_2}$. This procedure captures the causal influence of $X$ on $Y$ transmitted through $Z_1$ and $Z_2$ sequentially. Similarly, one can reverse the order—predict $Z_2$ first, then $Z_1$—to account for the alternative indirect pathway.
 
 In \textit{tEDM}, we support this sequential strategy, while also offering an alternative approach analogous to partial and semi-partial correlation analysis. When considering multiple confounders $(Z_1, Z_2, \dots, Z_m)$, we first reconstruct $M_y$ and predict each $Z_i$ individually:
 
