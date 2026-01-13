@@ -154,8 +154,10 @@ As an R package, the authors should present the basic framework of the package a
 \end{point}
 
 \begin{reply}
+We thank the reviewer for highlighting the need to clarify the overall framework of the package and the organization of the software. In the revised manuscript (Lines~xx--xx), we have substantially expanded the subsection 3.1 ``Software design philosophy and architecture'' to explicitly describe the layered architecture of \textit{tEDM}, including the separation between the user-facing R interface layer and the high-performance C++ computational backend. We further added a new schematic figure (Figure~\ref{fig_tedm_arch}) illustrating the source code organization and architectural layers of the package, which provides a clear overview of the basic framework and module structure.
 
-\end{reply} 
+The description now explains the responsibilities of each layer, including user interaction, data preparation, parameter configuration, result formatting, visualization at the R level, and computationally intensive numerical operations at the C++ level. To avoid redundancy and improve clarity, the detailed data flow and execution pipeline are presented separately in the following section of the revised manuscript (Lines~xx--xx).
+\end{reply}
 
 \begin{point}
 Which existing R packages does this package rely on, and how does it ensure computational efficiency when handling large-scale data?
