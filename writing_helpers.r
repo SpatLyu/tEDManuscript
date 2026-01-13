@@ -43,6 +43,9 @@ doi2bib("10.1890/14-1479.1")          # multispatialccm
 doi2bib("10.2139/ssrn.2637764")       # sdid
 doi2bib("10.1177/0160017619869781")   # srdd 
 
+doi2bib("10.1111/j.1538-4632.1996.tb00936.x") # gwr
+doi2bib("10.1002/9780470517277")              # gstat
+
 doi2bib("10.1177/1536867X211000030")  # fastEDM package
 doi2bib("10.18637/jss.v077.i02")      # bnlearn package
 
