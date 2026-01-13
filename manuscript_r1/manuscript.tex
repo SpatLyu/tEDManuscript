@@ -259,7 +259,7 @@ In \textit{tEDM}, we support this native sequential strategy, while also offerin
 
 \subsubsection{Cross Mapping Cardinality (CMC)}
 
-Cross mapping cardinality evaluates causality based on the structural similarity between the reconstructed attractor manifolds of $X$ and $Y$. It quantifies how frequently nearest neighbors in one manifold correspond to neighbors in the other, under the assumption that causally linked variables share geometric properties in state space \citep{tao2023cmc}. Unlike CCM, which focuses on predictive performance, CMC emphasizes topological consistency, offering an alternative metric for assessing the strength of dynamic coupling in spatiotemporal processes. Given two time series $X_{(t)}$ and $Y_{(t)}$, we first reconstruct their shadow manifolds $M_x$ and $M_y$. For each time point $i$, the intersection cardinality is defined as the number of shared neighbors between the direct neighborhood of $Y$ and the neighborhood inferred via cross mapping from $X$:
+Cross mapping cardinality evaluates causality based on the structural similarity between the reconstructed shadow manifolds of $X$ and $Y$. It quantifies how frequently nearest neighbors in one manifold correspond to neighbors in the other, under the assumption that causally linked variables share geometric properties in state space \citep{tao2023cmc}. Unlike CCM, which focuses on predictive performance, CMC emphasizes topological consistency, offering an alternative metric for assessing the strength of dynamic coupling. Given two time series $X_{(t)}$ and $Y_{(t)}$, we first reconstruct their shadow manifolds $M_x$ and $M_y$. For each time point $i$, the intersectional cardinality is defined as the number of shared neighbors between the direct neighborhood of $Y$ and the neighborhood projected via cross mapping from $X$:
 
 \begin{equation}\label{eq_cmc_ic_ik_delong}
 IC_{i,k} = \left| M_y^{nn}(i,k) \cap M_y^{nn}\big(M_x^{nn}(i,k),k\big) \right|,
@@ -277,7 +277,7 @@ IC_k = \frac{1}{T} \sum_{i=1}^T IC_{i,k},
 IC_{\text{curve}} = \{ IC_k \mid k = 1, 2, \dots, T \}.
 \end{equation}
 
-The causal strength (CS) from $Y$ to $X$ is estimated using the DeLong placement method, a non-parametric approach for calculating the area under the IC curve (AUC), along with its variance and confidence interval \citep{delong1988,sun2014delongfi}. Different from the original CMC, which directly compares IC curves, here we adopt the DeLong placement method to provide a statistically rigorous estimate of the AUC. Let $\{X_i\}_{i=1}^{m}$ denote the IC values under the alternative hypothesis $H_1$ and $\{Y_j\}_{j=1}^{n}$ denote the IC values under the null hypothesis $H_0$. The estimated AUC is:
+To improve the statistical rigor of causal strength (CS) estimation in CMC, we replace the original strategy that directly compares IC curves with the DeLong placement method. This non-parametric approach provides statistically consistent estimation of the area under the IC curve (AUC), together with its variance and confidence interval \citep{delong1988,sun2014delongfi}. The causal strength from $Y$ to $X$ is therefore quantified by the AUC estimated using the DeLong placement method. Let $\{X_i\}_{i=1}^{m}$ denote the IC values under the alternative hypothesis $H_1$ and $\{Y_j\}_{j=1}^{n}$ denote the IC values under the null hypothesis $H_0$. The estimated AUC is given by:
 
 \begin{equation}
 \hat{\theta} = \frac{1}{mn} \sum_{i=1}^{m} \sum_{j=1}^{n} \mathbb{I}(X_i > Y_j) + \frac{1}{2} \mathbb{I}(X_i = Y_j),
