@@ -206,7 +206,7 @@ In CCM, the prediction skill $\rho$ is evaluated across different library sizes 
 
 \subsubsection{Partial Cross Mapping (PCM)}
 
-Partial cross mapping extends the standard CCM framework by accounting for potential indirect causal influences mediated by third variables. In addition to detecting whether $X$ causally influences $Y$, PCM seeks to distinguish the \emph{direct} effect of $X$ on $Y$ from any indirect influence transmitted through a mediate variable $Z$ \citep{leng2020pcm}.
+Partial cross mapping extends the CCM method by accounting for indirect causal influences mediated by third variables. In addition to detecting whether $X$ causally influences $Y$, PCM seeks to distinguish the \emph{direct} effect of $X$ on $Y$ from any indirect influence transmitted through a mediate variable $Z$ \citep{leng2020pcm}.
 
 Given three time series $X_{(t)}, Y_{(t)}, Z_{(t)}$, the PCM procedure operates as follows:
 
@@ -226,7 +226,7 @@ Then, the predicted $\hat{Z}$ is itself used to estimate $X$ via CCM:
 
 \noindent where $M_{\hat{Z}}$ denotes the shadow manifold reconstructed from $\hat{Z}$, and $\omega^{(Z)}_{ti}$ is defined analogously to Equation~\eqref{eq_ccm_weight}.
 
-Finally, the causal strength from $X$ to $Y$ is quantified using the \emph{partial correlation} between $X$ and $\hat{X}$ while controlling for $\hat{X}^{(Z)}$:
+Finally, the causal influence from $X$ to $Y$ is quantified using the \emph{partial correlation} between $X$ and $\hat{X}$ while controlling for $\hat{X}^{(Z)}$:
 
 \begin{equation}\label{eq_pcm_partial_corr}
 \rho_{X \to Y \mid Z} = \frac{ \rho_{X,\, \hat{X}} - \rho_{X,\, \hat{X}^{(Z)}} \rho_{\hat{X},\, \hat{X}^{(Z)}} }
@@ -237,7 +237,7 @@ Finally, the causal strength from $X$ to $Y$ is quantified using the \emph{parti
 
 The original PCM formulation can handle more than one potential mediate variable by sequentially considering cumulative indirect effects. For example, when assessing the causal influence of $X$ on $Y$ with two potential mediators $Z_1$ and $Z_2$, one can first predict $Z_1$ from $M_y$, then predict $Z_2$ from $M_{\hat{Z}_1}$, and finally estimate $\hat{X}^{(Z_1,Z_2)}$ from $M_{\hat{Z}_2}$. This procedure captures the causal influence of $X$ on $Y$ transmitted through $Z_1$ and $Z_2$ sequentially. Similarly, one can reverse the order—predict $Z_2$ first, then $Z_1$—to account for the alternative indirect pathway.
 
-In \textit{tEDM}, we support this sequential strategy, while also offering an alternative approach analogous to partial and semi-partial correlation analysis. When considering multiple confounders $(Z_1, Z_2, \dots, Z_m)$, we first reconstruct $M_y$ and predict each $Z_i$ individually:
+In \textit{tEDM}, we support this native sequential strategy, while also offering an improved approach, in which potential third-party variables, whether arising from mediator, collider, or confounding structures or their combinations, are treated as conditioning variables so that the analysis focuses on direct causal influences. When considering multiple conditioning variables $(Z_1, Z_2, \dots, Z_m)$, we first reconstruct $M_y$ and predict each $Z_i$ individually:
 
 \begin{equation}\label{eq_pcm_multi_zhat}
 \hat{Z}_i \mid M_y = \sum_{j=1}^k \left( \omega_{tj} \, Z_{ij} \mid M_y \right), \quad i=1,2,\dots,m,
@@ -255,7 +255,7 @@ In \textit{tEDM}, we support this sequential strategy, while also offering an al
 \rho_{X \to Y \mid Z_1, \dots, Z_m} = \text{PartialCorr}\Big(X,\, \hat{X} \mid \hat{X}^{(Z_1)}, \dots, \hat{X}^{(Z_m)} \Big),
 \end{equation}
 
-\noindent where $\text{PartialCorr}(\cdot)$ denotes the standard multivariate partial correlation. This approach provides a complementary perspective on direct causal effects in the presence of multiple confounders, analogous to extending correlation and partial correlation analyses to high-dimensional settings.
+\noindent where $\text{PartialCorr}(\cdot)$ denotes the standard multivariate partial correlation.
 
 \subsubsection{Cross Mapping Cardinality (CMC)}
 
