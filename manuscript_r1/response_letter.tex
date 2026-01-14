@@ -137,7 +137,11 @@ The paper does not clearly discuss how the causal discovery results produced by 
 The authors need to further explain why the results obtained from the tEDM analysis represent temporal causality rather than merely correlation.
 \end{point}
 
-\begin{reply}egin{point}
+\begin{reply}
+
+\end{reply}
+
+\begin{point}
 Complex urban systems involve variables across multiple dimensions such as population, economy, transportation, energy, and environment. These variables inherently interact in a disordered, complex, and stochastic manner. How does tEDM characterize the features of different variables and adapt to various scenarios?
 \end{point}
 
@@ -152,7 +156,7 @@ As an R package, the authors should present the basic framework of the package a
 \begin{reply}
 We thank the reviewer for highlighting the need to clarify the overall framework of the package and the organization of the software. In the revised manuscript (Lines~xx--xx), we have substantially expanded the subsection 3.1 ``Software design philosophy and architecture'' to explicitly describe the layered architecture of \textit{tEDM}, including the separation between the user-facing R interface layer and the high-performance C++ computational backend. We further added a new schematic figure (Figure~\ref{fig_tedm_arch}) illustrating the source code organization and architectural layers of the package, which provides a clear overview of the basic framework and module structure.
 
-Thhe revised manuscript (Lines~xx--xx).
+The description now explains the responsibilities of each layer, including user interaction, data preparation, parameter configuration, result formatting, visualization at the R level, and computationally intensive numerical operations at the C++ level. To avoid redundancy and improve clarity, the detailed data flow and execution pipeline are presented separately in the following section of the revised manuscript (Lines~xx--xx).
 \end{reply}
 
 \begin{point}
@@ -170,7 +174,11 @@ In Figure 5, what is the meaning of ``causal strength''? Does ``causal strength'
 \end{point}
 
 \begin{reply}
+We appreciate the reviewer's request for clarification regarding the meaning and applicability of ``causal strength.'' In the revised manuscript, we added a dedicated paragraph in the \emph{Discussion and conclusion} section to formally define this concept and clarify its scope of interpretation (see revised manuscript, lines~xx--xx).
 
+We now explain that within the dynamical causality framework, quantities reported as ``cross-mapping skill'' (the $\rho$ value) in CCM and PCM, and ``causal strength'' in CMC quantify the influence of data-driven deterministic processes governing the evolution of the underlying system. These metrics measure the consistency and reliability with which the state of one variable can be recovered from another in reconstructed state space, thereby serving as relative indicators of directional dynamical dependence.
+
+Importantly, we clarify that ``causal strength'' should not be interpreted as a counterfactual causal effect comparable to quantities such as the average treatment effect in intervention-based causal inference. Its magnitude is system-dependent and is primarily intended for causal discovery purposes, including ranking, comparison, and screening of potential causal influences within a given dataset, rather than direct transferability across unrelated systems or policy contexts. We further note that in applied analyses, statistical significance should be accompanied by effect-size thresholds (e.g., $\rho > 0.2$ in our case studies) to reduce spurious detections caused by strong coupling or mirror dynamics.
 \end{reply}
 
 \baselineskip12pt
