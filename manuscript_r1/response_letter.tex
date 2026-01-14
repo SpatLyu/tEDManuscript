@@ -95,7 +95,15 @@ The proposed tool appears to mainly integrate several existing EDM methods witho
 \end{point}
 
 \begin{reply}
+We thank the reviewer for this constructive comment. We would like to clarify that \textit{tEDM} is not a simple integration of existing EDM methods, but introduces several methodological extensions to address known limitations of CCM, PCM, and CMC in the context of urban time series. In the revised manuscript, we expanded the background and methodological descriptions to explicitly articulate these innovations and their implementation details (see revised manuscript, lines~xx--xx and xx--xx).
 
+First, building upon multispatial CCM and related advances, \textit{tEDM} extends CCM to explicitly leverage spatially replicated observations that frequently arise in urban monitoring networks. Replicated time series are independently embedded, temporally aligned, and concatenated to form a combined embedding, enabling causal detection when individual series are short or weakly informative. Spatial dependence among replicated units can be incorporated through informed selection of spatially replicated observations participating in the combined embeddings (such as bandwidth selection in geographically weighted regression or range parameters derived from fitted variograms.), improving effective sample size while preserving dynamical consistency.
+
+Second, PCM is generalized beyond separating indirect effects to focus on identifying direct causal influences in high-dimensional systems. In \textit{tEDM}, potential third-party variables, including mediator, collider, confounding structures, and their combinations, are treated as conditioning variables, allowing the algorithm to isolate direct causal pathways under complex multivariate dependencies.
+
+Third, for causal strength estimation, CMC is augmented with a statistically robust DeLong placement strategy, which enables consistent estimation of causal strength together with uncertainty quantification via confidence intervals and significance testing. This extension improves the reliability of causal inference under noisy urban data conditions.
+
+These methodological extensions are now described both conceptually and algorithmically in the revised manuscript, and their performance and applicability are illustrated through three case studies covering different urban domains. We hope that these clarifications help make the methodological contributions and implementation details more transparent.
 \end{reply}
 
 \begin{point}
@@ -104,8 +112,16 @@ The proposed tool appears to mainly integrate several existing EDM methods witho
 The manuscript repeatedly states that tEDM is specifically developed for urban environmental studies. However, there is no clear explanation of how the model has been adapted to the specific characteristics of urban data, nor how spatial dependencies are incorporated into the modeling process. The authors should elaborate on why this tool is particularly suited for urban environments and provide supporting analysis or discussion to justify this claim.
 \end{point}
 
-\begin{reply}
+\begin{reply} 
+We thank the reviewer for highlighting the need to more clearly justify why \textit{tEDM} is particularly suited for urban environments and how spatial dependence is explicitly incorporated. In the revised manuscript, we substantially expanded both the methodological description and the discussion to clarify these points (see revised manuscript, lines~xx--xx and xx--xx).
 
+Urban datasets are characterized by several structural properties that challenge classical causal discovery methods, including short and fragmented time series, dense spatial replication across monitoring sites, strong spatial dependence, and heterogeneous multivariate interactions. As discussed in our response to the previous comment and elaborated in the revised manuscript, \textit{tEDM} introduces a series of methodological extensions to address these challenges, including multispatial extensions of CCM for short and replicated time series, generalized PCM for disentangling direct causal influences under complex multivariate interactions, and robust CMC-based causal strength estimation with uncertainty quantification. Rather than treating spatial observations as independent samples, \textit{tEDM} explicitly exploits these structural properties at the algorithmic level.
+
+Specifically, motivated by the multispatial CCM framework, \textit{tEDM} extends CCM to accommodate spatially replicated observations by independently embedding each replicated time series, temporally aligning and concatenating the embeddings into a combined state-space representation, and performing cross mapping on the aggregated manifold. Importantly, the selection of spatially replicated observations participating in reconstruction and prediction can be guided by spatial statistical criteria, such as the bandwidth in geographically weighted regression or the range parameter inferred from fitted variograms. This design allows spatial dependence among replicated units to be systematically exploited rather than ignored, thereby improving effective sample size and causal detectability when individual time series are short or weakly informative. Statistical significance is assessed via bootstrap resampling to construct an empirical null distribution of cross-mapping skill.
+
+Empirical support for this adaptation is provided in the county-level U.S. temperature and CO$_2$ emissions case study. In this example, classical CCM fails due to insufficient temporal information at the individual county level, whereas the multispatial extension that exploits spatially replicated time series successfully recovers a physically interpretable causal direction. This demonstrates that explicitly modeling spatial replication and spatial dependence is not only theoretically motivated but also practically necessary for urban-scale causal analysis.
+
+We hope that these clarifications and the additional methodological details help clarify why \textit{tEDM} is well suited for urban data and how spatial dependence is explicitly incorporated into the modeling framework.
 \end{reply}
 
 \begin{point}
@@ -138,7 +154,13 @@ The authors need to further explain why the results obtained from the tEDM analy
 \end{point}
 
 \begin{reply}
+We thank the reviewer for raising this important conceptual clarification. In the revised manuscript, we substantially expanded the \emph{Discussion and conclusion} section to explicitly explain why the causal relationships inferred by \textit{tEDM} represent \emph{temporal and dynamical causality} rather than mere statistical correlation (see revised manuscript, lines~xx--xx).
 
+Specifically, we now emphasize that \textit{tEDM} is grounded in the concept of dynamical causality, where causation is defined by whether the evolution of one variable leaves a persistent and directionally identifiable imprint on the state evolution of another variable through the underlying system dynamics. Unlike correlation analysis, which measures instantaneous or marginal association, EDM-based methods exploit state-space reconstruction and cross mapping to test whether information about a potential driver can be reliably recovered from the temporal trajectory of a response variable. Moreover, the convergence of cross-mapping skill with increasing library size provides an operational criterion to distinguish genuine causal signal from spurious correlation induced by shared trends, synchronization, or external forcing.
+
+In addition, we clarify that the notion of causality adopted by \textit{tEDM} differs from counterfactual or intervention-based causal effects commonly used in policy evaluation (e.g., average treatment effect). Instead, \textit{tEDM} focuses on \emph{dynamical causality}, which characterizes whether directional information flow is embedded in the evolving system dynamics. Within this framework, quantities such as the cross-mapping skill $\rho$ in CCM and PCM, and the causal strength metric in CMC, quantify the consistency and reliability with which the state of one variable can be recovered from another in reconstructed state space. These measures therefore serve as relative indicators of directional dynamical influence and are primarily intended for causal discovery, ranking, and comparative analysis within a given system, rather than as transferable effect sizes across unrelated systems or intervention scenarios (see revised manuscript, lines~xx--xx).
+
+To further reduce the risk that high cross-mapping skill reflects spurious assocaition rather than genuine dynamical influence, \textit{tEDM} incorporates multiple layers of robustness assessment, including statistical significance testing, convergence diagnostics with respect to library size, and consistency checks across spatial replications. In applied analyses, effect magnitude is also considered in addition to statistical significance. For example, in the case studies we only interpret statistically significant cross-mapping skill values exceeding a practical threshold (e.g., $\rho > 0.2$) as meaningful causal influence, in order to mitigate mirror dynamics or strong coupling effects that may otherwise inflate reconstruction skill without true causal directionality (see revised manuscript, lines~xx--xx). Together, these criteria support interpreting the inferred relationships as temporal and dynamical causality rather than merely enhanced correlation.
 \end{reply}
 
 \begin{point}
@@ -146,7 +168,15 @@ Complex urban systems involve variables across multiple dimensions such as popul
 \end{point}
 
 \begin{reply}
+We thank the reviewer for raising the important question of how \textit{tEDM} characterizes heterogeneous urban variables and adapts to diverse empirical scenarios. We have clarified this aspect in the revised manuscript by expanding the methodological description and discussion (see revised manuscript, lines~xx--xx and xx--xx).
 
+A key design principle of \textit{tEDM} is that heterogeneous urban variables (e.g., population, economy, transportation, energy, and environment) are not modeled through explicit parametric assumptions, but are instead characterized implicitly through their observed dynamics. Empirical dynamic modeling reconstructs the latent state space of each variable directly from its time series, allowing nonlinearities, delayed effects, feedback loops, and scale differences to be captured in the geometry of the reconstructed manifolds. This data-driven representation avoids assumptions of linearity, stationarity, Gaussianity, or separability, which are often violated in complex urban systems.
+
+Within this dynamical framework, variable-specific features such as temporal persistence, volatility, nonlinear coupling strength, and noise structure are encoded in the reconstructed state trajectories and neighborhood geometry, rather than being prescribed a priori. As a result, variables from fundamentally different domains can be analyzed within a unified representation while preserving their intrinsic dynamics.
+
+To adapt to different analytical scenarios commonly encountered in urban systems, \textit{tEDM} provides complementary methodological extensions. The multispatial extension of CCM enables effective use of spatially replicated observations to compensate for short or fragmented time series and to explicitly exploit spatial dependence. The generalized PCM framework focuses on identifying direct causal influence in high-dimensional multivariate settings, enhancing robustness to confounding, collider structures, and complex interdependencies. The augmented CMC implementation provides statistically consistent causal strength estimation with uncertainty quantification, improving reliability under noisy or partially observed conditions.
+
+We further emphasize that the data-driven and nonparametric nature of EDM enables \textit{tEDM} to accommodate nonlinear, nonstationary, and strongly coupled dynamics without requiring explicit model specification or variable-specific assumptions. The presented case studies across environmental health, carbon-tempeature interaction, and epidemic spreading demonstrate the practical adaptability of the framework to heterogeneous urban scenarios.
 \end{reply}
 
 \begin{point}
@@ -174,11 +204,17 @@ In Figure 5, what is the meaning of ``causal strength''? Does ``causal strength'
 \end{point}
 
 \begin{reply}
+We appreciate the reviewer's request for clarification regarding the meaning and applicability of ``causal strength.'' In the revised manuscript, we added a dedicated paragraph in the \emph{Discussion and conclusion} section to formally define this concept and clarify its scope of interpretation (see revised manuscript, lines~xx--xx).
 
+We now explain that within the dynamical causality framework, quantities reported as ``cross-mapping skill'' (the $\rho$ value) in CCM and PCM, and ``causal strength'' in CMC quantify the influence of data-driven deterministic processes governing the evolution of the underlying system. These metrics measure the consistency and reliability with which the state of one variable can be recovered from another in reconstructed state space, thereby serving as relative indicators of directional dynamical dependence.
+
+Importantly, we clarify that ``causal strength'' should not be interpreted as a counterfactual causal effect comparable to quantities such as the average treatment effect in intervention-based causal inference. Its magnitude is system-dependent and is primarily intended for causal discovery purposes, including ranking, comparison, and screening of potential causal influences within a given dataset, rather than direct transferability across unrelated systems or policy contexts. We further note that in applied analyses, statistical significance should be accompanied by effect-size thresholds (e.g., $\rho > 0.2$ in our case studies) to reduce spurious detections caused by strong coupling or mirror dynamics.
+
+We hope that this clarification helps resolve potential ambiguity regarding the interpretation and applicability of ``causal strength'' and improves the transparency of how these quantities should be used and understood in practice.
 \end{reply}
 
-\baselineskip12pt
-\bibliographystyle{elsarticle-harv} 
-\bibliography{references.bib} 
+% \baselineskip12pt
+% \bibliographystyle{elsarticle-harv} 
+% \bibliography{references.bib} 
 
 \end{document}
