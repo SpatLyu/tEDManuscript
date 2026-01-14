@@ -134,7 +134,20 @@ The paper does not clearly discuss how the causal discovery results produced by 
 \end{point}
 
 \begin{reply}
+We thank the reviewer for this important comment regarding the comparison between \textit{tEDM} and other widely adopted causal discovery methods, as well as the evaluation of reliability and robustness when the true causal structure is unknown. In the revised manuscript, we have substantially expanded both the comparative analysis and the methodological discussion to address these points (see revised manuscript, lines~xx--xx; xx--xx; xx--xx; xx--xx).
 
+\paragraph{Comparison with alternative methods.}
+To explicitly contrast the behavior of \textit{tEDM} with representative baseline approaches, we conducted additional comparative experiments across the case studies. In the Hong Kong CVD (see Figure~\ref{fig_cvds_pc} or Supplementary Figure~S2) and Japan COVID (see Figure~\ref{fig_covid_pc} or Supplementary Figure~S5) case studies, we applied the PC algorithm as a benchmark. In the U.S. carbon--temperature case study, we further compared against Granger causality (Figure~\ref{fig_carbon_gc}), standard CCM (Figure~\ref{fig_carbon_ccm}a), and the multispatial CCM extension implemented in \textit{tEDM} (Figure~\ref{fig_carbon_ccm}b). The corresponding results and interpretations are discussed in detail in the revised manuscript (lines~xx--xx; xx--xx; xx--xx; xx--xx).
+
+Across these comparisons, we find that EDM-based methods generally exhibit stronger causal discovery capability than PC and Granger causality in settings characterized by nonlinear dynamics, strong coupling, short or fragmented time series, and spatially replicated observations. In particular, conditional-independence-based methods may yield oversimplified structures or spurious directions under strong nonlinear dependence, while Granger causality often lacks power when temporal depth is limited or when dynamics deviate from linear autoregressive assumptions.
+
+\paragraph{Guidance on method suitability.}
+To clarify which approaches are more appropriate under different data conditions, we added a dedicated discussion in the revised manuscript on the intended application scenarios of CCM, PCM, and CMC as implemented in \textit{tEDM} (see lines~xx--xx). In summary, CCM is well suited for detecting directional dynamical influence in moderately sized nonlinear systems; PCM is designed to disentangle direct causal influences under multivariate dependencies; and CMC provides statistically grounded causal strength estimation with uncertainty quantification. These methods are particularly advantageous for observational systems where interventions are infeasible and where spatial replication can be exploited to compensate for limited temporal information.
+
+\paragraph{Reliability and robustness assessment.}
+Given that the true causal structure is typically unknown in real-world systems, we emphasize multiple complementary strategies for evaluating reliability and robustness. First, convergence diagnostics based on cross-mapping skill as a function of library size are provided in the CVD case (Figure~\ref{fig_cvds_pcm}), which assess whether predictive skill increases and stabilizes as expected under genuine dynamical causality. Second, in the carbon--temperature case, consistency of inferred temporal causality across spatial locations and under multispatial aggregation provides an additional robustness check. Third, cross-method comparisons against PC, Granger causality, and standard CCM help identify agreements and discrepancies, thereby contextualizing the strengths and limitations of each approach.
+
+Together, these additions aim to provide readers with clearer guidance on methodological choice and a transparent framework for interpreting the reliability of inferred causal networks in the absence of ground truth.
 \end{reply}
 
 \begin{point}
