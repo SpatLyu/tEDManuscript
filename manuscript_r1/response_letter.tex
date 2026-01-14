@@ -95,7 +95,15 @@ The proposed tool appears to mainly integrate several existing EDM methods witho
 \end{point}
 
 \begin{reply}
+We thank the reviewer for this constructive comment. We would like to clarify that \textit{tEDM} is not a simple integration of existing EDM methods, but introduces several methodological extensions to address known limitations of CCM, PCM, and CMC in the context of urban time series. In the revised manuscript, we expanded the background and methodological descriptions to explicitly articulate these innovations and their implementation details (see revised manuscript, lines~xx--xx and xx--xx).
 
+First, building upon multispatial CCM and related advances, \textit{tEDM} extends CCM to explicitly leverage spatially replicated observations that frequently arise in urban monitoring networks. Replicated time series are independently embedded, temporally aligned, and concatenated to form a combined embedding, enabling causal detection when individual series are short or weakly informative. Spatial dependence among replicated units can be incorporated through informed selection of spatial neighborhoods, improving effective sample size while preserving dynamical consistency.
+
+Second, PCM is generalized beyond separating indirect effects to focus on identifying direct causal influences in high-dimensional systems. In \textit{tEDM}, potential third-party variables, including mediator, collider, confounding structures, and their combinations, are treated as conditioning variables, allowing the algorithm to isolate direct causal pathways under complex multivariate dependencies.
+
+Third, for causal strength estimation, CMC is augmented with a statistically robust DeLong placement strategy, which enables consistent estimation of causal strength together with uncertainty quantification via confidence intervals and significance testing. This extension improves the reliability of causal inference under noisy urban data conditions.
+
+These methodological extensions are described both conceptually and algorithmically in the revised manuscript, and their effectiveness is demonstrated through the three case studies covering different urban domains. We believe these additions address the reviewer’s concern regarding methodological novelty and clarify how the proposed extensions are implemented and evaluated.
 \end{reply}
 
 \begin{point}
