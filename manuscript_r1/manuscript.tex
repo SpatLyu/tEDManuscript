@@ -382,9 +382,9 @@ To demonstrate the practical utility of the \textit{tEDM} package, we present th
 
 \subsection{Air pollution and cardiovascular health in Hong Kong}\label{case_cvds_hk}
 
-\begin{figure}[htb]
+\begin{figure}[htb!]
 \centering
-\includegraphics[width=0.85\textwidth]{./figure/figure4.png}
+\includegraphics[width=0.95\textwidth]{./figure/figure4.png}
 \caption{Causal relationships between air pollutants and cardiovascular disease incidence in Hong Kong.
 \textbf{a} Time series of the relevant variables.
 \textbf{b} Cross mapping skill (\(\rho\) value) among variables estimated via partial cross mapping (values not statistically significant at \(p > 0.05\) are marked with \(^{\#}\)).
@@ -418,7 +418,7 @@ Because this case study involves a bivariate dataset with spatially replicated o
 \label{fig_covid_jp}
 \end{figure}
 
-The third case study investigates the dynamics of COVID-19 transmission among Japanese prefectures during the pandemic, utilizing convergent cross mapping to reconstruct the influence of the Tokyo outbreak. As illustrated in Figure~\ref{fig_covid_jp}, seven prefectures exhibit a causal strength greater than 0.9 from Tokyo, indicating strong transmission linkages. These prefectures, which include both immediate neighbors in the Tokyo metropolitan area and other major urban centers, represent the regions most substantially affected by the Tokyo outbreak. This finding reflects the hub-like role of Tokyo as the primary source of infection spread, consistent with its status as the earliest and largest epicenter of confirmed cases in Japan. The result resonates with prior studies employing cross mapping cardinality approaches, which have shown that causal influence from Tokyo tends to decrease with increasing geodesic distance, while metropolitan areas with higher population density and mobility networks remain particularly susceptible \citep{tao2023cmc}. This finding emphasizes the necessity for coordinated public health strategies across prefectures to effectively manage and mitigate the spread of infectious diseases. The results contribute to a deeper understanding of regional transmission dynamics and inform future preparedness efforts in the face of similar public health crises.
+The third case study investigates the dynamics of COVID-19 transmission among Japanese prefectures during the pandemic, utilizing convergent cross mapping to reconstruct the influence of the Tokyo outbreak. As illustrated in Figure~\ref{fig_covid_jp}, seven prefectures exhibit a causal strength greater than 0.9 from Tokyo, indicating strong transmission linkages. These prefectures, which include both immediate neighbors in the Tokyo metropolitan area and other major urban centers, represent the regions most substantially affected by the Tokyo outbreak. This pattern reflects the hub-like role of Tokyo as the primary source of infection spread, consistent with its status as the earliest and largest epicenter of confirmed cases in Japan. The result also resonates with prior studies employing cross mapping cardinality approaches, which have shown that causal influence from Tokyo tends to decrease with increasing geodesic distance, while metropolitan areas with higher population density and mobility networks remain particularly susceptible \citep{tao2023cmc}. For comparison, when the PC algorithm is applied to the same dataset, it only identifies causal transmission links from Tokyo to Kanagawa and Chiba, while failing to detect influences on other highly connected but geographically more distant metropolitan regions (Supplementary Figure~S5), suggesting limited capacity to nonlinear and mobility-driven transmission dynamics. Overall, the reconstructed transmission network recovered by \textit{tEDM} highlights the need for coordinated public health strategies across prefectures to effectively manage and mitigate epidemic spread beyond immediate geographic proximity. These results contribute to a deeper understanding of regional transmission mechanisms and provide actionable insights for future preparedness in large-scale public health crises.
 
 \section{Discussion and conclusion}\label{sec_conc}
 
