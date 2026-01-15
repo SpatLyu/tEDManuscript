@@ -208,9 +208,7 @@ Motivated by the multispatial CCM method, \textit{tEDM} extends CCM to explicitl
 
 \subsubsection{Partial Cross Mapping (PCM)}\label{sec_pcm}
 
-Partial cross mapping extends the CCM method by accounting for indirect causal influences mediated by third variables. In addition to detecting whether $X$ causally influences $Y$, PCM seeks to distinguish the \emph{direct} effect of $X$ on $Y$ from any indirect influence transmitted through a mediate variable $Z$ \citep{leng2020pcm}.
-
-Given three time series $X_{(t)}, Y_{(t)}, Z_{(t)}$, the PCM procedure operates as follows:
+Partial cross mapping extends the CCM method by accounting for indirect causal influences mediated by third variables. In addition to detecting whether $X$ causally influences $Y$, PCM seeks to distinguish the \emph{direct} effect of $X$ on $Y$ from any indirect influence transmitted through a mediate variable $Z$ \citep{leng2020pcm}. Given three time series $X_{(t)}, Y_{(t)}, Z_{(t)}$, the PCM procedure operates as follows:
 
 First, the shadow manifold $M_y$ of $Y$ is reconstructed, and $\hat{X}$ is obtained from $M_y$ following the standard CCM cross-mapping step in Equation~\eqref{eq_cross_mapping}, with weights defined by Equation~\eqref{eq_ccm_weight}.  
 
