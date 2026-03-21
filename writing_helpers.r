@@ -3,11 +3,11 @@
   pdftools::pdf_convert(pdf = pdfname, filenames = pngname, dpi = dpi)
 }
 
-fs::dir_ls("./manuscript_r1/figure_pdf/", regexp = ".pdf$") |>
-  stringr::str_sub(28,-5) |> 
+fs::dir_ls("./manuscript_revision/figure_pdf/", regexp = ".pdf$") |>
+  stringr::str_sub(34,-5) |> 
   purrr::walk(\(.x) {
-    .pdf2png(paste0('./manuscript_r1/figure_pdf/',.x,'.pdf'),
-             paste0('./manuscript_r1/figure/',.x,'.png'))
+    .pdf2png(paste0('./manuscript_revision/figure_pdf/',.x,'.pdf'),
+             paste0('./manuscript_revision/figure/',.x,'.png'))
   })
 
 # references: doi -> bibtex
@@ -37,6 +37,7 @@ doi2bib("10.1038/s41467-020-16238-0") # pcm
 doi2bib("10.1016/j.fmre.2023.01.007") # cmc
 doi2bib("10.1093/bib/bbad281")        # cme
 doi2bib("10.1038/srep07464")          # cms
+doi2bib("10.1109/TPAMI.2026.3658839") # cic
 doi2bib("10.1038/s41467-023-41619-6") # gccm
 doi2bib("10.1890/14-1479.1")          # multispatialccm
 
@@ -49,7 +50,6 @@ doi2bib("10.1002/9780470517277")              # gstat
 doi2bib("10.1177/1536867X211000030")  # fastEDM package
 doi2bib("10.18637/jss.v077.i02")      # bnlearn package
 
-
 # reviews
 
 doi2bib("10.1038/s41467-019-10105-3")   # review1 
@@ -58,6 +58,11 @@ doi2bib("10.1038/s43017-023-00431-y")   # review2
 doi2bib("10.1016/j.scib.2021.10.002")   # Temporally or spatially
 doi2bib("10.1111/gean.12312")           # spatial causality review
 doi2bib("10.1016/j.spasta.2022.100621") # causal inference in spatial statistics
+
+# discussions
+
+doi2bib("10.1109/TSP.2023.3286529")
+doi2bib("10.1016/j.future.2016.12.009")
 
 # applications
 
