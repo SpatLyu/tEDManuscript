@@ -180,7 +180,13 @@ We have also added explicit explanations in the caption of Figure~\ref{fig_cvds_
 \reviewersection
 
 \begin{point}
-The authors need to further explain why the results obtained from the tEDM analysis represent temporal causality rather than merely correlation.
+The revisions are effectively addressed. I was not a reviewer on the original manuscript, but reviewing the revisions, I agree that the revisions were absolutely necessary for the publication of the manuscript.
+
+The manuscript provides a clear (if not a bit selective) overview of the literature on causal discovery, and clearly positions the R package within this ecosystem. I am quite skeptical of these methods' true ability to detect real useful relationships in a social science context; they're really prone to detecting spurious relationships based on basic misunderstandings of the process (10.1109/TSP.2023.3286529) or for under-specified/noisy systems (10.1016/j.future.2016.12.009), which is basically all of urban analytics... The authors never mention this literature, nor acknowledge that detected relationships are only consistent *within* the specified covariate set. They never set up a known process and examine the statistical power of the technique, nor do they acknowledge that such a thing is necessary. The statistical significance of effect estimates are stated, but never acknowledge that the null against which they are tested (*no* causal relation) is unrealistic and often inapplicable.
+
+Hence, these approaches are most useful in climate science applications, where physics informs us about what the likely causal relations are, offering a clear set of what the "complete" specification might be, and also what nulls are reasonable for the partial correlations powering the methods. Thus, this package probably is most relevant for urban environmental applications, making this mainly a good fit for the "E" in CEUS.
+
+So, this is about what I would expect from a package that supports a particular view of causal discovery mechanisms—mostly demoing the functionality with little critique of the method being implemented. I Think this is reasonable, since the actual new science on tEDM/Convergent mapping methods is where these objections ought to be raised.
 \end{point}
 
 \begin{reply}
