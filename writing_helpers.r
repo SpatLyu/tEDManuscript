@@ -3,11 +3,11 @@
   pdftools::pdf_convert(pdf = pdfname, filenames = pngname, dpi = dpi)
 }
 
-fs::dir_ls("./manuscript_revsion/figure_pdf/", regexp = ".pdf$") |>
+fs::dir_ls("./manuscript_revision/figure_pdf/", regexp = ".pdf$") |>
   stringr::str_sub(28,-5) |> 
   purrr::walk(\(.x) {
-    .pdf2png(paste0('./manuscript_revsion/figure_pdf/',.x,'.pdf'),
-             paste0('./manuscript_revsion/figure/',.x,'.png'))
+    .pdf2png(paste0('./manuscript_revision/figure_pdf/',.x,'.pdf'),
+             paste0('./manuscript_revision/figure/',.x,'.png'))
   })
 
 # references: doi -> bibtex
