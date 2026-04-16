@@ -4,7 +4,7 @@
 }
 
 fs::dir_ls("./manuscript_revision/figure_pdf/", regexp = ".pdf$") |>
-  stringr::str_sub(28,-5) |> 
+  stringr::str_sub(34,-5) |> 
   purrr::walk(\(.x) {
     .pdf2png(paste0('./manuscript_revision/figure_pdf/',.x,'.pdf'),
              paste0('./manuscript_revision/figure/',.x,'.png'))
