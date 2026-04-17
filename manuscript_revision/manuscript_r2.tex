@@ -1,323 +1,388 @@
-\documentclass[11pt]{article}
+\documentclass[authoryear,preprint,review,12pt]{elsarticle}
+
+
+\textheight24cm
+\textwidth15.5cm              
+\oddsidemargin0.25cm
+\topmargin-1.8cm
 \usepackage[utf8]{inputenc}
+\usepackage{booktabs} 
+\usepackage{tabularx}
+\usepackage{ltablex} 
+\usepackage{geometry} 
+\usepackage{caption} 
 \usepackage{amsmath}
-\usepackage{lipsum} 
-\usepackage{fullpage}
-\usepackage{mathrsfs}
-\usepackage{svg}
-\usepackage{xr}
-\usepackage{amsthm,cite,natbib,url,graphicx,booktabs,lipsum,color,bm,caption,subcaption,soul}
-\usepackage{pifont,tikz,paralist,multirow,amssymb}
-\usepackage{xifthen}
-\usepackage{enumerate}
-\usepackage{enumitem}
-\usepackage{titlesec}
-\usepackage{hyperref}
-\usepackage{xcolor}
-\definecolor{revisionmodified}{HTML}{F2A6A6}   % red: modified text
-\definecolor{revisionadded}{HTML}{8AC1AF}      % green: newly added text
-\definecolor{revisionmoved}{HTML}{B4D9FF}      % blue: relocated/moved text
+\usepackage{tcolorbox} 
+\usepackage{soul}
+\usepackage{caption}
+\geometry{
+  left=0.75in,
+  right=0.75in,
+  top=1in,
+  bottom=1in
+}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xeCJK}
+\usepackage{pifont}
+\usepackage{placeins}
+\usepackage{color}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{lineno}  
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{float}
+\usepackage{arydshln}
+\usepackage{url}
+\def\UrlBreaks{\do\/\do-}
+\usepackage{multirow}
+\usepackage{comment}
+\usepackage{threeparttable}
+\usepackage{bm}
+\usepackage{amsmath}
+\usepackage{booktabs} 
+\usepackage{tabularx}
+\usepackage{geometry}
+%\usepackage[x11names]{xcolor}
+\usepackage[
+  colorlinks,
+]{hyperref}
+\definecolor{DodgerBlue4}{rgb}{0.0627, 0.3059, 0.5451}
+\AtBeginDocument{\hypersetup{citecolor=DodgerBlue4}}
 
-% 自定义 Reviewer 计数器
-\newcounter{reviewer}
-\setcounter{reviewer}{0}
-\newcounter{point}[reviewer]
-\setcounter{point}{0}
-
-% % 将 Reviewer 的计数方式改为字母（A, B, C, D, ...）
-% \renewcommand{\thereviewer}{\Alph{reviewer}}
-
-% 定义 Reviewer 的引用格式
-\renewcommand{\thepoint}{Comment\,\thereviewer.\arabic{point}}
-
-% 定义 Associate Editor 的评论环境
-\newenvironment{point1}
-   {\refstepcounter{point} \bigskip \noindent {\textbf{Editor Comment~}} ---\ }
-   {\par }
-
-% 定义 Reviewer 的评论环境
-\newenvironment{point}
-   {\refstepcounter{point} \bigskip \noindent {\textbf{Reviewer~\thepoint} } ---\ }
-   {\par }
-
-% 定义 Reviewer 的简短评论命令
-\newcommand{\shortpoint}[1]{\refstepcounter{point}   \bigskip \noindent 
-	{\textbf{Reviewer~Point~\thepoint} } ---~#1  }
-
-% 定义回复环境
-\newenvironment{reply}
-   {\medskip \noindent \color{blue} \begin{sf}\textbf{Reply}:\  }
-   {\medskip \par \end{sf}}
-
-% 定义简短回复命令
-\newcommand{\shortreply}[2][]{\medskip \noindent \begin{sf}\textbf{Reply}:\  #2
-	\ifthenelse{\equal{#1}{}}{}{ \hfill \footnotesize (#1)}%
-	\medskip \end{sf}}
-
-% 允许跳过某些 Reviewer
-\newcommand{\skipreviewer}{\stepcounter{reviewer}}
-
-% 定义 Reviewer 部分
-\newcommand{\reviewersection}{\stepcounter{reviewer} \bigskip \hrule
-                  \section*{Reviewer \thereviewer}}
-
-\title{Response to Reviewers \\ Manuscript Number: CEUS-D-25-01256R1}
-\author{}
-\date{}
-
+\journal{Computers, Environment and Urban Systems}
 \begin{document}
-\maketitle
+\begin{frontmatter}
+\title{Causal discovery in urban data with temporal empirical dynamic modeling: The R package tEDM}
 
-\vspace{-30pt}
+% \author[a,b,c]{Wenbo Lyu}
+% % \ead{wenbolyu@hkust-gz.edu.cn}
 
-The authors would like to thank the editor and reviewers for their constructive comments and suggestions, which have greatly improved the quality of this manuscript. In response, we have carefully revised the manuscript in accordance with all editorial and reviewers’ comments. Our point-by-point responses are provided below. In the revised manuscript (version with revisions marked), all changes made in response to the editor's and reviewers' comments are highlighted with a colored background (e.g., \colorbox{revisionmodified}{\strut as shown here}).
-% In the revised manuscript, all changes made in response to the editor’s and reviewers’ comments are highlighted as follows: \colorbox{revisionmodified}{\strut modified content}, \colorbox{revisionadded}{\strut newly added content}, and \colorbox{revisionmoved}{\strut content relocated within the manuscript}.
+% \author[d]{Yangyang Lei}
+% % \ead{yangyang.lei@stu.hit.edu.cn}
 
-\begin{point1}
-Given one of the original reviewers rejected our invitation to review the revision, Reviewer #3 was invited. Both reviewers seem to point in the same direction requiring more open discussion about the applicability and limitations of the method. Please reflect that in the revision.
-\end{point1}
+% \author[b]{Wen Yi}
+% % \ead{wen.yi@polyu.edu.hk}
 
-\begin{reply}
-We sincerely thank you for your guidance and for coordinating the review process. In this revision, we have substantially revised the \textit{Discussion and Conclusion} section to provide a more open and critical reflection on the applicability and limitations of the method. Specifically, we have:
+% \author[e]{Yongze Song}
+% % \ead{yongze.song@curtin.edu.au}
 
-\begin{itemize}
-    \item Added a more explicit discussion of the \textbf{applicability conditions} of empirical dynamic modeling, including requirements related to deterministic structure, data length, and system stability;
-    \item Expanded the discussion of \textbf{methodological limitations}, including sensitivity to noise, short time series, partial observability, and dependence on the specified covariate set;
-    \item Clarified the \textbf{interpretation of causal measures}, emphasizing that they reflect directional dynamical dependence rather than intervention-based causal effects;
-    \item Discussed the \textbf{limitations of statistical significance testing}, particularly the unrealistic nature of the ``no causality'' null hypothesis in complex systems;
-    \item Highlighted the importance of \textbf{domain knowledge and contextual validation} in interpreting inferred relationships.
-\end{itemize}
+% \author[f,g,h]{Xiao Li}
+% % \ead{xiao-shaw.li@polyu.edu.hk}
 
-We hope these revisions provide a more balanced and transparent account of the scope and limitations of methods implemented in the \textit{tEDM}, in line with the reviewers' suggestions and your recommendation.
-\end{reply}
+% \author[i]{Shaoqing Dai}
+% % \ead{shaoqing.dai@whu.edu.cn}
 
-\paragraph{Note:} All line numbers mentioned in this response letter refer to the small line numbers adjacent to the text in the revised manuscript (as generated by the \LaTeX{} line-numbering package). These may not correspond to the line numbers used by the submission system, which tend to be larger and differ from those in the manuscript.
+% \author[j]{Yiming Qin}
+% % \ead{ymqin@eitech.edu.cn}
 
-% In addition, several new comparative experiments have been added in this revision, and the corresponding figures are provided in the Supplementary Material. Moreover, all original case studies have been re-analyzed using the extended algorithms implemented in the \textit{tEDM} package developed in this study, which has resulted in substantial updates to multiple figures. To facilitate the reviewers' examination of the revised results and figure changes, we provide a complete list of all figures in the revised manuscript, including both main-text figures and supplementary figures, after the point-by-point responses. For clarity, Figures~1--6 referenced in the point-by-point responses correspond to Figures~1--6 in the revised manuscript, whereas Figures~7--11 in the point-by-point responses correspond to Supplementary Figures~S1--S5 in the Supplementary Material.
+% \author[a]{Wufan Zhao\corref{cor}}
+% % \ead{wufanzhao@hkust-gz.edu.cn}
 
-\newpage
+% \cortext[cor]{Corresponding author: Wufan Zhao, wufanzhao@hkust-gz.edu.cn}
 
-\skipreviewer
-\reviewersection
+% \address[a]{Urban Governance and Design Thrust, The Hong Kong University of Science and Technology (Guangzhou), Guangzhou, China}
+% \address[b]{Department of Building and Real Estate, The Hong Kong Polytechnic University, Hong Kong, China}
+% \address[c]{Shenzhen Research Institute, The Hong Kong Polytechnic University, Shenzhen, China}
+% \address[d]{School of Architecture and Design, Harbin Institute of Technology, Harbin, China}
+% \address[e]{School of Design and the Built Environment, Curtin University, Perth, Australia}
+% \address[f]{Department of Land Surveying and Geo-Informatics, The Hong Kong Polytechnic University, Hong Kong, China}
+% \address[g]{Transport Studies Unit, University of Oxford, Oxford, UK}
+% \address[h]{Smart Cities Research Institute, The Hong Kong Polytechnic University, Hong Kong, China}
+% \address[i]{School of Resource and Environmental Sciences, Wuhan University, Wuhan, China}
+% \address[j]{School of the Environment and Sustainable Engineering, Eastern Institute of Technology, Ningbo, China}
 
-\begin{point}
-The authors have addressed my questions. However, they need to further clarify in the conclusion the applicability conditions and limitations of the proposed method.
-\end{point}
+\begin{abstract}
+Urban systems are complex, nonlinear, and adaptive, with interactions unfolding across multiple spatial and temporal scales. Traditional correlation-based and regression approaches often fail to capture their dynamic causal structures, limiting understanding of underlying mechanisms. Causal inference provides a more powerful framework, encompassing both causal discovery and causal effect estimation, yet the former remains underexplored in urban studies. Empirical Dynamic Modeling (EDM) is well suited for this task, as it reconstructs system dynamics directly from time series without prespecified models. Despite its potential, EDM has seen limited application in urban contexts. To address this gap, we introduce \textit{tEDM}, an open-source R package that extends EDM to heterogeneous, high-frequency, multivariate, and multi-spatial urban datasets. The package combines a C++ computational backbone with seamless R integration to achieve both efficiency and usability in large-scale urban time series analysis. Its applicability is illustrated through representative case studies on environmental health, carbon-climate dynamics, and epidemic spread, demonstrating how \textit{tEDM} enables nuanced causal discovery and provides methodological as well as practical advances for urban and environmental research. The \textit{tEDM} package is publicly available at \url{https://github.com/stscl/tEDM}.
+\end{abstract}
 
-\begin{reply}
-We sincerely thank the reviewer for the careful reading of our last revision and for this helpful suggestion. In response, we have substantially expanded the \textit{Discussion and Conclusion} section to more clearly articulate both the \textbf{applicability conditions} and \textbf{limitations} of the proposed method. In particular, we now:
+\begin{keyword}
+causal discovery \sep empirical dynamic modeling \sep time series \sep urban data \sep R package \textit{tEDM}
+\end{keyword}
+\end{frontmatter}
 
-\begin{itemize}
-    \item Clarify the \textbf{data requirements} for reliable state-space reconstruction, including the need for sufficiently long and informative time series;
-    \item Discuss the impact of \textbf{noise, short or irregular observations, and partial observability} on inference stability;
-    \item Explicitly state that inferred causal relationships are \textbf{conditional on the selected set of observed variables}, and may change as additional covariates are incorporated;
-    \item Emphasize that EDM-based methods are most appropriate in systems with \textbf{coherent dynamical structure and relatively stable mechanisms};
-    \item Highlight that these methods are best suited for \textbf{observational causal discovery and hypothesis generation}, rather than fully identified causal effects.
-\end{itemize}
+\linenumbers
 
-We hope these additions address the reviewer's concern and improve the clarity regarding when and how the method can be appropriately applied.
+\section{Introduction}\label{sec_intro}
 
-We thank the reviewer for this constructive comment. We would like to clarify that \textit{tEDM} is not a simple integration of existing EDM methods, but introduces several methodological extensions to address known limitations of CCM, PCM, and CMC in the context of urban time series. In the revised manuscript, we expanded the background and methodological descriptions to explicitly articulate these innovations and their implementation details (see revised manuscript, lines~105--115, 143--158, 181--189, and 203--215).
+Urban systems are inherently complex, comprising interdependent socio-economic, environmental, and infrastructural components that interact across multiple spatial and temporal scales \citep{mcphearson2016understand_urban_systems}. These interactions are often nonlinear, adaptive, and subject to feedback loops, making them challenging to analyze with traditional correlation-based approaches and linear regression models \citep{gan2025urban_transfer_entropy}, which typically assume fixed functional relationships, linearity, and stationarity. Such assumptions constrain their capacity to capture the dynamic, nonlinear dependencies and feedback mechanisms that characterize real-world urban processes. As a result, much of the current analytical practice in urban science relies on methods that can identify statistical associations but are not equipped to uncover underlying causal mechanisms.
 
-First, building upon multispatial CCM and related advances, \textit{tEDM} extends CCM to explicitly leverage spatially replicated observations that frequently arise in urban monitoring networks. Replicated time series are independently embedded, temporally aligned, and concatenated to form a combined embedding, enabling causal detection when individual series are short or weakly informative. Spatial dependence among replicated units can be incorporated through informed selection of spatially replicated observations participating in the combined embeddings (such as bandwidth selection in geographically weighted regression or range parameters derived from fitted variograms.), improving effective sample size while preserving dynamical consistency.
+Causal analysis, in contrast, seeks to move beyond correlation by identifying the drivers and mechanisms that generate observed patterns, thereby providing a stronger basis for effective interventions and informed decision-making \citep{niu2023mobility_intervention_policies,li2025city_carbon,fekete2025urban_transport}. In recent years, it has been successfully applied in urban science to examine the interplay between climate change and human crises \citep{zhang2011climate_change_human_crisis}, assess the impact of air pollution on life expectancy \citep{chen2013air_pollution_life_expectancy}, investigate the effects of ozone exposure on influenza incidence \citep{guo2024ozone_influenza}, uncover the mechanisms underlying the urban heat island phenomenon \citep{zhong2024urban_heat_island}, and explore causality among roads within urban traffic networks \citep{mao2024urban_traffic_networks}. These examples provide compelling evidence of the transformative potential of causal inference in revealing mechanisms that are not accessible through correlational approaches alone.
 
-Second, PCM is generalized beyond separating indirect effects to focus on identifying direct causal influences in high-dimensional systems. In \textit{tEDM}, potential third-party variables, including mediator, collider, confounding structures, and their combinations, are treated as conditioning variables, allowing the algorithm to isolate direct causal pathways under complex multivariate dependencies.
+Causal inference in quantitative research can be broadly divided into two primary tasks: causal discovery, which seeks to identify the underlying structure of causal relationships among variables \citep{runge2015causal_gateways,runge2019ictsess,runge2023cits}, and causal effect estimation, which focuses on quantifying the magnitude of causal impacts once a causal structure is assumed or identified \citep{pearl1995scm1,pearl2000scm2,rubin1974pom1,rubin1986pom2}. In urban science and related disciplines, causal effect estimation has been widely implemented using quasi-experimental designs such as difference-in-differences (DID), regression discontinuity design (RDD), and instrumental variables, as well as structural equation modeling (SEM) approaches \citep{liu2021quasi_experimental,delgado2015sdid,kolak2019srdd,bowden2015instruments,rosseel2012sem}. These methods have enabled researchers to evaluate the effects of policies, infrastructure investments, and environmental interventions on various urban outcomes \citep{chen2013air_pollution_life_expectancy,jia2021high_speed_rail,li2024protected_areas}. In contrast, causal discovery has received comparatively less attention, despite its potential to uncover hidden causal structures in complex urban systems and to inform the design of more robust and targeted effect estimation strategies \citep{deng2022urban_granger_causality,fekete2025urban_transport,gan2025urban_transfer_entropy}.
 
-Third, for causal strength estimation, CMC is augmented with a statistically robust DeLong placement strategy, which enables consistent estimation of causal strength together with uncertainty quantification via confidence intervals and significance testing. This extension improves the reliability of causal inference under noisy urban data conditions.
+Among the existing approaches to causal discovery, one prominent category involves predictive models such as Granger causality \citep{granger1969grangertest,geweke1982grangertest2} and its nonlinear extension, transfer entropy \citep{schreiber2000te1,vicente2010te2}, which have been further adapted to multi-spatial observational and nonstationary urban time series \citep{deng2022urban_granger_causality,gan2025urban_transfer_entropy}. Another influential line of methods centers on graphical causal models, such as the Peter and Clark (PC) algorithm, Fast Causal Inference (FCI), and Peter and Clark Momentary Conditional Independence (PCMCI), which rely on conditional independence testing and structural constraints to infer causal structures \citep{spirtes1993pc,runge2019pcmci,runge2023cits}. A third and increasingly utilized framework is Empirical Dynamic Modeling (EDM), which reconstructs system dynamics from time series data using state-space embedding, enabling causal inference in complex systems without prespecified model structures \citep{lorenz1969ssr,Takens1981embedding,Mane1981embedding,sugihara2012ccm}. By leveraging the intrinsic properties of dynamic systems, such as nonlinearity and feedback, EDM is particularly well suited for capturing causal interactions in urban systems, which are often temporally evolving, multi-scale, and characterized by complex interdependencies. This makes EDM a compelling tool for advancing causal understanding in urban science.
 
-These methodological extensions are now described both conceptually and algorithmically in the revised manuscript, and their performance and applicability are illustrated through three case studies covering different urban domains. We hope that these clarifications help make the methodological contributions and implementation details more transparent.
-\end{reply}
+However, despite its conceptual advantages, the application of EDM for causal discovery in urban contexts remains limited. We argue that harnessing EDM in this domain can uncover causal linkages that are often overlooked by traditional correlation-based or regression approaches, thereby providing deeper insights into the mechanisms governing urban processes. To facilitate such efforts, we introduce \textit{tEDM}, an open-source \textit{R} package that extends the EDM framework with temporal causality detection capabilities tailored to the heterogeneous, high-frequency, multivariate, and multi-spatial observational nature of urban datasets \citep{deng2022urban_granger_causality,gan2025urban_transfer_entropy,fekete2025urban_transport}. Through three representative case studies, we demonstrate how \textit{tEDM} enables more nuanced and accurate causal discovery in urban time series, contributing both methodological innovation and practical value for urban science.
 
-\begin{point}
-\textbf{Adaptation to Urban Environmental Research}
+The remainder of this paper is organized as follows. Section~\ref{sec_bg} outlines the theoretical foundations of empirical dynamic modeling and its relevance to causal discovery. Section~\ref{sec_pkg} details the design, structure, and core functionalities of the \textit{tEDM} package. In Section~\ref{sec_cases}, we illustrate the practical utility of \textit{tEDM} through three real-world case studies spanning different urban contexts. Finally, Section~\ref{sec_conc} summarizes the key insights and discusses limitations, as well as directions for future research and development.
 
-The manuscript repeatedly states that tEDM is specifically developed for urban environmental studies. However, there is no clear explanation of how the model has been adapted to the specific characteristics of urban data, nor how spatial dependencies are incorporated into the modeling process. The authors should elaborate on why this tool is particularly suited for urban environments and provide supporting analysis or discussion to justify this claim.
-\end{point}
+\section{Background}\label{sec_bg}
 
-\begin{reply} 
-We thank the reviewer for highlighting the need to more clearly justify why \textit{tEDM} is particularly suited for urban environments and how spatial dependence is explicitly incorporated. In the revised manuscript, we substantially expanded both the methodological description and the discussion to clarify these points (see revised manuscript, lines~103--115, 143--158 and 434--445).
+\subsection{Empirical dynamic modeling and dynamic causality}\label{sec_edm}
 
-Urban datasets are characterized by several structural properties that challenge classical causal discovery methods, including short and fragmented time series, dense spatial replication across monitoring sites, strong spatial dependence, and heterogeneous multivariate interactions \citep{mcphearson2016understand_urban_systems,gan2025urban_transfer_entropy}. As discussed in our response to the previous comment and elaborated in the revised manuscript, \textit{tEDM} introduces a series of methodological extensions to address these challenges, including multispatial extensions of CCM for short and replicated time series, generalized PCM for disentangling direct causal influences under complex multivariate interactions, and robust CMC-based causal strength estimation with uncertainty quantification. Rather than treating spatial observations as independent samples, \textit{tEDM} explicitly exploits these structural properties at the algorithmic level.
+Traditional causality detection in time series analysis often relies on Granger causality, which assumes that if the historical values of variable $X$ can improve the prediction of variable $Y$, then $X$ is said to Granger-cause $Y$ \citep{granger1969grangertest,geweke1982grangertest2}. In practice, Granger causality is typically implemented using linear vector autoregressive models, which implicitly assume that interacting variables are separable. This separability assumption is frequently violated in nonlinear and dynamically coupled systems, limiting the ability of Granger causality to correctly identify causal relationships \citep{sugihara2012ccm}. To address this limitation, empirical dynamic modeling (EDM) provides a data-driven, model-free framework capable of capturing nonlinear and inseparable causal relationships directly from time series data. EDM reconstructs the underlying system dynamics through time-delay embedding, enabling robust inference of causal relationships without requiring explicit functional forms or assumptions of separability \citep{Takens1981embedding,Mane1981embedding,sugihara2012ccm,leng2020pcm,tao2023cmc}.
 
-Specifically, motivated by the multispatial CCM framework, \textit{tEDM} extends CCM to accommodate spatially replicated observations by independently embedding each replicated time series, temporally aligning and concatenating the embeddings into a combined state-space representation, and performing cross mapping on the aggregated manifold. Importantly, the selection of spatially replicated observations participating in reconstruction and prediction can be guided by spatial statistical criteria, such as the bandwidth in geographically weighted regression \citep{brunsdon1996gwr} or the range parameter inferred from fitted variograms \citep{webster2007gstat}. This design allows spatial dependence among replicated units to be systematically exploited rather than ignored, thereby improving effective sample size and causal detectability when individual time series are short or weakly informative. Statistical significance is assessed via bootstrap resampling to construct an empirical null distribution of cross-mapping skill.
+The theoretical foundations of EDM include the generalized embedding theorem and dynamical systems theory. The generalized embedding theorem states that the dynamics of a deterministic system can be reconstructed from time-delayed observations of a single variable \citep{lorenz1969ssr,Takens1981embedding,Mane1981embedding}, producing a shadow manifold that preserves the topological properties of the original system's attractor. Dynamical systems theory further indicates that if two variables are causally linked, the geometry of their respective shadow manifolds will exhibit a consistent correspondence, allowing states on one manifold to be used to estimate states on the other through mutual cross mapping \citep{sugihara2012ccm,gao2023gccm}. These two processes are jointly illustrated in Figure~\ref{fig_edm}, which depicts both manifold reconstruction and the cross mapping between shadow manifolds.
 
-Empirical support for this adaptation is provided in the county-level U.S. temperature and CO$_2$ emissions case study (see revised manuscript, lines~401--411). In this example, classical CCM fails due to insufficient temporal information at the individual county level (Figure~\ref{fig_carbon_ccm}a), whereas the multispatial extension that exploits spatially replicated time series successfully recovers a physically interpretable causal direction (Figure~\ref{fig_carbon_ccm}b). This demonstrates that explicitly modeling spatial replication and spatial dependence is not only theoretically motivated but also practically necessary for urban-scale causal analysis.
-
-We hope that these clarifications and the additional methodological details help clarify why \textit{tEDM} is well suited for urban data and how spatial dependence is explicitly incorporated into the modeling framework.
-\end{reply}
-
-\begin{point}
-\textbf{Comparison with Other Causal Discovery Methods}
-
-The paper does not clearly discuss how the causal discovery results produced by tEDM differ from those obtained using other widely adopted causal discovery algorithms, such as the PC algorithm. It would be valuable for readers if the authors could discuss which approach is more suitable under certain conditions, and—given that the true causal structure is typically unknown—how the reliability and robustness of the inferred causal networks are evaluated.
-\end{point}
-
-\begin{reply}
-We thank the reviewer for this important comment regarding the comparison between \textit{tEDM} and other widely adopted causal discovery methods, as well as the evaluation of reliability and robustness when the true causal structure is unknown. In the revised manuscript, we have substantially expanded both the comparative analysis and the methodological discussion to address these points (see revised manuscript, lines~372--376, 398--411, 424--427, and 446--496).
-
-\paragraph{Comparison with alternative methods.}
-To explicitly contrast the behavior of \textit{tEDM} with representative baseline approaches, we conducted additional comparative experiments across the case studies. In the Hong Kong CVD (see Figure~\ref{fig_cvds_pc} or Supplementary Figure~S2) and Japan COVID (see Figure~\ref{fig_covid_pc} or Supplementary Figure~S5) case studies, we applied the PC algorithm as a benchmark. In the U.S. carbon--temperature case study, we further compared against Granger causality (Figure~\ref{fig_carbon_gc}), standard CCM (Figure~\ref{fig_carbon_ccm}a), and the multispatial CCM extension implemented in \textit{tEDM} (Figure~\ref{fig_carbon_ccm}b). The corresponding results and interpretations are discussed in detail in the revised manuscript (lines~372--376, 398--411, and 424--427).
-
-Across these comparisons, we find that EDM-based methods generally exhibit stronger causal discovery capability than PC and Granger causality in settings characterized by nonlinear dynamics, strong coupling, short or fragmented time series, and spatially replicated observations. In particular, conditional-independence-based methods may yield oversimplified structures or spurious directions under strong nonlinear dependence, while Granger causality often lacks power when temporal depth is limited or when dynamics deviate from linear autoregressive assumptions.
-
-\paragraph{Guidance on method suitability.}
-To clarify which approaches are more appropriate under different data characteristics and analytical objectives, we added a dedicated discussion in the revised manuscript on the intended application scenarios of CCM, PCM, and CMC as implemented in \textit{tEDM} (see lines~471--479). Consistent with the discussion, standard CCM is most appropriate when sufficiently long and high-quality time series are available and when the dominant causal pathways are expected to be relatively low-dimensional. PCM is preferable in multivariate systems where indirect effects, confounding structures, or complex interdependencies may obscure direct causal relationships. CMC is advantageous when geometric consistency of reconstructed manifolds provides more stable evidence than prediction accuracy, particularly under noisy or partially observed conditions. In applied analyses, we further emphasize that combining evidence from these complementary perspectives often yields more reliable causal interpretation than reliance on a single criterion.
-
-\paragraph{Reliability and robustness assessment.}
-Given that the true causal structure is typically unknown in real-world systems, we explicitly emphasize multiple complementary strategies for evaluating the reliability and robustness of the inferred causal relationships in the revised manuscript (see lines~480--496). 
-
-First, statistical significance testing and convergence diagnostics with respect to library size are jointly used to distinguish genuine dynamical causality from spurious correlations driven by synchronization, or noise. For example, in the CVD case study, the cross-mapping skill curves across increasing library sizes (Figure~\ref{fig_cvds_pcm} or Supplementary Figure S1) allow readers to examine whether predictive skill exhibits a monotonic increase and eventual stabilization with library size, which serves as an empirical diagnostic for the presence of dynamically meaningful cross-mapping rather than finite-sample artifacts or noise.
-
-Second, effect magnitude is considered in addition to statistical significance. In the presented case studies, only statistically significant cross-mapping skill values or causal strength exceeding a practical threshold (e.g., $\rho > 0.2$) are interpreted as meaningful causal influence. This additional filtering helps reduce false positives arising from strong coupling, mirror dynamics, or shared external forcing, which may otherwise yield high reconstruction skill without true causal influence.
-
-Third, consistency checks across different spatial units provide an additional robustness criterion when spatially replicated observations are available. In the carbon--temperature case, causal influence is further evaluated by examining the overall distributions of causal strength and cross-mapping performance between carbon emissions and temperature across counties, summarized using boxplots. The consistent separation between the carbon $\rightarrow$ temperature and temperature $\rightarrow$ carbon directions across spatial units provides empirical support for the stability and robustness of the inferred causal asymmetry.
-
-Fourth, cross-method comparisons against alternative approaches, including PC, Granger causality, and standard CCM, help contextualize agreements and discrepancies among different causal assumptions and methodological paradigms, thereby clarifying the relative strengths and limitations of each method.
-
-Finally, we emphasize that algorithmic inference alone cannot fully resolve causal ambiguity. Domain knowledge, physical constraints, and contextual interpretation remain essential for validating inferred causal relationships and for translating dynamical causality into actionable scientific or policy insights.
-\end{reply}
-
-\begin{point}
-\textbf{Minor Comments on Presentation}
-
-\begin{enumerate}[label=\arabic*.]
-    \item In Figure 4, it is not clearly explained how the causal network results shown in Figure 3-c were obtained. This connection is crucial for understanding the workflow and logic of the causal discovery process. Please provide additional clarification or methodological description.
-    \item In Figure 3-b, the meaning of the symbol ``\#'' is unclear. A brief note or legend explanation should be added to help readers interpret the figure correctly.
-\end{enumerate}
-\end{point}
-
-\begin{reply}
-We thank the reviewer for these helpful comments on improving the clarity of presentation and methodological transparency. In the revised manuscript, we explicitly clarified both the implementation of the original EDM algorithms and the methodological extensions introduced in the \textit{tEDM} package. To ensure consistency with the revised workflow, the CVD case study was re-analyzed using the extended PCM formulation implemented in \textit{tEDM}, and the corresponding figures were updated accordingly.
-
-Specifically, the core results are summarized in Figure~\ref{fig_cvds_hk}. In Figure~\ref{fig_cvds_hk}b, cross-mapping skills $\rho$ that are not statistically significant are marked with the symbol ``$^{\#}$''. Causal links are inferred when the corresponding $\rho$ values are both statistically significant and exceed the practical effect-size threshold of $0.2$. These inferred links are then aggregated and visualized as the causal network in Figure~\ref{fig_cvds_hk}c according to this decision rule.
-
-In addition to the $\rho$ values reported at the maximum library size in Figure~\ref{fig_cvds_hk}b, the full cross-mapping skill curves across different library sizes are provided in Figure~\ref{fig_cvds_pcm} (Supplementary Figure~S1). These curves serve as convergence diagnostics, allowing readers to assess whether cross-mapping skill increases and stabilizes with increasing library size, which is a key criterion for distinguishing genuine dynamical causality from spurious associations driven by finite-sample effects or noise. The consistent convergence patterns observed across the supported causal directions further strengthen the robustness and interpretability of the inferred causal network.
-
-We have also added explicit explanations in the caption of Figure~\ref{fig_cvds_hk} to clarify the meaning of the symbol ``\#'' and the workflow linking quantitative PCM outputs to the reconstructed causal network.
-\end{reply}
-
-\newpage
-\reviewersection
-
-\begin{point}
-The revisions are effectively addressed. I was not a reviewer on the original manuscript, but reviewing the revisions, I agree that the revisions were absolutely necessary for the publication of the manuscript.
-
-The manuscript provides a clear (if not a bit selective) overview of the literature on causal discovery, and clearly positions the R package within this ecosystem. I am quite skeptical of these methods' true ability to detect real useful relationships in a social science context; they're really prone to detecting spurious relationships based on basic misunderstandings of the process (10.1109/TSP.2023.3286529) or for under-specified/noisy systems (10.1016/j.future.2016.12.009), which is basically all of urban analytics... The authors never mention this literature, nor acknowledge that detected relationships are only consistent *within* the specified covariate set. They never set up a known process and examine the statistical power of the technique, nor do they acknowledge that such a thing is necessary. The statistical significance of effect estimates are stated, but never acknowledge that the null against which they are tested (*no* causal relation) is unrealistic and often inapplicable.
-
-Hence, these approaches are most useful in climate science applications, where physics informs us about what the likely causal relations are, offering a clear set of what the "complete" specification might be, and also what nulls are reasonable for the partial correlations powering the methods. Thus, this package probably is most relevant for urban environmental applications, making this mainly a good fit for the "E" in CEUS.
-
-So, this is about what I would expect from a package that supports a particular view of causal discovery mechanisms—mostly demoing the functionality with little critique of the method being implemented. I Think this is reasonable, since the actual new science on tEDM/Convergent mapping methods is where these objections ought to be raised.
-\end{point}
-
-\begin{reply}
-We thank the reviewer for the thoughtful and constructive comments, and we appreciate the careful evaluation of the revised manuscript.
-
-We fully agree with the reviewer's concern that EDM-based approaches can be prone to detecting spurious or non-actionable relationships, particularly in noisy, under-specified systems such as those commonly encountered in urban analytics. In response, we have revised the \textit{Discussion and Conclusion} section to more explicitly acknowledge these limitations and to better contextualize the scope of the method.
-
-In particular, we have made the following revisions:
-
-\begin{itemize}
-    \item We now explicitly state that inferred causal relationships are \textbf{conditional on the specified covariate set}, and therefore may change when relevant variables are omitted or added;
-    \item We clarify that the reported measures (e.g., cross-mapping skill) should be interpreted as \textbf{directional dynamical dependence}, rather than as causal effects in an interventionist sense;
-    \item We discuss the limitations of \textbf{statistical significance testing}, emphasizing that the null hypothesis of ``no causal relationship'' is often unrealistic in complex systems, and that rejection of this null should be interpreted cautiously;
-    \item We acknowledge that \textbf{short, noisy, or partially observed systems} can degrade reconstruction quality and lead to unstable or misleading inferences;
-    \item We emphasize that \textbf{robust inference requires multiple lines of evidence}, including convergence diagnostics, effect size thresholds, consistency across methods, and domain knowledge;
-    \item We explicitly note that \textbf{evaluation under controlled or simulated systems is important} for understanding statistical power and failure modes, and highlight this as an important direction for future work.
-\end{itemize}
-
-Regarding applicability, we agree that these approaches are particularly well-suited to domains where there is strong prior knowledge about system structure, such as environmental or climate-related systems. We have revised the manuscript to reflect that the method is most reliable when the underlying dynamics are relatively stable and when plausible system structure can be informed by domain expertise.
-
-At the same time, we would like to clarify that the primary goal of this work is to present a \textbf{software framework} that implements and extends existing EDM methodologies, rather than to resolve all methodological debates surrounding causal discovery. Nevertheless, we agree that transparent discussion of limitations is essential, and we have aimed to provide a more balanced and explicit treatment in the revised manuscript.
-
-We sincerely thank the reviewer for raising these important points, which have significantly improved the rigor and clarity of the manuscript.
-
-We thank the reviewer for raising this important conceptual clarification. In the revised manuscript, we substantially expanded the \emph{Discussion and conclusion} section to explicitly explain why the causal relationships inferred by \textit{tEDM} represent \emph{temporal and dynamical causality} rather than mere statistical correlation (see revised manuscript, lines~446--458).
-
-Specifically, we now emphasize that \textit{tEDM} is grounded in the concept of dynamical causality, where causation is defined by whether the evolution of one variable leaves a persistent and directionally identifiable imprint on the state evolution of another variable through the underlying system dynamics \citep{sugihara2012ccm,leng2020pcm,tao2023cmc,gao2023gccm}. Unlike correlation analysis, which measures instantaneous or marginal association, EDM-based methods exploit state-space reconstruction and cross mapping to test whether information about a potential driver can be reliably recovered from the temporal trajectory of a response variable. Moreover, the convergence of cross-mapping skill with increasing library size provides an operational criterion to distinguish genuine causal signal from spurious correlation induced by shared trends, synchronization, or external forcing.
-
-In addition, we clarify that the notion of causality adopted by \textit{tEDM} differs from counterfactual or intervention-based causal effects commonly used in policy evaluation (e.g., average treatment effect). Instead, \textit{tEDM} focuses on \emph{dynamical causality}, which characterizes whether directional information flow is embedded in the evolving system dynamics. Within this framework, quantities such as the cross-mapping skill $\rho$ in CCM and PCM, and the causal strength metric in CMC, quantify the consistency and reliability with which the state of one variable can be recovered from another in reconstructed state space. These measures therefore serve as relative indicators of directional dynamical influence and are primarily intended for causal discovery, ranking, and comparative analysis within a given system, rather than as transferable effect sizes across unrelated systems or intervention scenarios (see revised manuscript, lines~459--470).
-
-To further reduce the risk that high cross-mapping skill reflects spurious assocaition rather than genuine dynamical influence, \textit{tEDM} incorporates multiple layers of robustness assessment, including statistical significance testing, convergence diagnostics with respect to library size, and consistency checks across spatial replications. In applied analyses, effect magnitude is also considered in addition to statistical significance. For example, in the case studies we only interpret statistically significant cross-mapping skill values exceeding a practical threshold (e.g., $\rho > 0.2$) as meaningful causal influence, in order to mitigate mirror dynamics or strong coupling effects that may otherwise inflate reconstruction skill without true causal directionality (see revised manuscript, lines~480--496). Together, these criteria support interpreting the inferred relationships as temporal and dynamical causality rather than merely enhanced correlation.
-\end{reply}
-
-\begin{point}
-Complex urban systems involve variables across multiple dimensions such as population, economy, transportation, energy, and environment. These variables inherently interact in a disordered, complex, and stochastic manner. How does tEDM characterize the features of different variables and adapt to various scenarios?
-\end{point}
-
-\begin{reply}
-We thank the reviewer for raising the important question of how \textit{tEDM} characterizes heterogeneous urban variables and adapts to diverse empirical scenarios. We have clarified this aspect in the revised manuscript by expanding the methodological description and discussion (see revised manuscript, lines~68--78, 103--115, and 446--496).
-
-A key design principle of \textit{tEDM} is that heterogeneous urban variables (e.g., population, economy, transportation, energy, and environment) are not modeled through explicit parametric assumptions, but are instead characterized implicitly through their observed dynamics. Empirical dynamic modeling reconstructs the latent state space of each variable directly from its time series, allowing nonlinearities, delayed effects, feedback loops, and scale differences to be captured in the geometry of the reconstructed manifolds. This data-driven representation avoids assumptions of linearity, stationarity, Gaussianity, or separability, which are often violated in complex urban systems.
-
-Within this dynamical framework, variable-specific features such as temporal persistence, volatility, nonlinear coupling strength, and noise structure are encoded in the reconstructed state trajectories and neighborhood geometry, rather than being prescribed a priori. As a result, variables from fundamentally different domains can be analyzed within a unified representation while preserving their intrinsic dynamics.
-
-To adapt to different analytical scenarios commonly encountered in urban systems, \textit{tEDM} provides complementary methodological extensions. The multispatial extension of CCM enables effective use of spatially replicated observations to compensate for short or fragmented time series and to explicitly exploit spatial dependence. The generalized PCM framework focuses on identifying direct causal influence in high-dimensional multivariate settings, enhancing robustness to confounding, collider structures, and complex interdependencies. The augmented CMC implementation provides statistically consistent causal strength estimation with uncertainty quantification, improving reliability under noisy or partially observed conditions.
-
-We further emphasize that the data-driven and nonparametric nature of EDM enables \textit{tEDM} to accommodate nonlinear, nonstationary, and strongly coupled dynamics without requiring explicit model specification or variable-specific assumptions. The presented case studies across environmental health, carbon-tempeature interaction, and epidemic spreading demonstrate the practical adaptability of the framework to heterogeneous urban scenarios.
-\end{reply}
-
-\begin{point}
-As an R package, the authors should present the basic framework of the package as well as the data flow.
-\end{point}
-
-\begin{reply}
-We thank the reviewer for highlighting the need to clarify the overall framework of the package and the organization of the software. In the revised manuscript (Lines~271--297), we have substantially expanded the subsection 3.1 ``Software design philosophy and architecture'' to explicitly describe the layered architecture of \textit{tEDM}, including the separation between the user-facing R interface layer and the high-performance C++ computational backend. We further added a new schematic figure (Figure~\ref{fig_tedm_arch}) illustrating the source code organization and architectural layers of the package, which provides a clear overview of the basic framework and module structure.
-
-The description now explains the responsibilities of each layer, including user interaction, data preparation, parameter configuration, result formatting, visualization at the R level, and computationally intensive numerical operations at the C++ level. To avoid redundancy and improve clarity, the detailed data flow and execution pipeline are presented separately in the following section of the revised manuscript (Lines~299--333).
-\end{reply}
-
-\begin{point}
-Which existing R packages does this package rely on, and how does it ensure computational efficiency when handling large-scale data?
-\end{point}
-
-\begin{reply}
-We thank the reviewer for highlighting the importance of clarifying software dependencies and computational efficiency. The overall design of \textit{tEDM} follows a widely adopted best practice in high-performance statistical computing \citep{rcpp,rcppthread,ropensci,r}, where computationally intensive components are implemented in high-performance languages such as C/C++, while the user interface and workflow orchestration are handled at the scripting level in R. This layered architecture balances computational efficiency, usability, and reproducibility. At the same time, we recognize that the rapid growth of urban sensing and monitoring data will continue to increase computational demands. Future extensions of the package could further enhance scalability through advanced strategies such as GPU acceleration and distributed computing, as discussed in the revised manuscript (Lines~523--525).
-
-With respect to the current implementation, we have revised the manuscript (Lines~291--293) to explicitly document the mandatory software stack of \textit{tEDM}. On the computational side, the package relies on \textit{Rcpp}, \textit{RcppArmadillo}, and \textit{RcppThread} to enable efficient C++ integration, optimized linear algebra routines, and multithreaded parallel execution. Core algorithmic components, including state-space reconstruction, nearest-neighbor search, and cross mapping, are implemented in C++ using the Standard Template Library (STL), thereby minimizing runtime overhead and improving scalability for large-scale data. On the user interface side, \textit{ggplot2} is employed for visualization and \textit{dplyr} is used for data manipulation and preprocessing, ensuring seamless interoperability with existing R-based workflows. All computationally intensive operations are executed in the optimized C++ backend, while the R layer primarily manages data input, configuration, and result presentation. We hope that this additional clarification helps the reviewer better understand the dependency structure and the design choices made to support efficient computation in the present version of \textit{tEDM}.
-\end{reply}
-
-\begin{point}
-In Figure 5, what is the meaning of ``causal strength''? Does ``causal strength'' have general applicability?
-\end{point}
-
-\begin{reply}
-We appreciate the reviewer's request for clarification regarding the meaning and applicability of ``causal strength.'' In the revised manuscript, we added a dedicated paragraph in the \emph{Discussion and conclusion} section to further clarify this concept and articulate its scope of interpretation (see revised manuscript, lines~446--470).
-
-We now explain that within the dynamical causality framework, the ``cross-mapping skill'' (the $\rho$ value) reported in CCM and PCM, as well as the ``causal strength'' reported in CMC, quantify the influence of data-driven deterministic processes governing the evolution of the underlying system \citep{sugihara2012ccm,leng2020pcm,tao2023cmc,gao2023gccm}. These metrics measure the consistency and reliability with which the state of one variable can be recovered from another in reconstructed state space, thereby serving as relative indicators of directional dynamical dependence. Importantly, we clarify that ``causal strength'' should not be interpreted as a counterfactual causal effect comparable to quantities such as the average treatment effect in intervention-based causal inference. Its magnitude is system-dependent and is primarily intended for causal discovery purposes, including ranking, comparison, and screening of potential causal influences within a given dataset, rather than direct transferability across unrelated systems or policy contexts. We further note that in applied analyses, statistical significance should be accompanied by effect-size thresholds (e.g., $\rho > 0.2$ in our case studies) to reduce spurious detections caused by strong coupling or mirror dynamics.
-
-We hope that this clarification helps resolve potential ambiguity regarding the interpretation and applicability of ``causal strength'' and improves the transparency of how these quantities should be used and understood in practice.
-\end{reply}
-
-\baselineskip12pt
-\bibliographystyle{elsarticle-harv} 
-\bibliography{references.bib} 
-
-\newpage
-
-\begin{figure}[htbp]
+\begin{figure}[htb]
 \centering
-\includegraphics[width=1\textwidth]{./figure/figure1.png}
+\includegraphics[width=0.95\textwidth]{./figure/figure1.png}
 \caption{Schematic illustration of empirical dynamic modeling.}
 \label{fig_edm}
 \end{figure}
 
-\begin{figure}[htbp] 
+Building on this principle, \citet{sugihara2012ccm} proposed convergent cross mapping (CCM) to detect causality in complex ecological systems. Subsequent developments extended CCM to address additional methodological challenges. Partial cross mapping (PCM) \citep{leng2020pcm} was introduced to distinguish direct from indirect causal influences by conditioning on third-party variables, thereby improving the robustness of causal inference in multivariate settings. Cross mapping cardinality (CMC) \citep{tao2023cmc} further advances causality detection by shifting the focus from prediction accuracy to the geometric consistency of shadow manifolds, quantified via the intersectional cardinality of cross-mapped neighborhoods.
+
+Beyond methodological refinements, EDM has evolved from an approach limited to time series analysis to one applicable to spatial cross-sectional data \citep{gao2023gccm}. To address CCM's requirement for relatively long time series, alternative models such as cross map smoothness (CMS) and multispatial convergent cross mapping (MultispatialCCM) have been developed for shorter time series \citep{ma2014cms,clark2015multispatialccm}. These advancements have broadened EDM's applicability across diverse empirical scenarios. Building upon these developments, the \textit{tEDM} package is specifically designed to address the structural characteristics of urban time series data rather than merely integrating existing EDM methods. In particular, \textit{tEDM} extends CCM to explicitly leverage spatially replicated observations that frequently arise in urban data, incorporating spatial dependence among replicated units to improve causal detection when individual time series are short or when classical CCM fails due to insufficient temporal information. To accommodate complex interdependencies among high-dimensional urban variables, PCM is further generalized to focus on identifying direct causal influences beyond separating indirect effects, enhancing robustness against confounding and collider structures commonly encountered in multivariate urban systems. For causal strength estimation, CMC is augmented with a robust DeLong placement strategy, enabling statistically consistent estimation of causal strength together with uncertainty quantification through confidence intervals and significance testing, thereby improving the reliability of causal discovery in noisy urban environments.
+
+\subsubsection{Convergent Cross Mapping (CCM)}\label{sec_ccm}
+
+Convergent cross mapping tests whether the states of a response variable $Y$ can reliably estimate the states of a potential driver $X$, based on the assumption that if $X$ causally influences $Y$, then information about $X$ is encoded in the dynamics of $Y$ \citep{sugihara2012ccm}. Let $Y_{(t)}$ and $X_{(t)}$ be the two time series variable, the shadow manifolds can be constructed using:
+
+\begin{equation}\label{eq_ts_embedding}
+\begin{split}
+M_{x} &= \left[ x(t),\, x(t-\tau),\, x\big(t-2\tau\big),\, \ldots,\, x\big(t-(E - 1)\tau\big) \right] \\
+M_{y} &= \left[ y(t),\, y(t-\tau),\, y\big(t-2\tau\big),\, \ldots,\, y\big(t-(E - 1)\tau\big) \right],
+\end{split}
+\end{equation}
+
+\noindent where $\tau$ denotes the time-delay step, $E$ is the embedding dimension, and $M_{x}$ and $M_{y}$ are the reconstructed shadow manifolds of the time series $X$ and $Y$, respectively.
+
+With the reconstructed shadow manifold $M_{y}$, the state of $X$ can be estimated from the state of $Y$ through the cross-mapping procedure:
+
+\begin{equation}\label{eq_cross_mapping}
+\hat{X}_t \mid M_y = \sum_{i=1}^k \left( \omega_{ti} \, X_{ti} \mid M_y \right),
+\end{equation}
+
+\noindent where $t$ denotes the time point at which the value of $X$ is to be predicted, $\hat{X}_t$ is the predicted value, $k$ is the number of nearest neighbors in the manifold used for prediction, $t_i$ is the time index of a neighbor, and $X_{ti}$ is the observed value of $X$ at time $t_i$. The corresponding weight $\omega_{ti}$ is defined as
+
+\begin{equation}\label{eq_ccm_weight}
+\omega_{ti} \mid M_y = \frac{ \mathrm{weight} \left( \psi(M_y, t_i),\, \psi(M_y, t) \right) }{ \sum_{i=1}^{k} \mathrm{weight} \left( \psi(M_y, t_i),\, \psi(M_y, t) \right) },
+\end{equation}
+
+\noindent where $\psi(M_y, t_i)$ is the state vector at time $t_i$ in the shadow manifold $M_y$, and $\mathrm{weight}(\cdot,\cdot)$ is a weight function based on the distance metric between two state-space vectors, defined as
+
+\begin{equation}\label{eq_ccm_weight_fun}
+\mathrm{weight} \left( \psi(M_y, t_i),\, \psi(M_y, t) \right) =
+\exp \left( - \frac{ \mathrm{dis} \left( \psi(M_y, t_i),\, \psi(M_y, t) \right) }{ \mathrm{dis} \left( \psi(M_y, t_1),\, \psi(M_y, t) \right) } \right).
+\end{equation}
+
+\noindent Here, $\exp$ denotes the exponential function, and $\mathrm{dis}(\cdot,\cdot)$ represents the average absolute distance between two state vectors in $M_y$, defined as
+
+\begin{equation}\label{eq_ccm_distance}
+\mathrm{dis} \left( \psi(M_y, t_i),\, \psi(M_y, t) \right) = \frac{1}{E} \sum_{m=1}^{E} \left| \psi_m(M_y, t_i) - \psi_m(M_y, t) \right|,
+\end{equation}
+
+\noindent where $\psi_m(M_y, t_i)$ denotes the $m$-th coordinate of $\psi(M_y, t_i)$.
+
+The cross-mapping skill $\rho$ is quantified by the Pearson correlation coefficient between the observed and predicted values, with the confidence interval of $\rho$ estimated via the $z$-transformation under the normality assumption:
+
+\begin{equation}\label{eq_ccm_rho}
+\rho = \frac{\mathrm{Cov}\left( X, \hat{X} \mid M_y \right)}{ \sqrt{\mathrm{Var}(X) \, \mathrm{Var}\left( \hat{X} \mid M_y \right) } },
+\end{equation}
+
+\begin{equation}\label{eq_ccm_tstat}
+t = \rho \, \sqrt{\frac{n - 2}{1 - \rho^2}}, 
+\end{equation}
+
+\noindent where $n$ is the number of predicted observations, and
+
+\begin{equation}\label{eq_ccm_zstat}
+z = \frac{1}{2} \ln \left( \frac{1 + \rho}{1 - \rho} \right).
+\end{equation}
+
+In CCM, the prediction skill $\rho$ is evaluated across different library sizes $L$, where $L$ is the number of points used to reconstruct the shadow manifold. Causal influence is inferred when $\rho$ exhibits a positive trend with increasing library size $L$ and shows convergence to a stable, statistically significant value as $L$ approaches its maximum. For the causation from $Y$ to $X$, the converged cross-mapping skill is expressed as
+
+\begin{equation}\label{eq_ccm_convergence}
+\rho_{x \to y} = \lim_{L \to \infty} \mathrm{cor} \left( X, \hat{X} \mid M_y \right),
+\end{equation}
+
+\noindent where $\rho_{x \to y}$ measures the strength of causal influence from $X$ to $Y$ after convergence.
+
+Motivated by the multispatial CCM method, \textit{tEDM} extends CCM to explicitly accommodate spatially replicated observations. For time series with repeated measurements across spatial units, each replicated series is first embedded independently using Equation~\ref{eq_ts_embedding}. The resulting embedding matrices are then aligned in temporal order and concatenated to form a combined embedding matrix, together with a combined target vector that preserves the one-to-one correspondence between embedded states and observations. Cross mapping prediction is subsequently performed on the combined embedding using Equations~\ref{eq_cross_mapping}--\ref{eq_ccm_rho}. The selection of spatially replicated observations participating in state-space reconstruction and cross mapping can be guided by spatial statistical criteria, such as the bandwidth in geographically weighted regression \citep{brunsdon1996gwr}, or the range parameter estimated from fitted variograms \citep{webster2007gstat}, to better coordinate and exploit spatial dependence among replicated units. In this setting, the statistical significance of the cross-mapping skill $\rho$ is assessed via a bootstrap procedure by randomly resampling the target series to be predicted, thereby generating an empirical null distribution of $\rho$ for hypothesis testing. This strategy enables CCM to exploit spatial dependence among replicated units to enhance causal detection when individual time series are short or weakly informative, while preserving the dynamical consistency of the reconstructed state space.
+
+\subsubsection{Partial Cross Mapping (PCM)}\label{sec_pcm}
+
+Partial cross mapping extends the CCM method by accounting for indirect causal influences mediated by third variables. In addition to detecting whether $X$ causally influences $Y$, PCM seeks to distinguish the \emph{direct} effect of $X$ on $Y$ from any indirect influence transmitted through a mediate variable $Z$ \citep{leng2020pcm}. Given three time series $X_{(t)}, Y_{(t)}, Z_{(t)}$, the PCM procedure operates as follows:
+
+First, the shadow manifold $M_y$ of $Y$ is reconstructed, and $\hat{X}$ is obtained from $M_y$ following the standard CCM cross-mapping step in Equation~\eqref{eq_cross_mapping}, with weights defined by Equation~\eqref{eq_ccm_weight}.  
+
+Next, the shadow manifold $M_y$ is used to predict $Z$ in the same manner:
+
+\begin{equation}\label{eq_pcm_zhat}
+\hat{Z}_t \mid M_y = \sum_{i=1}^k \left( \omega_{ti} \, Z_{ti} \mid M_y \right).
+\end{equation}
+
+Then, the predicted $\hat{Z}$ is itself used to estimate $X$ via CCM:
+
+\begin{equation}\label{eq_pcm_x_zhat}
+\hat{X}^{(Z)}_t \mid M_{\hat{Z}} = \sum_{i=1}^k \left( \omega^{(Z)}_{ti} \, X_{ti} \mid M_{\hat{Z}} \right),
+\end{equation}
+
+\noindent where $M_{\hat{Z}}$ denotes the shadow manifold reconstructed from $\hat{Z}$, and $\omega^{(Z)}_{ti}$ is defined analogously to Equation~\eqref{eq_ccm_weight}.
+
+Finally, the causal influence from $X$ to $Y$ is quantified using the \emph{partial correlation} between $X$ and $\hat{X}$ while controlling for $\hat{X}^{(Z)}$:
+
+\begin{equation}\label{eq_pcm_partial_corr}
+\rho_{X \to Y \mid Z} = \frac{ \rho_{X,\, \hat{X}} - \rho_{X,\, \hat{X}^{(Z)}} \rho_{\hat{X},\, \hat{X}^{(Z)}} }
+{\sqrt{\left( 1 - \rho_{X,\, \hat{X}^{(Z)}}^2 \right) \left( 1 - \rho_{\hat{X},\, \hat{X}^{(Z)}}^2 \right) }},
+\end{equation}
+
+\noindent where $\rho_{A,B}$ denotes the Pearson correlation between variables $A$ and $B$. A significant $\rho_{X \to Y \mid Z}$ suggests a direct causal influence from $X$ to $Y$ after removing the indirect path through $Z$.
+
+The original PCM formulation can handle more than one potential mediate variable by sequentially considering cumulative indirect effects. For example, when assessing the causal influence of $X$ on $Y$ with two potential mediators $Z_1$ and $Z_2$, one can first predict $Z_1$ from $M_y$, then predict $Z_2$ from $M_{\hat{Z}_1}$, and finally estimate $\hat{X}^{(Z_1,Z_2)}$ from $M_{\hat{Z}_2}$. This procedure captures the causal influence of $X$ on $Y$ transmitted through $Z_1$ and $Z_2$ sequentially. Similarly, one can reverse the order—predict $Z_2$ first, then $Z_1$—to account for the alternative indirect pathway.
+
+In \textit{tEDM}, we support this native sequential strategy, while also offering an improved extension referred to as the fully conditioned partial cross mapping. In this formulation, potential third-party variables, whether arising from mediator, collider, or confounding structures or their combinations, are jointly treated as conditioning variables so that the analysis explicitly focuses on direct causal influences. When considering multiple conditioning variables $(Z_1, Z_2, \dots, Z_m)$, we first reconstruct $M_y$ and predict each $Z_i$ individually:
+
+\begin{equation}\label{eq_pcm_multi_zhat}
+\hat{Z}_i \mid M_y = \sum_{j=1}^k \left( \omega_{tj} \, Z_{ij} \mid M_y \right), \quad i=1,2,\dots,m,
+\end{equation}
+
+\noindent then use each $\hat{Z}_i$ to predict $X$:
+
+\begin{equation}\label{eq_pcm_multi_xhat}
+\hat{X}^{(Z_i)}_t \mid M_{\hat{Z}_i} = \sum_{j=1}^k \left( \omega^{(Z_i)}_{tj} \, X_{tj} \mid M_{\hat{Z}_i} \right),
+\end{equation}
+
+\noindent and finally compute the partial correlation between $X$ and $\hat{X}$ while controlling for all $\hat{X}^{(Z_i)}$:
+
+\begin{equation}\label{eq_pcm_multi_partial_corr}
+\rho_{X \to Y \mid Z_1, \dots, Z_m} = \text{PartialCorr}\Big(X,\, \hat{X} \mid \hat{X}^{(Z_1)}, \dots, \hat{X}^{(Z_m)} \Big),
+\end{equation}
+
+\noindent where $\text{PartialCorr}(\cdot)$ denotes the standard multivariate partial correlation.
+
+\subsubsection{Cross Mapping Cardinality (CMC)}\label{sec_cmc}
+
+Cross mapping cardinality evaluates causality based on the structural similarity between the reconstructed shadow manifolds of $X$ and $Y$. It quantifies how frequently nearest neighbors in one manifold correspond to neighbors in the other, under the assumption that causally linked variables share geometric properties in state space \citep{tao2023cmc}. Unlike CCM, which focuses on predictive performance, CMC emphasizes topological consistency, offering an alternative metric for assessing the strength of dynamic coupling. Given two time series $X_{(t)}$ and $Y_{(t)}$, we first reconstruct their shadow manifolds $M_x$ and $M_y$. For each time point $i$, the intersectional cardinality is defined as the number of shared neighbors between the direct neighborhood of $Y$ and the neighborhood projected via cross mapping from $X$:
+
+\begin{equation}\label{eq_cmc_ic_ik_delong}
+IC_{i,k} = \left| M_y^{nn}(i,k) \cap M_y^{nn}\big(M_x^{nn}(i,k),k\big) \right|,
+\end{equation}
+
+\noindent where $M_x^{nn}(i,k)$ and $M_y^{nn}(i,k)$ denote the sets of the $k$ nearest neighbors of the $i$-th time point in $M_x$ and $M_y$, respectively. Averaging over all time points yields the global IC value:
+
+\begin{equation}\label{eq_cmc_ic_k_delong}
+IC_k = \frac{1}{T} \sum_{i=1}^T IC_{i,k},
+\end{equation}
+
+\noindent and varying $k$ from $1$ to $T$ produces the IC curve:
+
+\begin{equation}\label{eq_cmc_ic_curve_delong}
+IC_{\text{curve}} = \{ IC_k \mid k = 1, 2, \dots, T \}.
+\end{equation}
+
+To improve the statistical rigor of causal strength (CS) estimation in CMC, we replace the original strategy that directly compares IC curves with the DeLong placement method. This non-parametric approach provides statistically consistent estimation of the area under the IC curve (AUC), together with its variance and confidence interval \citep{delong1988,sun2014delongfi}. The causal strength from $Y$ to $X$ is therefore quantified by the AUC estimated using the DeLong placement method. Let $\{X_i\}_{i=1}^{m}$ denote the IC values under the alternative hypothesis $H_1$ and $\{Y_j\}_{j=1}^{n}$ denote the IC values under the null hypothesis $H_0$. The estimated AUC is given by:
+
+\begin{equation}
+\hat{\theta} = \frac{1}{mn} \sum_{i=1}^{m} \sum_{j=1}^{n} \mathbb{I}(X_i > Y_j) + \frac{1}{2} \mathbb{I}(X_i = Y_j),
+\end{equation}
+
+\noindent where $\mathbb{I}(\cdot)$ is the indicator function. The variance of the estimated AUC is
+
+\begin{equation}
+\hat{\sigma}^2 = \frac{1}{m} \sum_{i=1}^{m} (X_i - \hat{\theta})^2 + \frac{1}{n} \sum_{j=1}^{n} (Y_j - (1 - \hat{\theta}))^2,
+\end{equation}
+
+\noindent and the confidence interval is given by
+
+\begin{equation}
+\text{CI} = \left[ \hat{\theta} - z_{\alpha/2} \hat{\sigma}, \hat{\theta} + z_{\alpha/2} \hat{\sigma} \right].
+\end{equation}
+
+Finally, the statistical significance of the causal strength is assessed via a Z-test:
+
+\begin{equation}
+Z = \frac{\hat{\theta} - 0.5}{\hat{\sigma}}, \quad p = 2 \Phi(-|Z|),
+\end{equation}
+
+\noindent where $\Phi(\cdot)$ is the standard normal cumulative distribution function. A significant p-value indicates that the IC curve under $H_1$ is significantly different from the null expectation, supporting a causal influence from $Y$ to $X$.
+
+\subsection{Open-source toolkits for time series causal discovery}
+
+Causal discovery in time series is a growing area of interest in fields such as econometrics, neuroscience, climate science, and systems biology \citep{runge2019ictsess,runge2023cits}. Numerous open-source toolkits have been developed in both \textit{Python} and \textit{R} to facilitate causal discovery from observational temporal data. These toolkits implement a diverse range of methodologies, including traditional statistical tests such as Granger causality, constraint-based algorithms such as the PC algorithm, score-based and hybrid learning approaches, and more recent techniques derived from empirical dynamic modeling (EDM). Table~\ref{tab_toolkits} summarizes a selection of representative toolkits across these categories. Each package is described by its programming language, core methodological focus, and whether it supports direct application to time series data.
+
+\begin{table}[htb!]
+\centering
+\caption{Open-source toolkits for causal discovery and their applicability to time series}
+\label{tab_toolkits}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{| p{3.2cm} | p{2.8cm} | p{7.2cm} | p{2.5cm} |}
+\hline
+\textbf{Package} & \textbf{Language} & \textbf{Implemented Methods} & \textbf{Time Series Ready} \\
+\hline
+\textit{dowhy-gcm}       & Python           & Graphical causal modeling & \textbf{No} \\
+\textit{causal-learn}    & Python           & Multiple causal discovery algorithms            & \textbf{Partial} \\
+\textit{cdt}             & Python           & Causal discovery toolbox (hybrid methods)            & \textbf{Partial} \\
+\textit{lingam}          & Python           & Linear non-Gaussian models      & \textbf{Yes} \\
+\textit{tigramite}       & Python           & Causal time series analysis via PCMCI and its variants     & \textbf{Yes} \\
+\textit{pcalg}           & R                & Causal structure learning                & \textbf{Partial} \\
+\textit{bnlearn}         & R                & Bayesian network structure learning                  & \textbf{Partial} \\
+\textit{lmtest}          & R                & Granger causality tests  (GCT)                             & \textbf{Yes} \\
+\textit{NliTS}           & R                & Nonlinear time series causality methods              & \textbf{Yes} \\
+\textit{rEDM} \& \textit{pyEDM}     & R \& Python                 & Convergent Cross Mapping (CCM)             & \textbf{Yes} \\
+\textit{multispatialccm} & R                & Multispatial Convergent Cross Mapping (MultispatialCCM)                  & \textbf{Yes} \\
+\textit{fastEDM}         & R \& Python      &   CCM \& MultispatialCCM                          & \textbf{Yes} \\
+\textit{crossmapy}       & Python           & Temporal Empirical Dynamic Modeling      & \textbf{Yes} \\
+\textit{tEDM} (Our work)       & R          & Enhanced Temporal Empirical Dynamic Modeling                           & \textbf{Yes} \\
+\hline
+\end{tabular}
+\end{table}
+
+Among these, traditional statistical methods are exemplified by the \textit{lmtest} package, which provides implementations of Granger causality tests based on linear autoregressive models \citep{lmtest}. Constraint-based methods are implemented in \textit{pcalg}, \textit{causal-learn}, and \textit{cdt}, which allow for causal structure learning through conditional independence testing, though they often require additional preprocessing to handle temporal dependencies \citep{pcalg,causal-learn,cdt}. Score-based and hybrid approaches, such as those supported in \textit{bnlearn} and \textit{cdt}, combine structure search with statistical criteria to learn Bayesian networks, but are not inherently designed for time-lagged causality \citep{bnlearn,cdt}. Linear non-Gaussian models, as implemented in \textit{lingam}, assume non-Gaussian noise to identify causal directions and are directly applicable to time series under appropriate conditions \citep{lingam}.
+
+Methods designed specifically for causal discovery in time series include \textit{tigramite}, which employs PCMCI and its variants to robustly detect time-lagged causal relations under high-dimensional and autocorrelated conditions \citep{runge2019pcmci,runge2023cits}. In the context of nonlinear dynamical systems, EDM-based toolkits such as \textit{rEDM}, \textit{pyEDM}, and \textit{crossmapy} implement techniques like convergent cross mapping to infer causality from reconstructed state space \citep{sugihara2012ccm, tao2023cmc}. Packages such as \textit{multispatialccm} and \textit{fastEDM} further extend EDM capabilities by enabling causal inference on short time series with spatial replication, where spatial replicates are leveraged as surrogates for temporal variation, thereby allowing the application of convergent cross mapping even when the available time series data are too short for traditional EDM approaches.\citep{clark2015multispatialccm,fastEDM}.
+
+Despite these advances, several gaps remain in existing EDM toolkits. Both \textit{rEDM} and \textit{pyEDM} only support convergent cross mapping, limiting their applicability when more nuanced causal inference techniques are required. The \textit{multispatialccm} package incorporates both convergent cross mapping and its multispatial extension, but does not include methods such as partial cross mapping or cross mapping cardinality. The Python library \textit{crossmapy} is the only toolkit that implements convergent cross mapping, partial cross mapping, and cross mapping cardinality simultaneously, yet its interface does not allow users to flexibly specify input parameters. Moreover, its implementation departs from the original definition of convergent cross mapping by returning a single algorithm-determined ``optimal'' cross mapping $\rho$ value, rather than preserving the core principle that causality is revealed through the convergence of predictive skill with library size. These limitations restrict the flexibility, interpretability, and methodological fidelity of EDM-based causal discovery in complex time series data.
+
+To overcome the limitations of existing empirical dynamic modeling toolkits in terms of flexibility, scalability, and multivariate modeling, we introduce \textit{tEDM}, a novel R package designed for causal discovery in urban time series data. Urban systems are typically characterized by short temporal sequences, multiple spatially replicated observations, and substantial heterogeneity across locations \citep{gan2025urban_transfer_entropy,mao2024urban_traffic_networks}. \textit{tEDM} extends and refines core methods, including convergent cross mapping, partial cross mapping, and cross mapping cardinality, to better accommodate these features. In addition, it implements carefully designed numerical computation strategies and efficient algorithms for large-scale datasets. As a result, \textit{tEDM} provides a comprehensive and efficient tool for causal discovery in complex, high-dimensional urban systems, serving as a substantive extension of existing empirical dynamic modeling toolkits.
+
+\section{The \textit{tEDM} Package}\label{sec_pkg}
+
+\subsection{Software design philosophy and architecture}\label{sec_pkg_arch}
+
+The \textit{tEDM} package is developed with an emphasis on computational efficiency, modularity, and tight integration into the R ecosystem for data science and urban analysis \citep{r}. Figure~\ref{fig_tedm_arch} presents an overview of the source code organization and architectural layers of the package. At a high level, \textit{tEDM} adopts a layered architecture consisting of a user-facing R interface layer and a high-performance C++ computational backend. The R layer is responsible for user interaction, data preparation, parameter configuration, result formatting, and visualization, whereas all computationally intensive components are implemented in C++ to ensure scalability and runtime efficiency. This separation of concerns improves code maintainability, extensibility, and long-term sustainability of the software.
+
+\begin{figure}[htb!] 
 \centering 
 \includegraphics[width=1\textwidth]{./figure/figure2.png} 
 \caption{Overview of the source code architecture of the \textit{tEDM} package.} 
 \label{fig_tedm_arch} 
 \end{figure}
 
-\begin{figure}[htbp] 
+The computational backend is implemented entirely in C++ and provides the performance required for large-scale time series analysis. Core algorithmic components such as state-space reconstruction, nearest-neighbor search, and cross mapping are implemented using the C++ Standard Template Library (STL). Numerical operations involved in predictive skill estimation for empirical dynamic modeling, including correlation and partial correlation coefficients, are handled by the Armadillo linear algebra library via \textit{RcppArmadillo} \citep{armadillo}. To further improve computational throughput on modern multicore hardware, the backend integrates the \textit{RcppThread} library for multithreaded parallel execution \citep{rcppthread}. The C++ backend is exposed to R through the \textit{Rcpp} interface \citep{rcpp}, which enables efficient data exchange while minimizing overhead between the two languages.
+
+At the R interface level, \textit{tEDM} relies on a small set of essential R packages to ensure usability and interoperability. Specifically, \textit{ggplot2} is used for visualization, while \textit{dplyr} supports data manipulation and preprocessing. Together with \textit{Rcpp}, \textit{RcppArmadillo}, and \textit{RcppThread} in the computational layer, these dependencies constitute the mandatory software stack of the package. Core functions accept \textit{data.frame} inputs with explicit column specification and configurable model parameters, and outputs are returned as structured lists with formatted printing in the R console. This design allows seamless integration with existing R-based analytical workflows while maintaining high computational performance and reproducibility.
+
+\subsection{Core functionalities}\label{sec_pkg_guideline}  
+
+The core functionalities of \textit{tEDM} are summarized in Figure~\ref{fig_tedm_guideline}, which illustrates the workflow from data ingestion to causal discovery. The package supports a variety of common data formats, including non-spatial tabular files (\textit{csv}, \textit{tsv}, \textit{xls} and \textit{xlsx}) and spatial datasets that can be pre-processed in R and converted into \textit{data.frame} structures. Once the data are loaded, the pipeline provides tools to determine the minimal embedding dimension through the \texttt{fnn()} function, which applies the false nearest neighbors approach \citep{kennel1992fnn}. To refine this choice and jointly optimize the embedding dimension $E$ and the number of nearest neighbors $k$, auxiliary functions such as \texttt{simplex()} are employed, with the goal of maximizing predictive skill, or \texttt{ic()} to maximize causal strength. These steps establish the foundation for downstream empirical dynamic modeling analyses. A full description of adjustable parameters for each function is available in the package documentation at \url{https://stscl.github.io/tEDM/reference/index.html}. 
+
+\begin{figure}[htb] 
 \centering 
-\includegraphics[width=1\textwidth]{./figure/figure3.png} 
+\includegraphics[width=0.95\textwidth]{./figure/figure3.png} 
 \caption{Schematic representation of the standard workflow for causal discovery using the \textit{tEDM} package.} 
 \label{fig_tedm_guideline} 
 \end{figure} 
 
-\begin{figure}[htbp]
+After parameter selection, \textit{tEDM} provides several algorithms for causal discovery that quantify and evaluate potential causal relationships. The \texttt{ccm()} function applies convergent cross mapping to test for causality by explicitly assessing the convergence of predictive skill across library sizes \citep{sugihara2012ccm}, thereby retaining the original definition of CCM rather than returning only a single “optimal” strength value as in some existing implementations (the \textit{crossmapy} package). When applied to spatially replicated time series, the \texttt{multispatialccm()} function incorporates spatial dependencies, as described in Section~\ref{sec_ccm}. The \texttt{cmc()} function implements cross mapping cardinality \citep{tao2023cmc}, and extends prior approaches by internally applying the DeLong placement method to estimate causal strength while also providing corresponding $p$-values and confidence intervals. This incorporation of formal statistical inference enhances the rigor and interpretability of causal estimates. For cases where direct causation needs to be identified, the \texttt{pcm()} function employs partial cross mapping to discriminate direct causal effects from indirect causations \citep{leng2020pcm}. Beyond reproducing the approach described in the original paper, \textit{tEDM} introduces a new \texttt{cumulate} parameter: when set to \texttt{TRUE}, the function follows the original PCM implementation, while the default setting (\texttt{FALSE}) applies our newly defined PCM formulation, thereby offering greater flexibility in handling complex spatiotemporal datasets.  
+
+Predictive skill and intersectional cardinality are incorporated as complementary measures to enhance the robustness of inference. Results can be visualized directly using \textit{ggplot2}, which ensures that causal discovery outcomes in urban time series can be examined in a transparent and interpretable manner. These functionalities provide a coherent workflow that integrates data preparation, parameter selection, causal quantification, and visualization within a unified framework. By extending CCM, CMC, and PCM with flexible parameterization, statistical inference, and new formulations, \textit{tEDM} addresses the key gaps of prior EDM toolkits and establishes a comprehensive and rigorous platform for causal discovery in urban systems.
+
+\section{Case Studies}\label{sec_cases}
+
+To demonstrate the practical utility of the \textit{tEDM} package, we present three representative case studies drawn from prior work in urban and environmental research, each exemplifying different characteristics of urban time series data and corresponding causal discovery tasks. The first case study investigates the relationship between air pollution and cardiovascular health in Hong Kong \citep{leng2020pcm}, illustrating how \textit{tEDM} can be employed to analyze multivariate time series and infer the underlying causal interaction network between environmental exposures and health outcomes. The second case study examines county-level carbon emissions and temperature dynamics in the contiguous United States \citep{gan2025urban_transfer_entropy}, showcasing the capability of \textit{tEDM} to uncover causal dependencies within spatially replicated multivariate time series, a data scenario frequently encountered in large scale urban and climate research. The third case study explores the spread of COVID-19 across Japanese prefectures \citep{tao2023cmc}, demonstrating how \textit{tEDM} can reconstruct causal structures from spatially replicated univariate time series, where repeated temporal observations across locations (spatial units) enable causal inference even in single-variable settings. For transparency and reproducibility, the datasets corresponding to all three case studies are archived within the \textit{tEDM} package, together with complete analysis code available in the package vignette at \url{https://stscl.github.io/tEDM/articles/tEDM.html}. These case studies not only highlight the methodological versatility and empirical relevance of \textit{tEDM}, but also provide a foundation for its broader application in advancing causal discovery across diverse domains of urban and environmental research.
+
+\subsection{Air pollution and cardiovascular health in Hong Kong}\label{case_cvds_hk}
+
+\begin{figure}[htb!]
 \centering
-\includegraphics[width=1\textwidth]{./figure/figure4.png}
+\includegraphics[width=0.95\textwidth]{./figure/figure4.png}
 \caption{Causal relationships between air pollutants and cardiovascular disease incidence in Hong Kong.
 \textbf{a} Time series of the relevant variables.
 \textbf{b} Cross mapping skill (\(\rho\) value) among variables estimated via partial cross mapping (values not statistically significant at \(p > 0.05\) are marked with \(^{\#}\)).
@@ -325,59 +390,75 @@ We hope that this clarification helps resolve potential ambiguity regarding the 
 \label{fig_cvds_hk}
 \end{figure}
 
-\begin{figure}[htbp]
+The first case study examines the causal relationships between air pollutants and cardiovascular disease (CVD) incidence in Hong Kong, where the fully conditioned partial cross mapping extension implemented in the \textit{tEDM} package was applied. Figure~\ref{fig_cvds_hk}a presents the time series of the variables, including daily counts of CVD hospital admissions and the concentrations of SO$_2$, NO$_2$, O$_3$, and respirable suspended particulates (RSP). The dynamics exhibit pronounced seasonal variability together with substantial short-term fluctuations, reflecting the complex interactions between atmospheric processes and population health responses. Figure~\ref{fig_cvds_hk}b reports the cross-mapping skill ($\rho$) evaluated at the maximum library size for each candidate causal direction. The variation of cross-mapping skill with library size for all tested links is further reported in Supplementary Figure~S1, which confirms the convergence behavior and robustness of these estimates. Figure~\ref{fig_cvds_hk}c summarizes the reconstructed causal network linking air pollutants to CVD incidence. The results indicate strong dynamical coupling among the four pollutants, consistent with known atmospheric chemical and physical interactions. In contrast, among the pollutant-to-health links, only NO$_2$ exhibits a statistically significant and sufficiently large cross-mapping skill toward CVD, suggesting a direct causal influence, whereas the effects of SO$_2$, O$_3$, and RSP on CVD are likely indirect. Compared with the original PCM study, our implementation in \textit{tEDM} further detects a plausible bidirectional interaction between O$_3$ and NO$_2$, which is consistent with photochemical smog formation and nitric oxide cycling \citep{ravina2022o3_no2}. For comparison, the PC algorithm incorrectly identifies a causal influence from CVD to NO$_2$ and yields an oversimplified internal structure among SO$_2$, NO$_2$, O$_3$, and RSP (see Supplementary Figure~S2). This contrast exemplifies the difficulty of recovering reliable causal directions in strongly coupled and nonlinear systems using conditional independence tests alone.
+
+\subsection{US county carbon emissions and temperature dynamics}\label{case_carbon_us}
+
+\begin{figure}[htb]
 \centering
-\includegraphics[height=0.75\textwidth]{./figure/figure5.png}
+\includegraphics[height=0.6\textwidth]{./figure/figure5.png}
 \caption{Boxplots of causal strengths between annual mean temperature and carbon emissions across contiguous U.S. counties. Causal strengths were estimated using cross mapping cardinality by the \textit{tEDM} package.}
 \label{fig_carbon_us}
 \end{figure}
 
-\begin{figure}[htbp]
+Figure~\ref{fig_carbon_us} reports the causal strengths between county-level carbon emissions (CO\textsubscript{2} concentrations) and annual mean temperature (tem) across the contiguous United States, revealing a pronounced asymmetry in the directional causal influence. The causal influence from carbon emissions to temperature (carbon $\rightarrow$ tem) is substantially stronger than the reciprocal pathway (tem $\rightarrow$ carbon). Specifically, the distribution of causal strengths for carbon $\rightarrow$ temperature has quartiles of $0.2099$, $0.2515$, and $0.2917$ (with a full range of $0.0972$--$0.4151$), whereas the corresponding quartiles for temperature $\rightarrow$ carbon are $0.0864$, $0.0926$, and $0.0988$ (range: $0.0648$--$0.1620$). These results indicate that anthropogenic carbon emissions exert a dominant influence on temperature variations, while the reverse effect is comparatively weak.
+
+The broader spread of causal strengths in the carbon $\rightarrow$ temperature direction highlights spatial heterogeneity across U.S. counties, potentially reflecting variations in local climatic sensitivities or emission profiles. By contrast, the consistently small causal strengths in the temperature $\rightarrow$ carbon pathway suggest that this relationship is better interpreted as a secondary feedback effect rather than a primary driver. Notably, these findings are consistent with prior results obtained using the feature-adjusted transfer entropy (FsATE) method \citep{gan2025urban_transfer_entropy}, while the cross mapping cardinality approach applied here to spatially replicated county-level time series offers a more compelling delineation between dominant causal effects and weaker feedback mechanisms. This provides quantitative evidence reinforcing the well-established role of carbon emissions as a principal driver of temperature dynamics in the context of anthropogenic climate change \citep{madden1980carbon_tem}.
+
+Because this case study involves a bivariate dataset with spatially replicated observations, we further benchmarked alternative causal discovery approaches. Granger causality provides little evidence for a causal relationship between carbon emissions and temperature, as most tests fail to reject the null hypothesis with $p$-values exceeding $0.05$ (Supplementary Figure~S3). Standard CCM exhibits stronger cross-mapping skill for the carbon $\rightarrow$ temperature direction than for the reverse pathway (Supplementary Figure~S4a), but the limited temporal length of individual county-level series prevents statistically stable inference. In contrast, when the \textit{tEDM} multispatial CCM extension is applied by selecting spatially replicated observations using a $k$-nearest-neighbor strategy ($k=8$), the causal signal becomes substantially clearer and the carbon $\rightarrow$ temperature influence is successfully recovered (Supplementary Figure~S4b). Together, these comparisons indicate that while conventional methods may struggle under short and spatially fragmented time series, the multispatial extensions in \textit{tEDM} effectively exploit spatial replication and spatial dependence to enhance causal detectability, supporting its suitability for urban and environmental applications with dense spatial sampling but limited temporal depth.
+
+\subsection{COVID-19 spread across japanese prefectures}\label{case_covid_jp}
+
+\begin{figure}[htb]
 \centering
-\includegraphics[width=1\textwidth]{./figure/figure6.png}
+\includegraphics[width=0.95\textwidth]{./figure/figure6.png}
 \caption{Reconstruction of COVID-19 transmission dynamics from Tokyo to other prefectures in Japan using convergent cross mapping. Results are based on our reanalysis of the original dataset, with visualization style adapted from \citet{tao2023cmc}.}
 \label{fig_covid_jp}
 \end{figure}
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=1\textwidth]{./figure/figure_si_1.png}
-\caption{Cross mapping skills ($\rho$) between air pollutants and cardiovascular disease incidence, estimated via partial cross mapping across varying library sizes. Here, $x \;\text{xmap}\; y$ denotes the cross mapping from $x$ to $y$, representing the causal direction $y \rightarrow x$, while $x \;\text{xmap}\; y \mid z_1, z_2, \ldots$ denotes the conditional cross-mapping skill of $x$ and $y$ given variables $z_1, z_2, \ldots$.
-}
-\label{fig_cvds_pcm}
-\end{figure}
+The third case study investigates the dynamics of COVID-19 transmission among Japanese prefectures during the pandemic, utilizing convergent cross mapping to reconstruct the influence of the Tokyo outbreak. As illustrated in Figure~\ref{fig_covid_jp}, seven prefectures exhibit a causal strength greater than 0.9 from Tokyo, indicating strong transmission linkages. These prefectures, which include both immediate neighbors in the Tokyo metropolitan area and other major urban centers, represent the regions most substantially affected by the Tokyo outbreak. This pattern reflects the hub-like role of Tokyo as the primary source of infection spread, consistent with its status as the earliest and largest epicenter of confirmed cases in Japan. The result also resonates with prior studies employing cross mapping cardinality approaches, which have shown that causal influence from Tokyo tends to decrease with increasing geodesic distance, while metropolitan areas with higher population density and mobility networks remain particularly susceptible \citep{tao2023cmc}. For comparison, when the PC algorithm is applied to the same dataset, it only identifies causal transmission links from Tokyo to Kanagawa and Chiba, while failing to detect influences on other highly connected but geographically more distant metropolitan regions (Supplementary Figure~S5), suggesting limited capacity to nonlinear and mobility-driven transmission dynamics. Overall, the reconstructed transmission network recovered by \textit{tEDM} highlights the need for coordinated public health strategies across prefectures to effectively manage and mitigate epidemic spread beyond immediate geographic proximity. These results contribute to a deeper understanding of regional transmission mechanisms and provide actionable insights for future preparedness in large-scale public health crises.
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=1\textwidth]{./figure/figure_si_2.png}
-\caption{Causal netwrok inferred by the PC algorithm for the Hong Kong CVD case study.
-}
-\label{fig_cvds_pc}
-\end{figure}
+\section{Discussion and conclusion}\label{sec_conc}
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[height=0.75\textwidth]{./figure/figure_si_3.png}
-\caption{Results of applying Granger causality to the U.S. carbon emissions case study.
-}
-\label{fig_carbon_gc}
-\end{figure}
+In this study, we have introduced \textit{tEDM}, an open-source \textit{R} package designed to implement and extend empirical dynamic modeling for temporal causal discovery in complex urban systems. Through three representative case studies, which investigate the relationship between air pollution and cardiovascular health in Hong Kong, the dynamics between county-level carbon emissions and temperature in the United States, and the spread of COVID-19 across Japanese prefectures, we demonstrated the versatility and practical utility of \textit{tEDM} in uncovering dynamic causal linkages from multivariate and spatially replicated time series. Our results highlight the advantages of EDM-based causal inference in capturing nonlinear interactions, feedback mechanisms, and temporally evolving dependencies that are often overlooked by traditional correlation-based or quasi-experimental approaches. The \textit{tEDM} package provides both methodological innovation and actionable insights, offering a reliable toolkit for advancing causal understanding in urban science and related disciplines.
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=1\textwidth]{./figure/figure_si_4.png}
-\caption{Results of applying CCM to the U.S. carbon emissions case study. 
-\textbf{a} Results obtained using the original CCM algorithm. 
-\textbf{b} Results obtained using the multispatial CCM extension implemented in the \textit{tEDM} package.}
-\label{fig_carbon_ccm}
-\end{figure}
+A central premise of \textit{tEDM} is that causality in complex systems should be understood in a dynamical sense, rather than as a static association between variables. Dynamic causality emphasizes whether the evolution of one variable leaves a persistent and directionally identifiable imprint on the state evolution of another variable through the underlying system dynamics \citep{sugihara2012ccm,harnack2017separability}. Unlike conventional correlation analysis, which quantifies instantaneous or marginal dependence, EDM-based approaches exploit state-space reconstruction to test whether information about a potential driver is embedded in the temporal evolution of a response variable. Cross mapping therefore evaluates directional information recovery from reconstructed shadow manifolds, and the convergence of cross-mapping skill with increasing library size provides an operational criterion to distinguish genuine causal signal from spurious correlation driven by shared trends, synchronization, or external forcing. In this sense, the causal relationships inferred by \textit{tEDM} represent temporal and dynamical causality encoded in system trajectories, rather than merely statistical co-variation.
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=1\textwidth]{./figure/figure_si_5.png}
-\caption{Transmission dynamics inferred by the PC algorithm for the Japan COVID-19 case study.
-}
-\label{fig_covid_pc}
-\end{figure}
+Within this dynamical causality perspective, the quantities reported as ``cross-mapping skill'' (the $\rho$ value) in CCM and PCM, and ``causal strength'' in CMC quantify the influence of data-driven deterministic processes that govern the evolution of the underlying system \citep{sugihara2012ccm,leng2020pcm,tao2023cmc}. Specifically, they measure the consistency and reliability with which the state of one variable can be recovered from another in the reconstructed state space, reflecting the extent to which dynamical information is shared directionally between variables. These metrics should be interpreted as relative measures of directional dynamical dependence within a given system, rather than as counterfactual causal effects comparable to quantities such as the average treatment effect in intervention-based causal inference. Consequently, their magnitudes are system-dependent and primarily support causal discovery tasks, including ranking, comparison, and screening of potential causal influences within a dataset, rather than direct transferability across unrelated systems or policy scenarios.
+
+From a practical perspective, different EDM-based methods implemented in \textit{tEDM} are suited to different data characteristics and analytical objectives. Standard CCM is most appropriate when sufficiently long and high-quality time series are available and when dominant causal pathways are expected to be relatively low-dimensional. PCM is preferable in multivariate systems where indirect effects, confounding structures, or complex interdependencies may obscure direct causal relationships. CMC is advantageous when geometric consistency of reconstructed manifolds provides more stable evidence than prediction accuracy, particularly under noisy or partially observed conditions. In applied analyses, combining evidence from these complementary perspectives often yields more reliable causal interpretation than reliance on a single criterion.
+
+Because the true causal structure is typically unknown in real-world systems, causal discovery inevitably involves uncertainty and the risk of false positives. \textit{tEDM} mitigates these risks through multiple layers of validation, including statistical significance testing, convergence diagnostics with respect to library size, and consistency checks across spatial replications when available. Joint use of multiple EDM methods further improves robustness by requiring agreement across independent causal criteria. In practice, effect magnitude is also considered in addition to statistical significance. For example, in the presented case studies, only statistically significant cross-mapping skill values exceeding a threshold (e.g., $\rho > 0.2$) are interpreted as meaningful causal influence. This criterion reflects the fact that strong coupling, synchronization, or mirror dynamics between variables may produce high reconstruction skill without true causal influence \citep{mur2013mirroring_effect,gao2023gccm}, and thus additional effect-size filtering helps reduce spurious detections. Compared with constraint-based causal discovery algorithms such as PC, EDM-based approaches have intrinsic advantages in handling nonlinear, non-separable, and strongly coupled dynamical systems without requiring explicit model specification. Nevertheless, algorithmic inference alone cannot fully resolve causal ambiguity. Domain knowledge, physical constraints, and contextual interpretation remain essential for validating inferred causal relationships and for translating dynamical causality into actionable scientific or policy insight.
+
+Despite its strengths, the use of \textit{tEDM} for causal discovery is subject to several important limitations that relate to data quality, statistical interpretation, and underlying dynamical assumptions. The reliability of state-space reconstruction depends critically on the presence of sufficient deterministic structure in the observed system. In empirical settings, short or irregular time series \citep{ma2014cms,clark2015multispatialccm}, measurement noise \citep{mnster2017ccm_performance}, and partial observability can degrade the fidelity of the reconstructed attractor and, consequently, the stability of cross-mapping estimates. More fundamentally, the causal relationships identified by \textit{tEDM} are defined with respect to the specified set of observed variables. Inferred directional influences are therefore conditional on the chosen covariate set and may change as additional relevant variables are incorporated. In this sense, the method operates at the level of observational causal discovery and does not, by itself, resolve ambiguities arising from incomplete system specification.
+
+Second, the statistical interpretation of EDM-based causal measures requires careful qualification. Significance testing in CCM, PCM, and related approaches is typically formulated against a null hypothesis of no causal association \citep{tao2023cmc}. However, in complex systems, the assumption of complete causal independence is rarely tenable, as variables are often weakly coupled through shared drivers or indirect pathways. Consequently, rejection of the null should be understood as evidence against specific null-generating processes rather than as confirmation of a well-defined causal mechanism. In this context, cross-mapping skill and related metrics are more appropriately interpreted as measures of directional dynamical dependence within the observed system, rather than as estimates of causal effects in the interventionist sense. For this reason, robust inference in \textit{tEDM} relies on the joint consideration of convergence behavior, effect size, consistency across methods, and compatibility with domain knowledge, rather than on statistical significance alone. In addition, evaluating the performance of EDM-based causal discovery under controlled or simulated systems remains important for understanding its statistical power and failure modes, particularly in settings characterized by noise, limited observations, or model misspecification.
+
+Third, the applicability of \textit{tEDM} is constrained by assumptions from delay embedding theory and, more broadly, by the extent to which the system admits a coherent dynamical representation. The framework builds upon results such as the Takens--Ma{\~n}{\'e} theorem \citep{Takens1981embedding,Mane1981embedding}, which apply to deterministic and (approximately) autonomous systems evolving on a stable attractor \citep{leng2020pcm}. In practice, this implies that the method is most reliable in settings where the underlying dynamics are governed by relatively stable mechanisms and where the effective dimensionality of the system is limited. Such conditions are more likely to be satisfied in domains where prior knowledge, including physical or mechanistic constraints, provides guidance on plausible system structure and variable selection. In contrast, for systems with rapidly changing dynamics, strong exogenous forcing, or poorly understood coupling mechanisms, causal interpretations based on reconstructed state spaces become less stable \citep{butler2023discussion_of_ccm,park2023gobi}.
+
+From the perspective of the causal hierarchy \citep{pearl2018why}, the methods implemented in \textit{tEDM} primarily operate at the level of observational causal discovery, identifying directional dynamical dependencies without explicit intervention or counterfactual structure. Recent work has begun to address some of these limitations by developing diagnostic tools to assess whether data satisfy the assumptions required for EDM-based inference \citep{butler2023discussion_of_ccm}, as well as by exploring extensions that improve causal identification in the presence of incomplete observations or latent confounding \citep{yan2026cic}. These developments suggest that the scope of EDM-based causal analysis is actively evolving, particularly with respect to assessing applicability conditions and strengthening robustness under realistic data constraints. At the same time, extending these approaches toward interventional and counterfactual settings would require additional structural assumptions or integration with complementary causal frameworks. In this context, \textit{tEDM} is best understood as a principled tool for observational causal discovery that can support hypothesis generation and guide subsequent analysis, rather than as a standalone solution for fully identified causal effects.
+
+Building on these methodological considerations, the long-term value of \textit{tEDM} lies not only in its current capabilities but also in its continued development as an extensible and research-oriented platform. The sustainability of the \textit{tEDM} package is ensured through its open-source development model and adherence to best practices in research software engineering \citep{ropensci}. The source code is maintained under version control on GitHub, where continuous integration workflows enable automated testing, code review, and platform-independent reproducibility. Stable releases are regularly archived on CRAN, which guarantees long-term accessibility, standardized distribution, and interoperability within the broader R ecosystem \citep{r}. In addition, sustainability is supported by a community-driven governance model, where issues, feature requests, and contributions are openly tracked and managed, and by the active involvement of the core development team in ongoing maintenance. These practices ensure that \textit{tEDM} remains a reliable, extensible, and transparent software platform.
+
+The development roadmap for \textit{tEDM} emphasizes methodological, computational, and usability advances. On the methodological side, future releases will incorporate extensions of empirical dynamic modeling, including adaptive cross mapping strategies and integration with network-based representations of urban dynamics. Computational advances will focus on GPU acceleration, parallelization, and distributed implementations in order to accommodate the rapidly increasing volume of urban sensing data. From a usability perspective, the package will be expanded with richer vignettes, reproducible workflow templates, and advanced visualization capabilities to further lower barriers to adoption while maintaining analytical rigor. These developments will further position \textit{tEDM} as a flexible platform for causal discovery in complex urban systems.
+
+\section*{Data Availability Statement}
+
+The datasets and analysis scripts used in the case studies are openly available in the GitHub repository at \url{https://github.com/SpatLyu/tEDM_CEUS}. An archived and versioned release of this repository is available via Zenodo with DOI: \url{https://doi.org/10.5281/zenodo.18247202}. The \textit{tEDM} package itself is released under the GPL-3 license, with source code hosted on GitHub at \url{https://github.com/stscl/tEDM}. A corresponding archived release of the package source code is also available via Zenodo with DOI: \url{https://doi.org/10.5281/zenodo.18252240}, ensuring long-term accessibility and reproducibility of the software version referenced in this study. Stable versions of the package are additionally distributed through CRAN at \url{https://cran.r-project.org/package=tEDM}.
+
+\baselineskip12pt
+\bibliographystyle{elsarticle-harv} 
+\bibliography{references.bib} 
+
+% \newpage
+% % \appendix
+% \section*{Appendix}
+% \vspace{-0.5em}
+
+% % Reset figure counter and label format
+% \renewcommand{\thefigure}{A\arabic{figure}}
+% \setcounter{figure}{0}  % reset counter for appendix
+
+
 
 \end{document}
