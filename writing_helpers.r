@@ -49,7 +49,6 @@ doi2bib("10.1002/9780470517277")              # gstat
 doi2bib("10.1177/1536867X211000030")  # fastEDM package
 doi2bib("10.18637/jss.v077.i02")      # bnlearn package
 
-
 # reviews
 
 doi2bib("10.1038/s41467-019-10105-3")   # review1 
@@ -58,6 +57,10 @@ doi2bib("10.1038/s43017-023-00431-y")   # review2
 doi2bib("10.1016/j.scib.2021.10.002")   # Temporally or spatially
 doi2bib("10.1111/gean.12312")           # spatial causality review
 doi2bib("10.1016/j.spasta.2022.100621") # causal inference in spatial statistics
+
+# discussions
+
+doi2bib("10.1109/TSP.2023.3286529")
 
 # applications
 
