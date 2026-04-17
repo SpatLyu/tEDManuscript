@@ -210,6 +210,27 @@ So, this is about what I would expect from a package that supports a particular 
 \end{point}
 
 \begin{reply}
+We thank the reviewer for the thoughtful and constructive comments, and we appreciate the careful evaluation of the revised manuscript.
+
+We fully agree with the reviewer's concern that EDM-based methods can be prone to detecting spurious or non-actionable relationships, particularly in noisy, under-specified systems such as those commonly encountered in urban analytics. In response, we have revised the \textit{Discussion and Conclusion} section to more explicitly acknowledge these limitations and to better contextualize the scope of the method.
+
+In particular, we have made the following revisions:
+
+\begin{itemize}
+    \item We now explicitly state that inferred causal relationships are \textbf{conditional on the specified covariate set}, and therefore may change when relevant variables are omitted or added;
+    \item We clarify that the reported measures (e.g., cross-mapping skill) should be interpreted as \textbf{directional dynamical dependence}, rather than as causal effects in the interventionist sense;
+    \item We discuss the limitations of \textbf{statistical significance testing}, emphasizing that the null hypothesis of ``no causal relationship'' is often unrealistic in complex systems, and that rejection of this null should be interpreted cautiously;
+    \item We acknowledge that \textbf{short, noisy, or partially observed systems} can degrade reconstruction quality and lead to unstable or misleading inferences;
+    \item We emphasize that \textbf{robust inference requires multiple lines of evidence}, including convergence diagnostics, effect size thresholds, consistency across methods, and domain knowledge;
+    \item We explicitly note that \textbf{evaluation under controlled or simulated systems is important} for understanding statistical power and failure modes, and highlight this as an important direction for future work.
+\end{itemize}
+
+Regarding applicability, we agree that these approaches are particularly well-suited to domains where there is strong prior knowledge about system structure, such as environmental or climate-related systems. We have revised the manuscript to reflect that the method is most reliable when the underlying dynamics are relatively stable and when plausible system structure can be informed by domain expertise.
+
+At the same time, we would like to clarify that the primary goal of this work is to present a \textbf{software framework} that implements and extends existing EDM methodologies, rather than to resolve all methodological debates surrounding causal discovery. Nevertheless, we agree that transparent discussion of limitations is essential, and we have aimed to provide a more balanced and explicit treatment in the revised manuscript.
+
+We sincerely thank the reviewer for raising these important points, which have significantly improved the rigor and clarity of the manuscript.
+
 We thank the reviewer for raising this important conceptual clarification. In the revised manuscript, we substantially expanded the \emph{Discussion and conclusion} section to explicitly explain why the causal relationships inferred by \textit{tEDM} represent \emph{temporal and dynamical causality} rather than mere statistical correlation (see revised manuscript, lines~446--458).
 
 Specifically, we now emphasize that \textit{tEDM} is grounded in the concept of dynamical causality, where causation is defined by whether the evolution of one variable leaves a persistent and directionally identifiable imprint on the state evolution of another variable through the underlying system dynamics \citep{sugihara2012ccm,leng2020pcm,tao2023cmc,gao2023gccm}. Unlike correlation analysis, which measures instantaneous or marginal association, EDM-based methods exploit state-space reconstruction and cross mapping to test whether information about a potential driver can be reliably recovered from the temporal trajectory of a response variable. Moreover, the convergence of cross-mapping skill with increasing library size provides an operational criterion to distinguish genuine causal signal from spurious correlation induced by shared trends, synchronization, or external forcing.
