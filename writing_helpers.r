@@ -61,6 +61,7 @@ doi2bib("10.1016/j.spasta.2022.100621") # causal inference in spatial statistics
 # discussions
 
 doi2bib("10.1109/TSP.2023.3286529")
+doi2bib("10.1016/j.future.2016.12.009")
 
 # applications
 
