@@ -37,6 +37,7 @@ doi2bib("10.1038/s41467-020-16238-0") # pcm
 doi2bib("10.1016/j.fmre.2023.01.007") # cmc
 doi2bib("10.1093/bib/bbad281")        # cme
 doi2bib("10.1038/srep07464")          # cms
+doi2bib("10.1109/TPAMI.2026.3658839") # cic
 doi2bib("10.1038/s41467-023-41619-6") # gccm
 doi2bib("10.1890/14-1479.1")          # multispatialccm
 
