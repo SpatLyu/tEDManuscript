@@ -105,34 +105,19 @@ The authors have addressed my questions. However, they need to further clarify i
 \end{point}
 
 \begin{reply}
-We sincerely thank the reviewer for this helpful suggestion. In response, we have further clarified the applicability conditions and limitations of the proposed method in the \textit{Discussion and Conclusion} section. We expanded the general discussion of EDM-related assumptions, including data requirements, sensitivity to noise and short time series, and dependence on the selected set of observed variables.
+We sincerely thank the reviewer for this helpful suggestion. In response, we have substantially revised and expanded the \textit{Discussion and Conclusion} section to provide a more explicit and structured account of the \textbf{applicability conditions and limitations} of the proposed method.
 
-Importantly, we now explicitly state that the methodological extensions introduced in this work (e.g., multispatial embedding for CCM, generalized PCM, and enhanced CMC) \textbf{remain subject to the same fundamental assumptions and limitations of the EDM framework}. In addition, we briefly outline the \textbf{additional practical conditions} associated with these extensions, such as the need for comparability across spatial units, sufficiently informative conditioning variables, and stable reconstruction quality.
+First, we clarify the \textbf{data and system requirements} underlying EDM-based inference, including the need for sufficient deterministic structure, as well as the sensitivity to short or irregular time series, measurement noise, and partial observability. We also explicitly state that inferred causal relationships are \textbf{conditional on the selected set of observed variables}, and may change as additional relevant covariates are incorporated.
 
-We hope this revision improves the clarity regarding the scope and applicability of both the core method and its extensions.
+Second, we expand the discussion on the \textbf{statistical interpretation} of causal measures, emphasizing that the commonly used null hypothesis of ``no causal relationship'' is often unrealistic in complex systems. We clarify that cross-mapping skill and related metrics should be interpreted as measures of \textbf{directional dynamical dependence}, rather than as causal effects in an interventionist sense, and that robust inference requires joint consideration of convergence, effect size, consistency across methods, and domain knowledge.
 
+Third, we further elaborate the \textbf{dynamical assumptions} underlying the method, including constraints from delay embedding theory (e.g., Takens--Ma{\~n}{\'e} theorem), and discuss the conditions under which these assumptions are more likely to hold, such as systems with relatively stable dynamics and limited effective dimensionality.
 
-We sincerely thank the reviewer for the careful reading of our last revision and for this helpful suggestion. In response, we have substantially expanded the \textit{Discussion and Conclusion} section to more clearly articulate both the \textbf{applicability conditions} and \textbf{limitations} of the proposed method. In particular, we now:
+Importantly, we also explicitly clarify that the \textbf{methodological extensions} introduced in this work (including multispatial CCM, generalized PCM, and enhanced CMC) \textbf{remain subject to the same fundamental assumptions and limitations of the EDM framework}. In addition, we briefly outline the \textbf{additional practical considerations} associated with these extensions, such as the requirement for comparability and dynamical consistency across spatial units, the need for sufficiently informative conditioning variables, and the dependence on stable reconstruction quality.
 
-\begin{itemize}
-    \item Clarify the \textbf{data requirements} for reliable state-space reconstruction, including the need for sufficiently long and informative time series;
-    \item Discuss the impact of \textbf{noise, short or irregular observations, and partial observability} on inference stability;
-    \item Explicitly state that inferred causal relationships are \textbf{conditional on the selected set of observed variables}, and may change as additional covariates are incorporated;
-    \item Emphasize that EDM-based methods are most appropriate in systems with \textbf{coherent dynamical structure and relatively stable mechanisms};
-    \item Highlight that these methods are best suited for \textbf{observational causal discovery and hypothesis generation}, rather than fully identified causal effects.
-\end{itemize}
+These additions are now explicitly integrated into the revised manuscript to provide a clearer and more balanced discussion of when and how the method, including its extensions, can be appropriately applied.
 
-We hope these additions address the reviewer's concern and improve the clarity regarding when and how the method can be appropriately applied.
-
-We thank the reviewer for this constructive comment. We would like to clarify that \textit{tEDM} is not a simple integration of existing EDM methods, but introduces several methodological extensions to address known limitations of CCM, PCM, and CMC in the context of urban time series. In the revised manuscript, we expanded the background and methodological descriptions to explicitly articulate these innovations and their implementation details (see revised manuscript, lines~105--115, 143--158, 181--189, and 203--215).
-
-First, building upon multispatial CCM and related advances, \textit{tEDM} extends CCM to explicitly leverage spatially replicated observations that frequently arise in urban monitoring networks. Replicated time series are independently embedded, temporally aligned, and concatenated to form a combined embedding, enabling causal detection when individual series are short or weakly informative. Spatial dependence among replicated units can be incorporated through informed selection of spatially replicated observations participating in the combined embeddings (such as bandwidth selection in geographically weighted regression or range parameters derived from fitted variograms.), improving effective sample size while preserving dynamical consistency.
-
-Second, PCM is generalized beyond separating indirect effects to focus on identifying direct causal influences in high-dimensional systems. In \textit{tEDM}, potential third-party variables, including mediator, collider, confounding structures, and their combinations, are treated as conditioning variables, allowing the algorithm to isolate direct causal pathways under complex multivariate dependencies.
-
-Third, for causal strength estimation, CMC is augmented with a statistically robust DeLong placement strategy, which enables consistent estimation of causal strength together with uncertainty quantification via confidence intervals and significance testing. This extension improves the reliability of causal inference under noisy urban data conditions.
-
-These methodological extensions are now described both conceptually and algorithmically in the revised manuscript, and their performance and applicability are illustrated through three case studies covering different urban domains. We hope that these clarifications help make the methodological contributions and implementation details more transparent.
+We hope this revision adequately addresses the reviewer's concern.
 \end{reply}
 
 \begin{point}
