@@ -134,29 +134,6 @@ So, this is about what I would expect from a package that supports a particular 
 \end{point}
 
 \begin{reply}
-We thank the reviewer for the thoughtful and constructive comments, and we appreciate the careful evaluation of the revised manuscript.
-
-We fully agree with the reviewer's concern that EDM-based methods can be prone to detecting spurious or non-actionable relationships, particularly in noisy, under-specified systems such as those commonly encountered in urban analytics. In response, we have revised the \textit{Discussion and Conclusion} section to more explicitly acknowledge these limitations and to better contextualize the scope of the method.
-
-In particular, we have made the following revisions:
-
-\begin{itemize}
-    \item We now explicitly state that inferred causal relationships are \textbf{conditional on the specified covariate set}, and therefore may change when relevant variables are omitted or added;
-    \item We clarify that the reported measures (e.g., cross-mapping skill) should be interpreted as \textbf{directional dynamical dependence}, rather than as causal effects in the interventionist sense;
-    \item We discuss the limitations of \textbf{statistical significance testing}, emphasizing that the null hypothesis of ``no causal relationship'' is often unrealistic in complex systems, and that rejection of this null should be interpreted cautiously;
-    \item We acknowledge that \textbf{short, noisy, or partially observed systems} can degrade reconstruction quality and lead to unstable or misleading inferences;
-    \item We emphasize that \textbf{robust inference requires multiple lines of evidence}, including convergence diagnostics, effect size thresholds, consistency across methods, and domain knowledge;
-    \item We explicitly note that \textbf{evaluation under controlled or simulated systems is important} for understanding statistical power and failure modes, and highlight this as an important direction for future work.
-\end{itemize}
-
-Regarding applicability, we agree that these approaches are particularly well-suited to domains where there is strong prior knowledge about system structure, such as environmental or climate-related systems. We have revised the manuscript to reflect that the method is most reliable when the underlying dynamics are relatively stable and when plausible system structure can be informed by domain expertise.
-
-At the same time, we would like to clarify that the primary goal of this work is to present a \textbf{software framework} that implements and extends existing EDM methodologies, rather than to resolve all methodological debates surrounding causal discovery. Nevertheless, we agree that transparent discussion of limitations is essential, and we have aimed to provide a more balanced and explicit treatment in the revised manuscript.
-
-\noindent\textbf{Response to Reviewer \#3}
-
-\vspace{0.5em}
-
 We sincerely thank the reviewer for the thoughtful and constructive comments. We especially appreciate the critical perspective on the applicability of EDM-based causal discovery in a social science context, which has helped us substantially improve the clarity and balance of the manuscript. We respond to the main concerns as follows:
 
 \vspace{0.5em}
