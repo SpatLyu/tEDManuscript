@@ -164,54 +164,6 @@ In addition, we clarify that the notion of causality adopted by \textit{tEDM} di
 To further reduce the risk that high cross-mapping skill reflects spurious assocaition rather than genuine dynamical influence, \textit{tEDM} incorporates multiple layers of robustness assessment, including statistical significance testing, convergence diagnostics with respect to library size, and consistency checks across spatial replications. In applied analyses, effect magnitude is also considered in addition to statistical significance. For example, in the case studies we only interpret statistically significant cross-mapping skill values exceeding a practical threshold (e.g., $\rho > 0.2$) as meaningful causal influence, in order to mitigate mirror dynamics or strong coupling effects that may otherwise inflate reconstruction skill without true causal directionality (see revised manuscript, lines~480--496). Together, these criteria support interpreting the inferred relationships as temporal and dynamical causality rather than merely enhanced correlation.
 \end{reply}
 
-\begin{point}
-Complex urban systems involve variables across multiple dimensions such as population, economy, transportation, energy, and environment. These variables inherently interact in a disordered, complex, and stochastic manner. How does tEDM characterize the features of different variables and adapt to various scenarios?
-\end{point}
-
-\begin{reply}
-We thank the reviewer for raising the important question of how \textit{tEDM} characterizes heterogeneous urban variables and adapts to diverse empirical scenarios. We have clarified this aspect in the revised manuscript by expanding the methodological description and discussion (see revised manuscript, lines~68--78, 103--115, and 446--496).
-
-A key design principle of \textit{tEDM} is that heterogeneous urban variables (e.g., population, economy, transportation, energy, and environment) are not modeled through explicit parametric assumptions, but are instead characterized implicitly through their observed dynamics. Empirical dynamic modeling reconstructs the latent state space of each variable directly from its time series, allowing nonlinearities, delayed effects, feedback loops, and scale differences to be captured in the geometry of the reconstructed manifolds. This data-driven representation avoids assumptions of linearity, stationarity, Gaussianity, or separability, which are often violated in complex urban systems.
-
-Within this dynamical framework, variable-specific features such as temporal persistence, volatility, nonlinear coupling strength, and noise structure are encoded in the reconstructed state trajectories and neighborhood geometry, rather than being prescribed a priori. As a result, variables from fundamentally different domains can be analyzed within a unified representation while preserving their intrinsic dynamics.
-
-To adapt to different analytical scenarios commonly encountered in urban systems, \textit{tEDM} provides complementary methodological extensions. The multispatial extension of CCM enables effective use of spatially replicated observations to compensate for short or fragmented time series and to explicitly exploit spatial dependence. The generalized PCM framework focuses on identifying direct causal influence in high-dimensional multivariate settings, enhancing robustness to confounding, collider structures, and complex interdependencies. The augmented CMC implementation provides statistically consistent causal strength estimation with uncertainty quantification, improving reliability under noisy or partially observed conditions.
-
-We further emphasize that the data-driven and nonparametric nature of EDM enables \textit{tEDM} to accommodate nonlinear, nonstationary, and strongly coupled dynamics without requiring explicit model specification or variable-specific assumptions. The presented case studies across environmental health, carbon-tempeature interaction, and epidemic spreading demonstrate the practical adaptability of the framework to heterogeneous urban scenarios.
-\end{reply}
-
-\begin{point}
-As an R package, the authors should present the basic framework of the package as well as the data flow.
-\end{point}
-
-\begin{reply}
-We thank the reviewer for highlighting the need to clarify the overall framework of the package and the organization of the software. In the revised manuscript (Lines~271--297), we have substantially expanded the subsection 3.1 ``Software design philosophy and architecture'' to explicitly describe the layered architecture of \textit{tEDM}, including the separation between the user-facing R interface layer and the high-performance C++ computational backend. We further added a new schematic figure (Figure~\ref{fig_tedm_arch}) illustrating the source code organization and architectural layers of the package, which provides a clear overview of the basic framework and module structure.
-
-The description now explains the responsibilities of each layer, including user interaction, data preparation, parameter configuration, result formatting, visualization at the R level, and computationally intensive numerical operations at the C++ level. To avoid redundancy and improve clarity, the detailed data flow and execution pipeline are presented separately in the following section of the revised manuscript (Lines~299--333).
-\end{reply}
-
-\begin{point}
-Which existing R packages does this package rely on, and how does it ensure computational efficiency when handling large-scale data?
-\end{point}
-
-\begin{reply}
-We thank the reviewer for highlighting the importance of clarifying software dependencies and computational efficiency. The overall design of \textit{tEDM} follows a widely adopted best practice in high-performance statistical computing \citep{rcpp,rcppthread,ropensci,r}, where computationally intensive components are implemented in high-performance languages such as C/C++, while the user interface and workflow orchestration are handled at the scripting level in R. This layered architecture balances computational efficiency, usability, and reproducibility. At the same time, we recognize that the rapid growth of urban sensing and monitoring data will continue to increase computational demands. Future extensions of the package could further enhance scalability through advanced strategies such as GPU acceleration and distributed computing, as discussed in the revised manuscript (Lines~523--525).
-
-With respect to the current implementation, we have revised the manuscript (Lines~291--293) to explicitly document the mandatory software stack of \textit{tEDM}. On the computational side, the package relies on \textit{Rcpp}, \textit{RcppArmadillo}, and \textit{RcppThread} to enable efficient C++ integration, optimized linear algebra routines, and multithreaded parallel execution. Core algorithmic components, including state-space reconstruction, nearest-neighbor search, and cross mapping, are implemented in C++ using the Standard Template Library (STL), thereby minimizing runtime overhead and improving scalability for large-scale data. On the user interface side, \textit{ggplot2} is employed for visualization and \textit{dplyr} is used for data manipulation and preprocessing, ensuring seamless interoperability with existing R-based workflows. All computationally intensive operations are executed in the optimized C++ backend, while the R layer primarily manages data input, configuration, and result presentation. We hope that this additional clarification helps the reviewer better understand the dependency structure and the design choices made to support efficient computation in the present version of \textit{tEDM}.
-\end{reply}
-
-\begin{point}
-In Figure 5, what is the meaning of ``causal strength''? Does ``causal strength'' have general applicability?
-\end{point}
-
-\begin{reply}
-We appreciate the reviewer's request for clarification regarding the meaning and applicability of ``causal strength.'' In the revised manuscript, we added a dedicated paragraph in the \emph{Discussion and conclusion} section to further clarify this concept and articulate its scope of interpretation (see revised manuscript, lines~446--470).
-
-We now explain that within the dynamical causality framework, the ``cross-mapping skill'' (the $\rho$ value) reported in CCM and PCM, as well as the ``causal strength'' reported in CMC, quantify the influence of data-driven deterministic processes governing the evolution of the underlying system \citep{sugihara2012ccm,leng2020pcm,tao2023cmc,gao2023gccm}. These metrics measure the consistency and reliability with which the state of one variable can be recovered from another in reconstructed state space, thereby serving as relative indicators of directional dynamical dependence. Importantly, we clarify that ``causal strength'' should not be interpreted as a counterfactual causal effect comparable to quantities such as the average treatment effect in intervention-based causal inference. Its magnitude is system-dependent and is primarily intended for causal discovery purposes, including ranking, comparison, and screening of potential causal influences within a given dataset, rather than direct transferability across unrelated systems or policy contexts. We further note that in applied analyses, statistical significance should be accompanied by effect-size thresholds (e.g., $\rho > 0.2$ in our case studies) to reduce spurious detections caused by strong coupling or mirror dynamics.
-
-We hope that this clarification helps resolve potential ambiguity regarding the interpretation and applicability of ``causal strength'' and improves the transparency of how these quantities should be used and understood in practice.
-\end{reply}
-
 \baselineskip12pt
 \bibliographystyle{elsarticle-harv} 
 \bibliography{references.bib} 
