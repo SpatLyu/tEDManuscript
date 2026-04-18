@@ -143,11 +143,11 @@ These additions are now explicitly integrated into the revised manuscript to pro
 \begin{point}
 The revisions are effectively addressed. I was not a reviewer on the original manuscript, but reviewing the revisions, I agree that the revisions were absolutely necessary for the publication of the manuscript.
 
-The manuscript provides a clear (if not a bit selective) overview of the literature on causal discovery, and clearly positions the R package within this ecosystem. I am quite skeptical of these methods' true ability to detect real useful relationships in a social science context; they're really prone to detecting spurious relationships based on basic misunderstandings of the process or for under-specified/noisy systems, which is basically all of urban analytics... The authors never mention this literature, nor acknowledge that detected relationships are only consistent within the specified covariate set. They never set up a known process and examine the statistical power of the technique, nor do they acknowledge that such a thing is necessary. The statistical significance of effect estimates are stated, but never acknowledge that the null against which they are tested (*no* causal relation) is unrealistic and often inapplicable.
+The manuscript provides a clear (if not a bit selective) overview of the literature on causal discovery, and clearly positions the R package within this ecosystem. I am quite skeptical of these methods' true ability to detect real useful relationships in a social science context; they're really prone to detecting spurious relationships based on basic misunderstandings of the process (10.1109/TSP.2023.3286529) or for under-specified/noisy systems (10.1016/j.future.2016.12.009), which is basically all of urban analytics... The authors never mention this literature, nor acknowledge that detected relationships are only consistent *within* the specified covariate set. They never set up a known process and examine the statistical power of the technique, nor do they acknowledge that such a thing is necessary. The statistical significance of effect estimates are stated, but never acknowledge that the null against which they are tested (*no* causal relation) is unrealistic and often inapplicable.
 
-Hence, these approaches are most useful in climate science applications... 
+Hence, these approaches are most useful in climate science applications, where physics informs us about what the likely causal relations are, offering a clear set of what the "complete" specification might be, and also what nulls are reasonable for the partial correlations powering the methods. Thus, this package probably is most relevant for urban environmental applications, making this mainly a good fit for the "E" in CEUS.
 
-So, this is about what I would expect from a package that supports a particular view of causal discovery mechanisms—mostly demoing the functionality with little critique of the method being implemented.
+So, this is about what I would expect from a package that supports a particular view of causal discovery mechanisms—mostly demoing the functionality with little critique of the method being implemented. I Think this is reasonable, since the actual new science on tEDM/Convergent mapping methods is where these objections ought to be raised.
 \end{point}
 
 \begin{reply}
@@ -254,68 +254,6 @@ Finally, we would like to clarify that the primary goal of this work is to provi
 We thank the reviewer again for these insightful comments, which have helped us improve the rigor and balance of the manuscript.
 
 \end{reply}
-
-% \begin{point}
-% The revisions are effectively addressed. I was not a reviewer on the original manuscript, but reviewing the revisions, I agree that the revisions were absolutely necessary for the publication of the manuscript.
-
-% The manuscript provides a clear (if not a bit selective) overview of the literature on causal discovery, and clearly positions the R package within this ecosystem. I am quite skeptical of these methods' true ability to detect real useful relationships in a social science context; they're really prone to detecting spurious relationships based on basic misunderstandings of the process (10.1109/TSP.2023.3286529) or for under-specified/noisy systems (10.1016/j.future.2016.12.009), which is basically all of urban analytics... The authors never mention this literature, nor acknowledge that detected relationships are only consistent *within* the specified covariate set. They never set up a known process and examine the statistical power of the technique, nor do they acknowledge that such a thing is necessary. The statistical significance of effect estimates are stated, but never acknowledge that the null against which they are tested (*no* causal relation) is unrealistic and often inapplicable.
-
-% Hence, these approaches are most useful in climate science applications, where physics informs us about what the likely causal relations are, offering a clear set of what the "complete" specification might be, and also what nulls are reasonable for the partial correlations powering the methods. Thus, this package probably is most relevant for urban environmental applications, making this mainly a good fit for the "E" in CEUS.
-
-% So, this is about what I would expect from a package that supports a particular view of causal discovery mechanisms—mostly demoing the functionality with little critique of the method being implemented. I Think this is reasonable, since the actual new science on tEDM/Convergent mapping methods is where these objections ought to be raised.
-% \end{point}
-
-% \begin{reply}
-% We sincerely thank the reviewer for the thoughtful and constructive comments. We especially appreciate the critical perspective on the applicability of EDM-based causal discovery in a social science context, which has helped us substantially improve the clarity and balance of the manuscript. We respond to the main concerns as follows:
-
-% \vspace{0.5em}
-
-% \noindent\textbf{(1) Risk of spurious relationships in noisy or under-specified systems}
-
-% We fully agree that EDM-based methods may detect spurious or non-actionable relationships, particularly in noisy, weakly observed, or under-specified systems such as those commonly encountered in urban analytics. In response, we have significantly expanded the discussion of \textbf{data-related limitations}, including sensitivity to noise, short or irregular time series, and partial observability, as well as the impact of incomplete system specification on inference stability.
-
-% \vspace{0.5em}
-
-% \noindent\textbf{(2) Dependence on the specified covariate set}
-
-% We appreciate this important point and have now explicitly clarified in the revised manuscript that inferred causal relationships are \textbf{conditional on the selected set of observed variables}. We emphasize that directional influences identified by \textit{tEDM} may change as additional relevant variables are incorporated, and therefore should be interpreted within the context of the specified system representation.
-
-% \vspace{0.5em}
-
-% \noindent\textbf{(3) Lack of discussion on statistical power and controlled evaluation}
-
-% We agree that evaluating statistical power and failure modes under controlled or simulated systems is important. In the revised manuscript, we now explicitly acknowledge that \textbf{performance assessment under controlled settings is necessary} for understanding the reliability and limitations of EDM-based causal discovery, particularly in the presence of noise, limited observations, or model misspecification. We highlight this as an important direction for future work.
-
-% \vspace{0.5em}
-
-% \noindent\textbf{(4) Interpretation of statistical significance and unrealistic null hypothesis}
-
-% We thank the reviewer for raising this important issue. In the revised manuscript, we now explicitly discuss the limitations of significance testing in EDM-based methods. In particular, we clarify that the null hypothesis of ``no causal relationship'' is often \textbf{unrealistic in complex systems}, where variables are typically weakly coupled through shared drivers or indirect pathways. We emphasize that rejection of the null should be interpreted cautiously, and that cross-mapping skill and related metrics are better understood as measures of \textbf{directional dynamical dependence}, rather than as evidence of well-defined causal mechanisms.
-
-% \vspace{0.5em}
-
-% \noindent\textbf{(5) Applicability in social science versus systems with stronger prior structure}
-
-% We agree that EDM-based approaches are generally more reliable in domains where prior knowledge constrains system structure, such as environmental or climate-related systems. In the revised manuscript, we have clarified that the method is most appropriate in settings with relatively stable dynamics and where plausible system structure can be informed by domain expertise. We also acknowledge that causal interpretation becomes less stable in systems with strong exogenous forcing or poorly understood coupling mechanisms, which are common in urban analytics.
-
-% \vspace{0.5em}
-
-% \noindent\textbf{(6) Limited critical discussion of the method}
-
-% We appreciate this observation. In response, we have substantially strengthened the \textit{Discussion and Conclusion} section to provide a more balanced and critical perspective on the limitations of EDM-based causal inference. This includes explicit discussion of data constraints, statistical interpretation, dynamical assumptions, and the conditional nature of inferred relationships.
-
-% We also clarify that the \textbf{methodological extensions} introduced in this work (e.g., multispatial CCM, generalized PCM, and enhanced CMC) remain subject to the same fundamental assumptions and limitations of the EDM framework, and introduce additional practical considerations related to spatial comparability, conditioning variables, and reconstruction quality.
-
-% \vspace{0.5em}
-
-% \noindent\textbf{(7) Scope of the contribution}
-
-% Finally, we would like to clarify that the primary goal of this work is to provide a \textbf{transparent and extensible software implementation} of existing EDM-based methodologies, along with practical extensions for urban data contexts. While we agree that deeper methodological critique and evaluation are important, we view this contribution as complementary to ongoing research on the theoretical and statistical properties of these methods.
-
-% \vspace{0.5em}
-
-% We sincerely thank the reviewer again for these insightful comments, which have significantly improved the rigor and balance of the manuscript.
-% \end{reply}
 
 \baselineskip12pt
 \bibliographystyle{elsarticle-harv} 
