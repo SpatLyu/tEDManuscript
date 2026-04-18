@@ -153,15 +153,59 @@ Regarding applicability, we agree that these approaches are particularly well-su
 
 At the same time, we would like to clarify that the primary goal of this work is to present a \textbf{software framework} that implements and extends existing EDM methodologies, rather than to resolve all methodological debates surrounding causal discovery. Nevertheless, we agree that transparent discussion of limitations is essential, and we have aimed to provide a more balanced and explicit treatment in the revised manuscript.
 
-We sincerely thank the reviewer for raising these important points, which have significantly improved the rigor and clarity of the manuscript.
+\noindent\textbf{Response to Reviewer \#3}
 
-We thank the reviewer for raising this important conceptual clarification. In the revised manuscript, we substantially expanded the \emph{Discussion and conclusion} section to explicitly explain why the causal relationships inferred by \textit{tEDM} represent \emph{temporal and dynamical causality} rather than mere statistical correlation (see revised manuscript, lines~446--458).
+\vspace{0.5em}
 
-Specifically, we now emphasize that \textit{tEDM} is grounded in the concept of dynamical causality, where causation is defined by whether the evolution of one variable leaves a persistent and directionally identifiable imprint on the state evolution of another variable through the underlying system dynamics \citep{sugihara2012ccm,leng2020pcm,tao2023cmc,gao2023gccm}. Unlike correlation analysis, which measures instantaneous or marginal association, EDM-based methods exploit state-space reconstruction and cross mapping to test whether information about a potential driver can be reliably recovered from the temporal trajectory of a response variable. Moreover, the convergence of cross-mapping skill with increasing library size provides an operational criterion to distinguish genuine causal signal from spurious correlation induced by shared trends, synchronization, or external forcing.
+We sincerely thank the reviewer for the thoughtful and constructive comments. We especially appreciate the critical perspective on the applicability of EDM-based causal discovery in a social science context, which has helped us substantially improve the clarity and balance of the manuscript. We respond to the main concerns as follows:
 
-In addition, we clarify that the notion of causality adopted by \textit{tEDM} differs from counterfactual or intervention-based causal effects commonly used in policy evaluation (e.g., average treatment effect). Instead, \textit{tEDM} focuses on \emph{dynamical causality}, which characterizes whether directional information flow is embedded in the evolving system dynamics. Within this framework, quantities such as the cross-mapping skill $\rho$ in CCM and PCM, and the causal strength metric in CMC, quantify the consistency and reliability with which the state of one variable can be recovered from another in reconstructed state space. These measures therefore serve as relative indicators of directional dynamical influence and are primarily intended for causal discovery, ranking, and comparative analysis within a given system, rather than as transferable effect sizes across unrelated systems or intervention scenarios (see revised manuscript, lines~459--470).
+\vspace{0.5em}
 
-To further reduce the risk that high cross-mapping skill reflects spurious assocaition rather than genuine dynamical influence, \textit{tEDM} incorporates multiple layers of robustness assessment, including statistical significance testing, convergence diagnostics with respect to library size, and consistency checks across spatial replications. In applied analyses, effect magnitude is also considered in addition to statistical significance. For example, in the case studies we only interpret statistically significant cross-mapping skill values exceeding a practical threshold (e.g., $\rho > 0.2$) as meaningful causal influence, in order to mitigate mirror dynamics or strong coupling effects that may otherwise inflate reconstruction skill without true causal directionality (see revised manuscript, lines~480--496). Together, these criteria support interpreting the inferred relationships as temporal and dynamical causality rather than merely enhanced correlation.
+\noindent\textbf{(1) Risk of spurious relationships in noisy or under-specified systems}
+
+We fully agree that EDM-based methods may detect spurious or non-actionable relationships, particularly in noisy, weakly observed, or under-specified systems such as those commonly encountered in urban analytics. In response, we have significantly expanded the discussion of \textbf{data-related limitations}, including sensitivity to noise, short or irregular time series, and partial observability, as well as the impact of incomplete system specification on inference stability.
+
+\vspace{0.5em}
+
+\noindent\textbf{(2) Dependence on the specified covariate set}
+
+We appreciate this important point and have now explicitly clarified in the revised manuscript that inferred causal relationships are \textbf{conditional on the selected set of observed variables}. We emphasize that directional influences identified by \textit{tEDM} may change as additional relevant variables are incorporated, and therefore should be interpreted within the context of the specified system representation.
+
+\vspace{0.5em}
+
+\noindent\textbf{(3) Lack of discussion on statistical power and controlled evaluation}
+
+We agree that evaluating statistical power and failure modes under controlled or simulated systems is important. In the revised manuscript, we now explicitly acknowledge that \textbf{performance assessment under controlled settings is necessary} for understanding the reliability and limitations of EDM-based causal discovery, particularly in the presence of noise, limited observations, or model misspecification. We highlight this as an important direction for future work.
+
+\vspace{0.5em}
+
+\noindent\textbf{(4) Interpretation of statistical significance and unrealistic null hypothesis}
+
+We thank the reviewer for raising this important issue. In the revised manuscript, we now explicitly discuss the limitations of significance testing in EDM-based methods. In particular, we clarify that the null hypothesis of ``no causal relationship'' is often \textbf{unrealistic in complex systems}, where variables are typically weakly coupled through shared drivers or indirect pathways. We emphasize that rejection of the null should be interpreted cautiously, and that cross-mapping skill and related metrics are better understood as measures of \textbf{directional dynamical dependence}, rather than as evidence of well-defined causal mechanisms.
+
+\vspace{0.5em}
+
+\noindent\textbf{(5) Applicability in social science versus systems with stronger prior structure}
+
+We agree that EDM-based approaches are generally more reliable in domains where prior knowledge constrains system structure, such as environmental or climate-related systems. In the revised manuscript, we have clarified that the method is most appropriate in settings with relatively stable dynamics and where plausible system structure can be informed by domain expertise. We also acknowledge that causal interpretation becomes less stable in systems with strong exogenous forcing or poorly understood coupling mechanisms, which are common in urban analytics.
+
+\vspace{0.5em}
+
+\noindent\textbf{(6) Limited critical discussion of the method}
+
+We appreciate this observation. In response, we have substantially strengthened the \textit{Discussion and Conclusion} section to provide a more balanced and critical perspective on the limitations of EDM-based causal inference. This includes explicit discussion of data constraints, statistical interpretation, dynamical assumptions, and the conditional nature of inferred relationships.
+
+We also clarify that the \textbf{methodological extensions} introduced in this work (e.g., multispatial CCM, generalized PCM, and enhanced CMC) remain subject to the same fundamental assumptions and limitations of the EDM framework, and introduce additional practical considerations related to spatial comparability, conditioning variables, and reconstruction quality.
+
+\vspace{0.5em}
+
+\noindent\textbf{(7) Scope of the contribution}
+
+Finally, we would like to clarify that the primary goal of this work is to provide a \textbf{transparent and extensible software implementation} of existing EDM-based methodologies, along with practical extensions for urban data contexts. While we agree that deeper methodological critique and evaluation are important, we view this contribution as complementary to ongoing research on the theoretical and statistical properties of these methods.
+
+\vspace{0.5em}
+
+We sincerely thank the reviewer again for these insightful comments, which have significantly improved the rigor and balance of the manuscript.
 \end{reply}
 
 \baselineskip12pt
